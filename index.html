@@ -1,0 +1,4937 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lobo_RutaCeroMatematica_v0.1_Demo_MI_ADP08_MI_CR01_MI_RL02a</title>
+<style>
+:root{--c1:#006847;--c2:#0b3d2e;--c3:#f4f6f8;}
+body{font-family:Arial,sans-serif;margin:0;background:var(--c3);}
+header{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;padding:18px;text-align:center}
+.pantalla{display:none;padding:20px;max-width:900px;margin:auto}
+.activa{display:block}
+.card{background:#fff;border-radius:12px;padding:18px;margin:15px 0;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+button{background:var(--c1);color:#fff;border:none;padding:12px 18px;border-radius:8px;cursor:pointer}
+input{width:100%;padding:10px;margin:8px 0}
+.progress{height:20px;background:#ddd;border-radius:10px;overflow:hidden}
+.progress div{height:100%;background:var(--c1);width:0%}
+.lobo{border-left:5px solid var(--c1);background:#eef8f4}
+.opcion{display:block;margin:8px 0;padding:8px;border:1px solid #ccc;border-radius:8px}
+#evidenciaFinal.pantalla{max-width:1200px;padding:10px 18px 24px;overflow-x:auto}
+#reporteDocente.pantalla{max-width:900px;padding:10px 18px 24px;overflow-x:auto}
+body:has(#evidenciaFinal.activa) > header,body:has(#reporteDocente.activa) > header{display:none}
+body:has(#evidenciaFinal.activa),body:has(#reporteDocente.activa){background:#e9eceb}
+.reconocimiento{--oro:#b78b26;--oro-claro:#d8bd72;--verde:#075840;--verde-oscuro:#083c30;position:relative;aspect-ratio:3/2;min-width:900px;max-width:1120px;margin:12px auto;padding:25px 50px 20px;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;text-align:center;background:linear-gradient(90deg,#fafafa 0,#fff 18%,#fff 82%,#fafafa 100%);color:#172f29;border:1px solid #cfd5d2;border-radius:2px;box-shadow:0 5px 18px rgba(0,0,0,.12)}
+.reconocimiento > *{position:relative;z-index:2}
+.reconocimiento-lineas{position:absolute;inset:12px;border:1px solid rgba(95,115,108,.20);z-index:1;pointer-events:none}
+.reconocimiento-encabezado{display:flex;justify-content:space-between;align-items:center;min-height:58px;margin-bottom:26px;padding:0 14px}
+.reconocimiento-institucion{text-align:left;color:var(--verde);font-weight:800;line-height:1}
+.reconocimiento-institucion .marca-conalep{font-size:clamp(32px,3vw,36px);font-style:normal;letter-spacing:0;text-transform:none}
+.reconocimiento-plantel{text-align:right;color:#17213a;font-size:clamp(32px,3vw,36px);font-style:normal;font-weight:800;line-height:1}
+.reconocimiento-proyecto{padding-top:2px;color:var(--verde);font-weight:700;font-size:20px;letter-spacing:8px;line-height:1.13;white-space:nowrap}
+.reconocimiento-proyecto span{display:block;margin-top:4px;color:#181818;font-size:13px;letter-spacing:5px;font-weight:500}
+.reconocimiento-lobo{text-align:right;padding-right:22px;color:var(--verde-oscuro);line-height:1;align-self:start}
+.reconocimiento-lobo strong{display:block;font-size:25px;font-weight:900;letter-spacing:2px}
+.reconocimiento-lobo span{display:inline-block;margin-top:5px;padding:3px 14px 2px;border-radius:999px;background:var(--verde);color:#fff;font-size:10px;letter-spacing:2.6px;font-weight:700}
+.reconocimiento-centro{width:min(860px,88%);margin:0 auto;display:flex;flex-direction:column;align-items:center}
+.reconocimiento-titulo{margin:1px 0 30px;color:var(--verde);font-size:29px;line-height:1.05;letter-spacing:1.8px;text-transform:uppercase;font-weight:800}
+.reconocimiento-otorga{margin:0;color:#555;font-size:15px;line-height:1.3}
+.reconocimiento-nombre{width:94%;max-width:820px;margin:4px auto 4px;padding:3px 18px 7px;border-bottom:2px solid var(--oro);color:var(--verde-oscuro);font-size:clamp(44px,4vw,50px);font-weight:800;line-height:1.02;letter-spacing:.2px;overflow-wrap:anywhere}
+.reconocimiento-conclusion{margin:2px 0 6px;color:#252525;font-size:17px;line-height:1.25}
+.insignia-lobo-contenedor{width:225px;height:202px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center}
+.insignia-lobo{display:block;width:100%;height:100%;object-fit:contain}
+.reconocimiento-felicitacion{max-width:760px;margin:1px auto 0;color:#444;font-size:14px;line-height:1.35}
+.reconocimiento-avance{margin:2px 0 5px;color:var(--verde);font-size:16px;font-style:italic;font-weight:700}
+.reconocimiento-lema{width:100%;margin-top:auto;padding:7px 0 6px;border-top:1px solid rgba(183,139,38,.72);border-bottom:1px solid rgba(183,139,38,.46);white-space:nowrap;color:#1c342d;font-size:12.5px;line-height:1.2;letter-spacing:-.08px}
+.inicial-lobo{color:var(--verde);font-weight:900;font-size:1.16em}
+.separador{margin:0 7px;color:var(--oro);font-weight:900}
+.reconocimiento-pie{display:grid;grid-template-columns:1fr 78px 1fr;align-items:center;gap:16px;padding-top:7px}
+.reconocimiento-meta{text-align:left;color:#333;font-size:11.5px;line-height:1.45}
+.reconocimiento-folio{justify-self:end;max-width:340px;padding-right:8px;text-align:right;color:#333;font-size:11.5px;line-height:1.45;white-space:nowrap}
+.qr-lobo{width:72px;height:72px;margin:auto;display:flex;align-items:center;justify-content:center;background:#fff;padding:3px;box-sizing:border-box}.qr-lobo svg{display:block;width:100%;height:100%}
+@media(max-width:980px){#evidenciaFinal.pantalla{padding-left:8px;padding-right:8px}.reconocimiento{margin-left:0;margin-right:0}}
+
+/* P03-A3b: eliminación explícita de las franjas diagonales de esquina */
+.reconocimiento::before,
+.reconocimiento::after,
+.reconocimiento-lineas::before,
+.reconocimiento-lineas::after{
+  content:none !important;
+  display:none !important;
+  background:none !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+
+/* P03-B: Reporte de Reforzamiento Matemático — vista docente */
+.documentos-acciones{max-width:1120px;margin:8px auto 0;text-align:center}
+.documentos-acciones button{margin:0 5px}
+.reporte-docente{--verde:#075840;--verde-oscuro:#083c30;--oro:#b78b26;position:relative;width:min(780px,96vw);aspect-ratio:8.5/11;margin:12px auto;padding:38px 46px 32px;box-sizing:border-box;background:#fff;color:#232323;border:1px solid #cfd5d2;border-radius:2px;box-shadow:0 5px 18px rgba(0,0,0,.12);display:flex;flex-direction:column}
+.reporte-encabezado{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:18px;border-bottom:2px solid var(--verde)}
+.reporte-marca{font-size:25px;font-weight:800;color:var(--verde)}
+.reporte-plantel{font-size:25px;font-weight:800;color:#17213a;text-align:right}
+.reporte-titulo{margin:24px 0 18px;text-align:center;color:var(--verde-oscuro);font-size:27px;line-height:1.15;text-transform:uppercase;letter-spacing:.8px}
+.reporte-identificacion{display:grid;grid-template-columns:1.6fr .7fr .7fr;gap:8px 18px;padding:14px 16px;background:#f5f8f7;border-left:4px solid var(--verde);font-size:13px;line-height:1.45}
+.reporte-identificacion .reporte-nombre{grid-column:1/4;font-size:17px;color:var(--verde-oscuro)}
+.reporte-fechas{grid-column:1/4;display:flex;justify-content:space-between;gap:20px;padding-top:3px;color:#444}
+.reporte-seccion-titulo{margin:24px 0 9px;color:var(--verde);font-size:16px;text-transform:uppercase;letter-spacing:.5px}
+.reporte-tabla{width:100%;border-collapse:collapse;font-size:13px}
+.reporte-tabla th{background:var(--verde);color:#fff;padding:9px 8px;text-align:left;font-weight:700}
+.reporte-tabla td{border-bottom:1px solid #d8dfdc;padding:9px 8px;vertical-align:middle}
+.reporte-tabla th:nth-child(n+2),.reporte-tabla td:nth-child(n+2){text-align:center}
+.reporte-resumen{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;padding:14px 16px;border:1px solid #d8dfdc;background:#fbfbfb;font-size:13px}
+.reporte-resumen strong{color:var(--verde-oscuro)}
+.reporte-pie{margin-top:auto;display:grid;grid-template-columns:1fr 82px 1fr;align-items:center;gap:18px;padding-top:18px;border-top:1px solid rgba(183,139,38,.65);font-size:11.5px;color:#333}
+.reporte-folio{text-align:right;font-weight:700;white-space:nowrap}
+.qr-reporte{width:76px;height:76px;margin:auto;display:flex;align-items:center;justify-content:center;background:#fff;padding:3px;box-sizing:border-box}
+.qr-reporte svg{display:block;width:100%;height:100%}
+.reporte-nota{grid-column:1/4;margin-top:7px;text-align:center;color:#666;font-size:10.5px}
+@media(max-width:760px){.reporte-docente{min-width:680px}.reporte-identificacion{grid-template-columns:1fr 1fr}.reporte-identificacion .reporte-nombre,.reporte-fechas{grid-column:1/3}}
+
+
+/* P04: Impresión / Guardar como PDF — expansión mínima */
+@media print{
+  html,body{background:#fff !important;margin:0 !important;padding:0 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.imprimir-reconocimiento > *,body.imprimir-reporte > *{display:none !important}
+  body.imprimir-reconocimiento #evidenciaFinal,body.imprimir-reporte #reporteDocente{display:block !important;max-width:none !important;margin:0 !important;padding:0 !important;overflow:visible !important}
+  body.imprimir-reconocimiento #evidenciaFinal .documentos-acciones,body.imprimir-reporte #reporteDocente .documentos-acciones{display:none !important}
+  body.imprimir-reconocimiento .reconocimiento{width:10.6in !important;height:8.1in !important;max-width:none !important;aspect-ratio:auto !important;margin:0 auto !important;box-shadow:none !important;border-radius:0 !important}
+  body.imprimir-reporte .reporte-docente{width:8.1in !important;height:10.6in !important;max-width:none !important;aspect-ratio:auto !important;margin:0 auto !important;box-shadow:none !important;border-radius:0 !important}
+}
+
+
+/* PRE-RC1-01: pulido visual exclusivo de Pantalla 1 — Registro */
+body:has(#registro.activa) > header{
+  padding:14px 18px;
+}
+body:has(#registro.activa) > header h1{
+  margin:0 0 4px;
+  font-size:28px;
+  line-height:1.15;
+}
+body:has(#registro.activa) > header h3{
+  margin:0;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:500;
+  opacity:.9;
+}
+#registro{
+  max-width:560px;
+  padding-top:28px;
+}
+#registro > .card{
+  margin:18px auto;
+  padding:28px 30px 30px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.10);
+}
+#registro h2{
+  margin:0 0 20px;
+  color:var(--c2);
+  font-size:26px;
+  line-height:1.15;
+}
+#registro .lobo{
+  margin:0 0 24px;
+  padding:14px 16px;
+  border-left-width:4px;
+  border-radius:8px;
+  box-shadow:none;
+  color:#27463c;
+  line-height:1.4;
+}
+#registro input{
+  display:block;
+  width:100%;
+  height:46px;
+  box-sizing:border-box;
+  margin:0 0 14px;
+  padding:0 13px;
+  border:1px solid #c7cfcc;
+  border-radius:8px;
+  background:#fff;
+  color:#1f2f2a;
+  font-size:15px;
+  font-family:inherit;
+}
+#registro input:focus{
+  border-color:var(--c1);
+  outline:3px solid rgba(0,104,71,.14);
+  outline-offset:1px;
+}
+#registro input::placeholder{
+  color:#747d7a;
+}
+#registro button{
+  width:100%;
+  min-height:48px;
+  margin-top:8px;
+  padding:12px 18px;
+  border-radius:8px;
+  background:var(--c1);
+  font-size:16px;
+  font-weight:700;
+  box-shadow:0 2px 5px rgba(0,104,71,.18);
+}
+#registro button:hover{
+  background:var(--c2);
+}
+#registro button:focus-visible{
+  outline:3px solid rgba(0,104,71,.28);
+  outline-offset:3px;
+}
+
+
+/* PRE-RC1-02: pulido visual exclusivo de Pantalla 2 — Introducción al Diagnóstico */
+body:has(#introDiagnostico.activa) > header{
+  padding:14px 18px;
+}
+body:has(#introDiagnostico.activa) > header h1{
+  margin:0 0 4px;
+  font-size:28px;
+  line-height:1.15;
+}
+body:has(#introDiagnostico.activa) > header h3{
+  margin:0;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:500;
+  opacity:.9;
+}
+#introDiagnostico{
+  max-width:560px;
+  padding-top:28px;
+}
+#introDiagnostico > .card{
+  margin:18px auto;
+  padding:28px 30px 30px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.10);
+}
+#introDiagnostico h2{
+  margin:0 0 20px;
+  color:var(--c2);
+  font-size:26px;
+  line-height:1.15;
+}
+#introDiagnostico .lobo{
+  margin:0 0 24px;
+  padding:14px 16px;
+  border-left-width:4px;
+  border-radius:8px;
+  box-shadow:none;
+  color:#27463c;
+  line-height:1.4;
+}
+#introDiagnostico .diagnostico-datos{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:0 0 24px;
+}
+#introDiagnostico .diagnostico-dato{
+  min-height:82px;
+  box-sizing:border-box;
+  padding:13px 14px;
+  border:1px solid #d5ddda;
+  border-radius:9px;
+  background:#f8faf9;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+#introDiagnostico .diagnostico-etiqueta{
+  margin-bottom:5px;
+  color:#5b6863;
+  font-size:13px;
+  font-weight:600;
+}
+#introDiagnostico .diagnostico-valor{
+  color:var(--c2);
+  font-size:20px;
+  font-weight:800;
+  line-height:1.15;
+}
+#introDiagnostico button{
+  width:100%;
+  min-height:48px;
+  margin-top:0;
+  padding:12px 18px;
+  border-radius:8px;
+  background:var(--c1);
+  font-size:16px;
+  font-weight:700;
+  box-shadow:0 2px 5px rgba(0,104,71,.18);
+}
+#introDiagnostico button:hover{
+  background:var(--c2);
+}
+#introDiagnostico button:focus-visible{
+  outline:3px solid rgba(0,104,71,.28);
+  outline-offset:3px;
+}
+@media(max-width:520px){
+  #introDiagnostico .diagnostico-datos{grid-template-columns:1fr}
+}
+
+
+/* PRE-RC1-03: pulido visual exclusivo de Pantalla 3 — Diagnóstico en ejecución */
+body:has(#diagnostico.activa) > header{
+  padding:14px 18px;
+}
+body:has(#diagnostico.activa) > header h1{
+  margin:0 0 4px;
+  font-size:28px;
+  line-height:1.15;
+}
+body:has(#diagnostico.activa) > header h3{
+  margin:0;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:500;
+  opacity:.9;
+}
+#diagnostico{
+  max-width:700px;
+  padding-top:28px;
+}
+#diagnostico > .card{
+  margin:18px auto;
+  padding:28px 32px 30px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.10);
+}
+#diagnostico h2{
+  margin:0 0 18px;
+  color:var(--c2);
+  font-size:26px;
+  line-height:1.15;
+}
+#diagnostico .progress{
+  height:10px;
+  margin:0 0 8px;
+  border-radius:999px;
+  background:#dfe5e2;
+}
+#diagnostico .progress div{
+  border-radius:999px;
+}
+#diagnostico #contador{
+  margin:0 0 18px;
+  color:#5d6965;
+  font-size:13px;
+  font-weight:700;
+  text-align:right;
+}
+#diagnostico #mensajeLobo{
+  margin:0 0 22px;
+  padding:12px 15px;
+  border-left-width:4px;
+  border-radius:8px;
+  box-shadow:none;
+  color:#27463c;
+  line-height:1.4;
+}
+#diagnostico #enunciado{
+  min-height:58px;
+  margin:0 0 20px;
+  padding:14px 12px;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#173c31;
+  font-size:clamp(24px,3.2vw,28px);
+  line-height:1.25;
+  text-align:center;
+  font-weight:800;
+}
+#diagnostico #opciones{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin:0 0 22px;
+}
+#diagnostico .opcion{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-height:50px;
+  box-sizing:border-box;
+  margin:0;
+  padding:12px 16px;
+  border:1px solid #cfd8d4;
+  border-radius:9px;
+  background:#fff;
+  color:#253630;
+  font-size:16px;
+  line-height:1.25;
+  cursor:pointer;
+  transition:border-color .16s ease,background .16s ease,box-shadow .16s ease;
+}
+#diagnostico .opcion:hover{
+  border-color:#8fb3a6;
+  background:#f8fbfa;
+}
+#diagnostico .opcion:has(input:checked){
+  border-color:var(--c1);
+  background:#eef8f4;
+  box-shadow:0 0 0 2px rgba(0,104,71,.10);
+}
+#diagnostico .opcion input[type="radio"]{
+  flex:0 0 auto;
+  width:18px;
+  height:18px;
+  margin:0;
+  padding:0;
+  accent-color:var(--c1);
+  cursor:pointer;
+}
+#diagnostico button{
+  width:100%;
+  min-height:48px;
+  margin-top:0;
+  padding:12px 18px;
+  border-radius:8px;
+  background:var(--c1);
+  font-size:16px;
+  font-weight:700;
+  box-shadow:0 2px 5px rgba(0,104,71,.18);
+}
+#diagnostico button:hover{
+  background:var(--c2);
+}
+#diagnostico button:focus-visible{
+  outline:3px solid rgba(0,104,71,.28);
+  outline-offset:3px;
+}
+@media(max-width:560px){
+  #diagnostico > .card{padding:24px 20px 26px}
+  #diagnostico #contador{text-align:left}
+  #diagnostico #enunciado{font-size:24px}
+}
+
+
+/* PRE-RC1-03a — Proporción común de cajas de respuesta */
+#diagnostico #opciones,
+#opcionesPractica,
+#opcionesFrac,
+#opcionesExp{
+  justify-items:center;
+}
+#diagnostico .opcion,
+#opcionesPractica .opcion,
+#opcionesFrac .opcion,
+#opcionesExp .opcion{
+  width:100%;
+  max-width:480px;
+  margin-left:auto;
+  margin-right:auto;
+  box-sizing:border-box;
+}
+@media (max-width:520px){
+  #diagnostico .opcion,
+  #opcionesPractica .opcion,
+  #opcionesFrac .opcion,
+  #opcionesExp .opcion{
+    max-width:none;
+  }
+}
+
+
+
+/* PRE-RC1-03b: regla visual transversal del encabezado general */
+body:not(:has(#evidenciaFinal.activa)):not(:has(#reporteDocente.activa)) > header{
+  padding:14px 18px;
+}
+body:not(:has(#evidenciaFinal.activa)):not(:has(#reporteDocente.activa)) > header h1{
+  margin:0 0 4px;
+  font-size:28px;
+  line-height:1.15;
+}
+body:not(:has(#evidenciaFinal.activa)):not(:has(#reporteDocente.activa)) > header h3{
+  margin:0;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:500;
+  opacity:.9;
+}
+
+
+/* PRE-RC1-04a: navegación de cierre (Dashboard ↔ cierre ↔ documentos) */
+/* PRE-RC1-04: pantalla de finalización de la Ruta Cero */
+#finalizacionRuta{
+  max-width:560px;
+  padding-top:32px;
+}
+#finalizacionRuta > .card{
+  margin:18px auto;
+  padding:30px 30px 32px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.10);
+  text-align:center;
+}
+#finalizacionRuta h2{
+  margin:0 0 22px;
+  color:var(--c2);
+  font-size:26px;
+  line-height:1.2;
+}
+#finalizacionRuta .lobo{
+  margin:0 0 26px;
+  padding:15px 17px;
+  border-left-width:4px;
+  border-radius:8px;
+  box-shadow:none;
+  color:#27463c;
+  line-height:1.5;
+  text-align:left;
+}
+#finalizacionRuta .finalizacion-acciones{
+  display:grid;
+  gap:12px;
+}
+#finalizacionRuta .finalizacion-acciones button{
+  width:100%;
+  min-height:48px;
+  margin:0;
+  padding:12px 18px;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:700;
+  box-shadow:0 2px 5px rgba(0,104,71,.18);
+}
+#finalizacionRuta .finalizacion-acciones button:hover{background:var(--c2)}
+#finalizacionRuta .finalizacion-acciones button:focus-visible{
+  outline:3px solid rgba(0,104,71,.28);
+  outline-offset:3px;
+}
+#finalizacionRuta .finalizacion-acciones .secundario{
+  background:#fff;
+  color:var(--c1);
+  border:1px solid rgba(0,104,71,.35);
+  box-shadow:none;
+}
+#finalizacionRuta .finalizacion-acciones .secundario:hover{
+  background:#eef8f4;
+  color:var(--c2);
+}
+
+
+/* MI-CR-01: créditos y firma de autor */
+#finalizacionRuta .creditos-firma{
+  margin-top:28px;
+  padding-top:16px;
+  border-top:1px solid rgba(0,104,71,.12);
+  text-align:center;
+}
+#finalizacionRuta .creditos-enlace{
+  width:auto;
+  min-height:0;
+  margin:0;
+  padding:4px 8px;
+  border:0;
+  background:transparent;
+  color:#66736e;
+  box-shadow:none;
+  font-size:12px;
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  cursor:pointer;
+}
+#finalizacionRuta .creditos-enlace:hover{
+  background:transparent;
+  color:var(--c1);
+}
+#finalizacionRuta .creditos-enlace:focus-visible{
+  outline:2px solid rgba(0,104,71,.22);
+  outline-offset:2px;
+}
+#finalizacionRuta .creditos-contenido{
+  max-width:390px;
+  margin:12px auto 0;
+  padding:12px 14px;
+  border-radius:8px;
+  background:#f8faf9;
+  color:#53615c;
+  font-size:12px;
+  line-height:1.55;
+  text-align:center;
+}
+#finalizacionRuta .creditos-contenido[hidden]{
+  display:none;
+}
+#finalizacionRuta .creditos-rol{
+  margin:0 0 3px;
+  font-weight:600;
+}
+#finalizacionRuta .creditos-autor{
+  margin:0;
+  color:#33443e;
+  font-size:13px;
+  font-weight:700;
+}
+#finalizacionRuta .creditos-homenaje{
+  margin:8px 0 0;
+  color:#78837f;
+  font-size:11px;
+  font-style:italic;
+}
+
+
+
+/* PRE-RC1-05: uniformidad estética final de botones */
+button{
+  min-height:44px;
+  box-sizing:border-box;
+  font-family:inherit;
+  font-size:15px;
+  font-weight:700;
+  line-height:1.2;
+  transition:background .16s ease,box-shadow .16s ease,transform .05s ease;
+}
+button:hover{
+  background:var(--c2);
+}
+button:focus-visible{
+  outline:3px solid rgba(0,104,71,.28);
+  outline-offset:3px;
+}
+button:active{
+  transform:translateY(1px);
+}
+
+/* Controles de las pantallas aún no pulidas: mismo lenguaje visual que Registro/Diagnóstico */
+#continuarRuta button,
+#resultadoDiag button,
+#microEnteros button,
+#microFracciones button,
+#microExponentes button,
+#microExponentesNegativos button,
+#practicaEnteros button,
+#practicaFracciones button,
+#practicaExponentes button,
+#practicaExponentesNegativos button,
+#resultadoPractica button,
+#dashboard button,
+.documentos-acciones button{
+  min-height:48px;
+  padding:12px 18px;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:700;
+  box-shadow:0 2px 5px rgba(0,104,71,.18);
+}
+
+/* Separación consistente cuando aparecen varios controles juntos */
+#continuarRuta button + button,
+#resultadoAcciones button + button{
+  margin-left:8px;
+}
+.documentos-acciones{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+}
+.documentos-acciones button{
+  margin:0;
+}
+
+@media(max-width:520px){
+  #continuarRuta button,
+  #resultadoAcciones button,
+  .documentos-acciones button{
+    width:100%;
+    margin-left:0;
+    margin-right:0;
+  }
+  #continuarRuta button + button,
+  #resultadoAcciones button + button{
+    margin-left:0;
+    margin-top:8px;
+  }
+}
+
+
+
+/* MI-RL-01: Reto LOBO — evidencia voluntaria de ruta completa */
+#retoLobo.pantalla{max-width:900px;padding:10px 18px 24px;overflow-x:auto}
+body:has(#retoLobo.activa) > header{display:none}
+body:has(#retoLobo.activa){background:#e9eceb}
+.reto-documento{--verde:#075840;--verde-oscuro:#083c30;--oro:#b78b26;display:grid;gap:18px;justify-items:center}
+.reto-pagina{position:relative;width:min(780px,96vw);min-height:1000px;padding:34px 42px 30px;box-sizing:border-box;background:#fff;color:#26322e;border:1px solid #cfd5d2;border-radius:2px;box-shadow:0 5px 18px rgba(0,0,0,.12)}
+.reto-encabezado{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:12px;border-bottom:2px solid var(--verde)}
+.reto-marca,.reto-plantel{font-size:22px;font-weight:800}.reto-marca{color:var(--verde)}.reto-plantel{color:#17213a;text-align:right}
+.reto-titulo{margin:18px 0 4px;text-align:center;color:var(--verde-oscuro);font-size:27px;line-height:1.1;text-transform:uppercase;letter-spacing:.7px}
+.reto-subtitulo{margin:0 0 14px;text-align:center;color:#59645f;font-size:13px}
+.reto-identificacion{display:grid;grid-template-columns:1.6fr .65fr .75fr;gap:7px 14px;margin-bottom:14px;padding:11px 13px;background:#f5f8f7;border-left:4px solid var(--verde);font-size:12px;line-height:1.35}
+.reto-identificacion .reto-nombre{grid-column:1/4;font-size:15px;color:var(--verde-oscuro)}
+.reto-intro{margin:0 0 14px;padding:10px 12px;border:1px solid #dbe2df;border-radius:7px;background:#fbfcfc;font-size:12px;line-height:1.4}
+.reto-reactivo{margin:0 0 12px;padding:12px 13px;border:1px solid #d7dfdc;border-radius:8px;background:#fff}
+.reto-reactivo-cabecera{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.reto-numero{display:inline-flex;width:27px;height:27px;align-items:center;justify-content:center;border-radius:50%;background:var(--verde);color:#fff;font-size:13px;font-weight:800}
+.reto-verbo{color:var(--verde);font-size:12px;font-weight:900;letter-spacing:.7px}
+.reto-enunciado{margin:0 0 9px;font-size:13.5px;line-height:1.42}
+.reto-caja{margin-top:8px;padding:8px 10px;border:1px solid #bfcac6;border-radius:6px;background:#fdfefe}
+.reto-caja strong{display:block;margin-bottom:4px;color:var(--verde-oscuro);font-size:11.5px;text-transform:uppercase;letter-spacing:.35px}
+.reto-caja p{margin:0 0 5px;color:#46534e;font-size:11.5px;line-height:1.35}
+
+/* MI-RL-02a: áreas de respuesta abiertas, sin cuadros ni líneas guía */
+.reto-caja.reto-respuesta-libre{
+  margin-top:8px;
+  padding:0 2px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+}
+.reto-caja.reto-respuesta-libre .reto-lineas{
+  background:none;
+}
+.reto-caja.reto-respuesta-libre .reto-lineas.amplias{height:168px}
+.reto-caja.reto-respuesta-libre .reto-lineas.medias{height:118px}
+.reto-caja.reto-respuesta-libre .reto-lineas.analisis{height:154px}
+.reto-pagina-cierre .reto-caja.reto-respuesta-libre .reto-lineas.medias{height:112px}
+.reto-lineas{height:54px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 19px,#d6ddda 20px,#d6ddda 21px)}
+.reto-lineas.medias{height:86px}.reto-lineas.amplias{height:118px}
+.reto-lineas.analisis{height:88px}
+.reto-lineas.reflexion{height:58px}
+.reto-lineas.entrevista{height:48px}
+.reto-pagina-cierre .reto-reactivo{margin-bottom:8px;padding:10px 12px}
+.reto-pagina-cierre .reto-lineas.medias{height:74px}
+.reto-pagina-cierre .reto-reflexion{margin-top:7px;padding:8px 10px}
+.reto-pagina-cierre .reto-lineas.reflexion{height:40px}
+.reto-pagina-cierre .reto-entrevista{margin-top:7px;padding:8px 10px}
+.reto-pagina-cierre .reto-entrevista p{margin-bottom:4px}
+.reto-pagina-cierre .reto-lineas.entrevista{height:30px}
+.reto-doble{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.reto-reflexion{margin-top:10px;padding:11px 12px;border:1px solid rgba(183,139,38,.55);border-radius:7px;background:#fffdf8}
+.reto-reflexion h3,.reto-entrevista h3{margin:0 0 5px;color:var(--verde);font-size:13px;text-transform:uppercase;letter-spacing:.4px}
+.reto-reflexion p,.reto-entrevista p{margin:0 0 6px;font-size:11.5px;line-height:1.4}
+.reto-entrevista{margin-top:10px;padding:11px 12px;border-left:4px solid var(--oro);background:#f8faf9}
+.reto-pie{position:absolute;left:42px;right:42px;bottom:20px;display:flex;justify-content:space-between;gap:15px;padding-top:8px;border-top:1px solid #d7dfdc;color:#606a66;font-size:10.5px}
+@media(max-width:760px){.reto-pagina{min-width:680px}.reto-documento{justify-items:start}}
+@media print{
+  body.imprimir-reto > *{display:none !important}
+  body.imprimir-reto #retoLobo{display:block !important;max-width:none !important;margin:0 !important;padding:0 !important;overflow:visible !important}
+  body.imprimir-reto #retoLobo .documentos-acciones{display:none !important}
+  body.imprimir-reto .reto-documento{display:block !important}
+  body.imprimir-reto .reto-pagina{width:8.1in !important;min-width:0 !important;height:10.35in !important;min-height:10.35in !important;margin:0 auto !important;padding:0.28in 0.38in 0.3in !important;box-shadow:none !important;border:none !important;border-radius:0 !important;page-break-after:always;break-after:page;overflow:hidden !important}
+  body.imprimir-reto .reto-reactivo, body.imprimir-reto .reto-reflexion, body.imprimir-reto .reto-entrevista{break-inside:avoid;page-break-inside:avoid}
+  body.imprimir-reto .reto-pagina:last-child{page-break-after:auto;break-after:auto}
+  body.imprimir-reto .reto-pie{left:.38in;right:.38in;bottom:.18in}
+}
+
+
+/* MI-ADP-04: Persistencia y Dashboard adaptativo */
+#perfilAdaptativoDashboard{margin:16px 0}
+.perfil-adaptativo-panel{
+  padding:16px;
+  border:1px solid #d5dfdb;
+  border-radius:10px;
+  background:#f9fbfa;
+}
+.perfil-adaptativo-panel h3{
+  margin:0 0 6px;
+  color:var(--c2);
+  font-size:18px;
+}
+.perfil-adaptativo-ayuda{
+  margin:0 0 12px;
+  color:#5b6763;
+  font-size:13px;
+  line-height:1.4;
+}
+.perfil-adaptativo-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.perfil-habilidad{
+  padding:13px 14px;
+  border:1px solid #d7e0dc;
+  border-radius:9px;
+  background:#fff;
+}
+.perfil-habilidad strong{
+  display:block;
+  margin-bottom:7px;
+  color:#183e33;
+  font-size:15px;
+}
+.perfil-estado{
+  display:inline-block;
+  margin-bottom:7px;
+  padding:5px 8px;
+  border:1px solid #b9c9c3;
+  border-radius:999px;
+  background:#eef5f2;
+  color:#24493e;
+  font-size:12px;
+  font-weight:800;
+}
+.perfil-nivel,.perfil-evidencia{
+  margin:3px 0 0;
+  color:#465650;
+  font-size:12.5px;
+  line-height:1.35;
+}
+.persistencia-pendiente{
+  margin:12px 0;
+  padding:13px 14px;
+  border-left:4px solid var(--c1);
+  border-radius:8px;
+  background:#eef8f4;
+}
+.persistencia-pendiente p{margin:0 0 9px;line-height:1.4}
+.persistencia-pendiente button{width:auto}
+@media(max-width:620px){
+  .perfil-adaptativo-grid{grid-template-columns:1fr}
+  .persistencia-pendiente button{width:100%}
+}
+
+
+
+/* MI-VIS-01: cajas de respuesta más compactas y estéticas */
+#diagnostico #opciones,
+#opcionesPractica,
+#opcionesFrac,
+#opcionesExp,
+#opcionesExpNeg{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  justify-items:center;
+  margin:0 0 22px;
+}
+
+#diagnostico .opcion,
+#opcionesPractica .opcion,
+#opcionesFrac .opcion,
+#opcionesExp .opcion,
+#opcionesExpNeg .opcion{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:min(100%, 430px);
+  min-height:52px;
+  margin:0 auto;
+  padding:12px 16px;
+  box-sizing:border-box;
+  border:1px solid #cfd8d4;
+  border-radius:12px;
+  background:#fff;
+  color:#253630;
+  font-size:16px;
+  line-height:1.25;
+  cursor:pointer;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+  transition:border-color .16s ease, background .16s ease, box-shadow .16s ease, transform .08s ease;
+}
+
+#diagnostico .opcion:hover,
+#opcionesPractica .opcion:hover,
+#opcionesFrac .opcion:hover,
+#opcionesExp .opcion:hover,
+#opcionesExpNeg .opcion:hover{
+  border-color:#8fb3a6;
+  background:#f8fbfa;
+  box-shadow:0 3px 10px rgba(0,104,71,.08);
+}
+
+#diagnostico .opcion:has(input:checked),
+#opcionesPractica .opcion:has(input:checked),
+#opcionesFrac .opcion:has(input:checked),
+#opcionesExp .opcion:has(input:checked),
+#opcionesExpNeg .opcion:has(input:checked){
+  border-color:var(--c1);
+  background:#eef8f4;
+  box-shadow:0 0 0 2px rgba(0,104,71,.10);
+}
+
+#diagnostico .opcion input[type="radio"],
+#opcionesPractica .opcion input[type="radio"],
+#opcionesFrac .opcion input[type="radio"],
+#opcionesExp .opcion input[type="radio"],
+#opcionesExpNeg .opcion input[type="radio"]{
+  flex:0 0 auto;
+  width:18px;
+  height:18px;
+  margin:0;
+  padding:0;
+  accent-color:var(--c1);
+  cursor:pointer;
+}
+
+@media (max-width:560px){
+  #diagnostico .opcion,
+  #opcionesPractica .opcion,
+  #opcionesFrac .opcion,
+  #opcionesExp .opcion,
+  #opcionesExpNeg .opcion{
+    width:100%;
+    max-width:none;
+  }
+}
+
+</style>
+<style id="miMob01Responsive">
+/* ============================================================
+   MI-MOB-01 — Adecuación responsive para dispositivo móvil
+   LOBO Ruta Cero Matemática
+   Intervención exclusivamente CSS. No modifica ejercicios,
+   generadores, adaptación, persistencia, navegación ni documentos.
+   ============================================================ */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{min-width:0}
+.pantalla,.card{box-sizing:border-box}
+.pantalla{width:100%}
+.card{max-width:100%}
+img,svg,canvas{max-width:100%}
+button,input{touch-action:manipulation}
+
+@media(max-width:640px){
+  body:not(:has(#evidenciaFinal.activa)):not(:has(#reporteDocente.activa)):not(:has(#retoLobo.activa)){
+    overflow-x:hidden;
+  }
+
+  header{padding:11px 12px 10px !important}
+  header h1{
+    margin:0 0 4px !important;
+    font-size:clamp(20px,6vw,24px) !important;
+    line-height:1.08 !important;
+  }
+  header h3{
+    margin:0 !important;
+    font-size:13px !important;
+    line-height:1.2 !important;
+  }
+
+  .pantalla{padding:14px 12px 22px}
+  .pantalla > .card{
+    width:100%;
+    margin:10px auto;
+    padding:20px 16px 22px;
+    border-radius:12px;
+  }
+  #registro,#introDiagnostico,#diagnostico,#resultadoDiag,
+  #microEnteros,#microFracciones,#microExponentes,#microExponentesNegativos,
+  #practicaEnteros,#practicaFracciones,#practicaExponentes,#practicaExponentesNegativos,
+  #resultadoPractica,#dashboard,#finalizacionRuta,#continuarRuta{
+    max-width:100%;
+  }
+
+  h2{font-size:clamp(22px,6vw,26px);line-height:1.15}
+  h3,p,.opcion,.card{overflow-wrap:anywhere}
+
+  #registro input{
+    min-height:48px;
+    font-size:16px;
+  }
+  #registro button,
+  #introDiagnostico button,
+  #diagnostico button,
+  #resultadoDiag button,
+  #continuarRuta button,
+  #microEnteros button,#microFracciones button,#microExponentes button,#microExponentesNegativos button,
+  #resultadoPractica button,
+  #dashboard button,
+  #finalizacionRuta button,
+  #practicaEnteros button,#practicaFracciones button,#practicaExponentes button,#practicaExponentesNegativos button{
+    width:100%;
+    min-height:48px;
+    margin-left:0;
+    margin-right:0;
+  }
+  #continuarRuta button + button,
+  #resultadoAcciones button + button{
+    margin-left:0;
+    margin-top:9px;
+  }
+  #resultadoAcciones,
+  .finalizacion-acciones{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:9px;
+  }
+  #resultadoAcciones button,
+  .finalizacion-acciones button{width:100%;margin:0}
+
+  #diagnostico #enunciado,
+  #enunciadoPractica,#enunciadoFrac,#enunciadoExp,#enunciadoExpNeg{
+    min-height:0;
+    font-size:clamp(20px,5.6vw,25px);
+    line-height:1.28;
+    padding-left:4px;
+    padding-right:4px;
+  }
+  #diagnostico #opciones,
+  #opcionesPractica,#opcionesFrac,#opcionesExp,#opcionesExpNeg{
+    width:100%;
+    gap:9px;
+  }
+  #diagnostico .opcion,
+  #opcionesPractica .opcion,#opcionesFrac .opcion,#opcionesExp .opcion,#opcionesExpNeg .opcion{
+    width:100%;
+    max-width:none;
+    min-height:52px;
+    padding:12px 13px;
+  }
+  #diagnostico .opcion input[type="radio"],
+  #opcionesPractica .opcion input[type="radio"],#opcionesFrac .opcion input[type="radio"],
+  #opcionesExp .opcion input[type="radio"],#opcionesExpNeg .opcion input[type="radio"]{
+    width:20px;
+    height:20px;
+  }
+
+  .diagnostico-datos,.perfil-adaptativo-grid{grid-template-columns:1fr}
+  #introDiagnostico .diagnostico-dato{min-height:72px}
+  .persistencia-pendiente button{width:100%}
+  .card.lobo{
+    margin-left:0;
+    margin-right:0;
+    padding:13px 14px;
+    min-height:0;
+    line-height:1.42;
+  }
+
+  #dashboard ul{padding-left:20px}
+  #dashboard li{margin-bottom:8px}
+  #dashboard li button{width:100%;text-align:left}
+  .progress{height:12px}
+
+  /* Los documentos conservan su maquetación para impresión. En móvil
+     se consultan mediante desplazamiento horizontal, sin deformarlos. */
+  #evidenciaFinal.pantalla,#reporteDocente.pantalla,#retoLobo.pantalla{
+    padding:8px 0 20px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-inline:contain;
+    touch-action:pan-x pan-y;
+  }
+  .documentos-acciones{
+    width:calc(100vw - 24px);
+    margin:10px 12px 0;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .documentos-acciones button{width:100%;margin:0}
+}
+
+@media(max-height:520px) and (orientation:landscape) and (max-width:950px){
+  header{padding:7px 12px 6px !important}
+  header h1{font-size:20px !important}
+  header h3{font-size:12px !important}
+  .pantalla{padding-top:8px;padding-bottom:14px}
+  .pantalla > .card{margin:6px auto;padding-top:16px;padding-bottom:17px}
+  .card.lobo{margin-bottom:14px}
+}
+
+@supports(padding:max(0px)){
+  @media(max-width:640px){
+    .pantalla{
+      padding-left:max(12px,env(safe-area-inset-left));
+      padding-right:max(12px,env(safe-area-inset-right));
+      padding-bottom:max(22px,env(safe-area-inset-bottom));
+    }
+  }
+}
+</style>
+</head>
+<body>
+<header>
+<h1>🐺 LOBO Ruta Cero Matemática</h1>
+<h3>CONALEP Naucalpan I</h3>
+</header>
+
+
+<section id="continuarRuta" class="pantalla">
+<div class="card">
+<h2>Ruta Encontrada</h2>
+<div class="card lobo">🐺 He encontrado una Ruta Cero guardada.</div>
+<p id="datosSesion"></p>
+<button onclick="continuarRuta()">Continuar Ruta</button>
+<button onclick="reiniciarRuta()">Reiniciar Ruta</button>
+</div>
+</section>
+
+<section id="registro" class="pantalla activa">
+<div class="card">
+<h2>Bienvenida</h2>
+<div class="card lobo">🐺 Bienvenido. Inicia tu Ruta Cero Matemática.</div>
+<input id="nombre" placeholder="Nombre completo">
+<input id="grupo" placeholder="Grupo">
+<input id="semestre" placeholder="Semestre" type="number" min="1" max="6">
+<button onclick="registrarAlumno()">Iniciar Diagnóstico</button>
+</div>
+</section>
+
+
+<section id="introDiagnostico" class="pantalla">
+<div class="card">
+<h2>Diagnóstico Inicial</h2>
+<div class="card lobo">🐺 Este diagnóstico me permitirá conocer tus conocimientos actuales. No afecta tu calificación.</div>
+<div class="diagnostico-datos" aria-label="Información del diagnóstico">
+  <div class="diagnostico-dato"><span class="diagnostico-etiqueta">Reactivos base</span><span class="diagnostico-valor">5</span></div>
+  <div class="diagnostico-dato"><span class="diagnostico-etiqueta">Confirmación</span><span class="diagnostico-valor">Solo si se requiere</span></div>
+</div>
+<p style="margin-top:14px;color:#4b5f58">Si alguna habilidad necesita más evidencia, LOBO presentará dos reactivos adicionales de esa habilidad.</p>
+<button onclick="iniciarDiagnostico()">Comenzar Diagnóstico</button>
+</div>
+</section>
+
+<section id="diagnostico" class="pantalla">
+<div class="card">
+<h2>Diagnóstico Inicial</h2>
+<div class="progress"><div id="barra"></div></div>
+<p id="contador"></p>
+<div class="card lobo" id="mensajeLobo"></div>
+<h3 id="enunciado"></h3>
+<div id="opciones"></div>
+<button onclick="comprobar()">Comprobar</button>
+</div>
+</section>
+
+<section id="resultadoDiag" class="pantalla">
+<div class="card">
+<h2>Resultados del Diagnóstico</h2>
+<p id="resultadoTexto"></p>
+<button onclick="iniciarRuta()">Iniciar Ruta de Aprendizaje</button>
+</div>
+</section>
+
+
+
+<section id="practicaEnteros" class="pantalla">
+<div class="card">
+<h2>Práctica adaptativa: Enteros</h2>
+<div class="progress"><div id="barraPractica"></div></div>
+<p id="contadorPractica"></p>
+<p id="estadoAdaptativoEnteros" style="font-weight:700;color:#345c50"></p>
+<div class="card lobo" id="loboPractica">🐺 Resuelve con calma. LOBO ajustará la práctica con base en tu desempeño.</div>
+<h3 id="enunciadoPractica"></h3>
+<div id="opcionesPractica"></div>
+<button onclick="comprobarPractica()">Responder</button>
+</div>
+</section>
+
+<section id="resultadoPractica" class="pantalla">
+<div class="card">
+<h2 id="resultadoTitulo"></h2>
+<p id="resultadoAciertos"></p>
+<p id="resultadoPorcentaje"></p>
+<p id="resultadoEstado"></p>
+<p id="resultadoDesbloqueo"></p>
+<div id="resultadoLobo" class="card lobo"></div>
+<div id="resultadoAcciones"></div>
+</div>
+</section>
+
+<section id="microEnteros" class="pantalla">
+<div class="card">
+<h2>Microlección 1: Suma y resta de enteros</h2>
+<div class="card">
+<h3>Suma de enteros</h3>
+<p>Si los números tienen el mismo signo, se suman y se conserva el signo.</p>
+<p><strong>(+4)+(+3)= +7</strong></p>
+<p><strong>(-4)+(-3)= -7</strong></p>
+<p>Si tienen diferente signo, se restan los valores absolutos y se conserva el signo del número con mayor valor absoluto.</p>
+<p><strong>(+8)+(-5)= +3</strong></p>
+<p><strong>(-10)+(+4)= -6</strong></p>
+<h3>Resta de enteros</h3>
+<p>Restar un entero equivale a sumar su opuesto.</p>
+<p><strong>5-(-3)=5+(+3)=8</strong></p>
+<p><strong>-4-(+2)=-4+(-2)=-6</strong></p>
+</div>
+<div class="card lobo">🐺 En una resta, primero transforma el segundo número en su opuesto y después aplica las reglas de la suma.</div>
+<button onclick="iniciarPracticaEnteros()">Iniciar Práctica adaptativa</button>
+</div>
+</section>
+
+
+<section id="practicaFracciones" class="pantalla">
+<div class="card">
+<h2>Práctica adaptativa: Fracciones</h2>
+<div class="progress"><div id="barraFrac"></div></div>
+<p id="contadorFrac"></p>
+<p id="estadoAdaptativoFracciones" style="font-weight:700;color:#345c50"></p>
+<div class="card lobo" id="loboPracticaFrac">🐺 Trabaja paso a paso. LOBO ajustará el apoyo con base en tu desempeño.</div>
+<h3 id="enunciadoFrac"></h3>
+<div id="opcionesFrac"></div>
+<button onclick="comprobarFrac()">Responder</button>
+</div></section>
+
+<section id="microFracciones" class="pantalla">
+<div class="card">
+<h2>Microlección 2: Fracciones</h2>
+<div class="card">
+<h3>Regla 1</h3>
+<p>Si las fracciones tienen el mismo denominador, se suman los numeradores y se conserva el denominador.</p>
+<p><b>1/5 + 2/5 = 3/5</b></p>
+<h3>Regla 2</h3>
+<p>Toda fracción debe simplificarse cuando sea posible.</p>
+<p><b>6/8 = 3/4</b></p>
+<p><b>2/6 + 1/6 = 3/6 = 1/2</b></p>
+</div>
+<div class="card lobo">🐺 Cuando los denominadores son iguales, solo necesitas sumar los numeradores.</div>
+<button onclick="iniciarPracticaFracciones()">Iniciar Práctica</button>
+</div></section>
+
+
+<section id="practicaExponentes" class="pantalla">
+<div class="card">
+<h2>Práctica adaptativa: Exponentes positivos</h2>
+<div class="progress"><div id="barraExp"></div></div>
+<p id="contadorExp"></p>
+<p id="estadoAdaptativoExponentes" style="font-weight:700;color:#345c50"></p>
+<div class="card lobo" id="loboPracticaExp">🐺 Recuerda: eleva numerador y denominador. LOBO ajustará la exigencia con base en tu desempeño.</div>
+<h3 id="enunciadoExp"></h3>
+<div id="opcionesExp"></div>
+<button onclick="comprobarExp()">Responder</button>
+</div></section>
+
+<section id="microExponentes" class="pantalla">
+<div class="card">
+<h2>Microlección 3: Exponentes y Fracciones</h2>
+<div class="card">
+<p><b>(a/b)^n = a^n / b^n</b></p>
+<p><b>(2/3)² = 4/9</b></p>
+<p><b>(1/2)³ = 1/8</b></p>
+<p><b>(3/4)² = 9/16</b></p>
+</div>
+<div class="card lobo">🐺 Elevar una fracción a una potencia significa multiplicarla por sí misma tantas veces como indique el exponente.</div>
+<button onclick="iniciarPracticaExponentes()">Iniciar Práctica</button>
+</div></section>
+
+
+
+<section id="practicaExponentesNegativos" class="pantalla">
+<div class="card">
+<h2>Práctica adaptativa: Exponentes negativos</h2>
+<div class="progress"><div id="barraExpNeg"></div></div>
+<p id="contadorExpNeg"></p>
+<p id="estadoAdaptativoExponentesNegativos" style="font-weight:700;color:#345c50"></p>
+<div class="card lobo" id="loboPracticaExpNeg">🐺 Un exponente negativo indica recíproco. LOBO ajustará la exigencia con base en tu desempeño.</div>
+<h3 id="enunciadoExpNeg"></h3>
+<div id="opcionesExpNeg"></div>
+<button onclick="comprobarExpNeg()">Responder</button>
+</div></section>
+
+<section id="microExponentesNegativos" class="pantalla">
+<div class="card">
+<h2>Microlección 4: Exponentes enteros negativos</h2>
+<div class="card">
+<h3>1. El recíproco</h3>
+<p><b>a⁻¹ = 1/a</b>, siempre que <b>a ≠ 0</b>.</p>
+<p><b>2⁻¹ = 1/2</b></p>
+<h3>2. Regla general</h3>
+<p><b>a⁻ⁿ = 1/aⁿ</b></p>
+<p><b>3⁻² = 1/3² = 1/9</b></p>
+<h3>3. Fracciones</h3>
+<p><b>(a/b)⁻ⁿ = (b/a)ⁿ</b></p>
+<p><b>(2/3)⁻² = (3/2)² = 9/4</b></p>
+<h3>4. Base negativa</h3>
+<p>Con base negativa, la paridad del exponente sigue determinando el signo después de aplicar el recíproco.</p>
+<p><b>(-2)⁻² = 1/4</b> y <b>(-2)⁻³ = -1/8</b></p>
+</div>
+<div class="card lobo">🐺 Secuencia útil: identifica el exponente negativo → toma el recíproco → convierte el exponente en positivo → calcula la potencia.</div>
+<button onclick="iniciarPracticaExponentesNegativos()">Iniciar Práctica adaptativa</button>
+</div></section>
+
+<section id="finalizacionRuta" class="pantalla">
+<div class="card">
+<h2>¡Ruta Cero Matemática completada!</h2>
+<div class="card lobo">🐺 Has concluido tu Ruta Cero Matemática. Cada paso que diste fortaleció tus herramientas para seguir aprendiendo.</div>
+<div class="finalizacion-acciones">
+<button onclick="abrirEvidenciaFinal()">Ver Reconocimiento LOBO</button>
+<button class="secundario" onclick="abrirReporteDocente()">Ver Reporte docente</button>
+<button id="btnRetoLobo" class="secundario" onclick="abrirRetoLobo()">Generar Reto LOBO (opcional)</button>
+<button class="secundario" onclick="mostrarPantalla('dashboard')">Volver al Dashboard</button>
+</div>
+
+<div class="creditos-firma">
+<button id="btnCreditosLobo" class="creditos-enlace" type="button" aria-expanded="false" aria-controls="creditosLobo" onclick="toggleCreditosLobo()">Créditos</button>
+<div id="creditosLobo" class="creditos-contenido" hidden>
+<p class="creditos-rol">Idea, diseño e implementación</p>
+<p class="creditos-autor">Profesor: José Antonio León Juárez</p>
+<p class="creditos-homenaje">En homenaje a quienes siempre desearon seguir aprendiendo...</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="retoLobo" class="pantalla">
+<div class="reto-documento" id="retoLoboContenido">
+  <article class="reto-pagina">
+    <div class="reto-encabezado"><div class="reto-marca">Conalep</div><div class="reto-plantel">Naucalpan I</div></div>
+    <h2 class="reto-titulo">Reto LOBO</h2>
+    <p class="reto-subtitulo">Evidencia voluntaria de reforzamiento · Trayectoria adaptada</p>
+    <div class="reto-identificacion">
+      <div class="reto-nombre"><strong>Alumno:</strong> <span id="retoAlumno"></span></div>
+      <div><strong>Grupo:</strong> <span id="retoGrupo"></span></div>
+      <div><strong>Semestre:</strong> <span id="retoSemestre"></span></div>
+      <div><strong>Fecha:</strong> <span id="retoFecha"></span></div>
+    </div>
+    <div class="reto-intro"><strong>Este reto es opcional.</strong> Resuélvelo en papel y haz visible cómo piensas. LOBO recupera parte de tu trayectoria y da mayor atención a habilidades que necesitaste trabajar durante la Ruta. Cada reactivo te pide una acción cognitiva diferente.</div>
+
+    <div class="reto-reactivo">
+      <div class="reto-reactivo-cabecera"><span class="reto-numero">1</span><span class="reto-verbo">RESUELVO</span></div>
+      <p class="reto-enunciado" id="retoR1"></p>
+      <div class="reto-caja reto-respuesta-libre"><strong>Mi procedimiento</strong><p id="retoCajaR1">Realiza la operación y escribe tu resultado.</p><div class="reto-lineas amplias"></div></div>
+    </div>
+
+    <div class="reto-reactivo">
+      <div class="reto-reactivo-cabecera"><span class="reto-numero">2</span><span class="reto-verbo">EXPLICO</span></div>
+      <p class="reto-enunciado" id="retoR2"></p>
+      <div class="reto-caja reto-respuesta-libre"><strong>Explico</strong><p id="retoCajaR2">Explica con tus palabras la idea matemática que utilizaste.</p><div class="reto-lineas amplias"></div></div>
+    </div>
+    <div class="reto-pie"><span>LOBO Ruta Cero Matemática</span><span id="retoFolio1"></span></div>
+  </article>
+
+  <article class="reto-pagina">
+    <div class="reto-encabezado"><div class="reto-marca">Conalep</div><div class="reto-plantel">Naucalpan I</div></div>
+    <h2 class="reto-titulo">Reto LOBO</h2>
+    <p class="reto-subtitulo">Continuación · Analizo y compruebo</p>
+
+    <div class="reto-reactivo">
+      <div class="reto-reactivo-cabecera"><span class="reto-numero">3</span><span class="reto-verbo">ANALIZO</span></div>
+      <p class="reto-enunciado" id="retoR3"></p>
+      <div class="reto-doble">
+        <div class="reto-caja reto-respuesta-libre"><strong>Detecto el error</strong><p>¿Qué falta o qué paso es incorrecto?</p><div class="reto-lineas analisis"></div></div>
+        <div class="reto-caja reto-respuesta-libre"><strong>Corrijo</strong><p>Escribe la solución correcta.</p><div class="reto-lineas analisis"></div></div>
+      </div>
+    </div>
+
+    <div class="reto-reactivo">
+      <div class="reto-reactivo-cabecera"><span class="reto-numero">4</span><span class="reto-verbo">COMPRUEBO</span></div>
+      <p class="reto-enunciado" id="retoR4"></p>
+      <div class="reto-caja reto-respuesta-libre"><strong>Compruebo</strong><p id="retoCajaR4">Explica cómo puedes verificar que tu respuesta es correcta.</p><div class="reto-lineas amplias"></div></div>
+    </div>
+    <div class="reto-pie"><span>Reto voluntario · Trayectoria adaptada</span><span id="retoFolio2"></span></div>
+  </article>
+
+  <article class="reto-pagina reto-pagina-cierre">
+    <div class="reto-encabezado"><div class="reto-marca">Conalep</div><div class="reto-plantel">Naucalpan I</div></div>
+    <h2 class="reto-titulo">Reto LOBO</h2>
+    <p class="reto-subtitulo">Continuación · Transfiero y aplico a mi vida real</p>
+
+    <div class="reto-reactivo">
+      <div class="reto-reactivo-cabecera"><span class="reto-numero">5</span><span class="reto-verbo">TRANSFIERO</span></div>
+      <p class="reto-enunciado" id="retoR5"></p>
+      <div class="reto-caja reto-respuesta-libre"><strong>Construyo</strong><p id="retoCajaR5">Usa la idea matemática en una situación o ejemplo nuevo.</p><div class="reto-lineas medias"></div></div>
+    </div>
+
+    <div class="reto-reactivo">
+      <div class="reto-reactivo-cabecera"><span class="reto-numero">6</span><span class="reto-verbo">APLICO A MI VIDA REAL</span></div>
+      <p class="reto-enunciado" id="retoR6"></p>
+      <div class="reto-caja reto-respuesta-libre"><strong>Aplico a mi vida real</strong><p id="retoCajaR6">Resuelve la situación, simplifica tu resultado y explica qué representa en el contexto.</p><div class="reto-lineas medias"></div></div>
+    </div>
+
+    <div class="reto-reflexion">
+      <h3>Necesito seguir practicando</h3>
+      <p>Escribe brevemente qué aspecto de esta Ruta Cero todavía te gustaría fortalecer.</p>
+      <div class="reto-lineas reflexion"></div>
+    </div>
+
+    <div class="reto-entrevista">
+      <h3>Microentrevista docente · opcional</h3>
+      <p>Tu profesor puede elegir uno de tus reactivos y pedirte una explicación breve, por ejemplo: “¿por qué elegiste este procedimiento?” o “¿cómo comprobaste tu respuesta?”.</p>
+      <div class="reto-doble">
+        <div class="reto-caja"><strong>Reactivo comentado</strong><div class="reto-lineas entrevista"></div></div>
+        <div class="reto-caja"><strong>Observación breve</strong><div class="reto-lineas entrevista"></div></div>
+      </div>
+    </div>
+    <div class="reto-pie"><span>Reto voluntario · No sustituye la Ruta Cero ni el reconocimiento</span><span id="retoFolio3"></span></div>
+  </article>
+</div>
+<div class="documentos-acciones"><button onclick="imprimirDocumento('reto')">Imprimir / guardar como PDF</button><button onclick="abrirFinalizacionRuta()">Volver al cierre de ruta</button></div>
+</section>
+
+<section id="evidenciaFinal" class="pantalla">
+<div class="card reconocimiento" id="evidenciaContenido">
+<div class="reconocimiento-lineas"></div>
+<div class="reconocimiento-encabezado">
+<div class="reconocimiento-institucion"><div class="marca-conalep">Conalep</div></div>
+<div class="reconocimiento-plantel">Naucalpan I</div>
+</div>
+<div class="reconocimiento-centro">
+<h2 class="reconocimiento-titulo">Reconocimiento LOBO</h2>
+<p class="reconocimiento-otorga">Se otorga el presente reconocimiento a</p>
+<div id="evAlumno" class="reconocimiento-nombre"></div>
+<p class="reconocimiento-conclusion">Por haber concluido satisfactoriamente la Ruta Cero Matemática.</p>
+<div class="insignia-lobo-contenedor"><img class="insignia-lobo" src="LOBO_insignia_central.png" alt="Insignia LOBO"></div>
+<p class="reconocimiento-felicitacion">Demostraste liderazgo en tu aprendizaje, organización en tu estudio, búsqueda constante de mejora y orientación hacia tus metas.</p>
+<p class="reconocimiento-avance">¡Sigue avanzando! El éxito es tuyo.</p>
+</div>
+<div class="reconocimiento-lema"><span class="inicial-lobo">L</span>iderazgo en el aprendizaje <span class="separador">•</span> <span class="inicial-lobo">O</span>rganización del estudio <span class="separador">•</span> <span class="inicial-lobo">B</span>úsqueda constante de mejora <span class="separador">•</span> <span class="inicial-lobo">O</span>rientación hacia las metas</div>
+<div class="reconocimiento-pie">
+<div class="reconocimiento-meta"><div id="evGrupo"></div><div id="evSemestre"></div><div id="evFecha"></div></div>
+<div class="qr-lobo" id="qrLobo" aria-label="Código QR del Folio LOBO"></div>
+<div class="reconocimiento-folio"><div id="evFolio"></div></div>
+</div>
+</div>
+<div class="documentos-acciones"><button onclick="imprimirDocumento('reconocimiento')">Imprimir / guardar como PDF</button><button onclick="abrirReporteDocente()">Ver reporte docente</button><button onclick="abrirFinalizacionRuta()">Volver al cierre de ruta</button></div>
+</section>
+
+<section id="reporteDocente" class="pantalla">
+<div class="reporte-docente" id="reporteDocenteContenido">
+  <div class="reporte-encabezado">
+    <div class="reporte-marca">Conalep</div>
+    <div class="reporte-plantel">Naucalpan I</div>
+  </div>
+  <h2 class="reporte-titulo">Reporte de Reforzamiento Matemático</h2>
+  <div class="reporte-identificacion">
+    <div class="reporte-nombre"><strong>Alumno:</strong> <span id="repAlumno"></span></div>
+    <div><strong>Grupo:</strong> <span id="repGrupo"></span></div>
+    <div><strong>Semestre:</strong> <span id="repSemestre"></span></div>
+    <div><strong>Estado:</strong> <span id="repEstadoRuta"></span></div>
+    <div class="reporte-fechas"><span><strong>Fecha de inicio:</strong> <span id="repFechaInicio"></span></span><span><strong>Fecha de conclusión:</strong> <span id="repFechaFin"></span></span></div>
+  </div>
+
+  <h3 class="reporte-seccion-titulo">Resultados de la Ruta Cero</h3>
+  <table class="reporte-tabla" aria-label="Resultados de reforzamiento matemático">
+    <thead><tr><th>Etapa</th><th>Aciertos</th><th>Porcentaje</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>Diagnóstico inicial</td><td id="repDiagAciertos"></td><td id="repDiagPorcentaje"></td><td id="repDiagEstado"></td></tr>
+      <tr><td>Enteros</td><td id="repEnterosAciertos"></td><td id="repEnterosPorcentaje"></td><td id="repEnterosEstado"></td></tr>
+      <tr><td>Fracciones</td><td id="repFraccionesAciertos"></td><td id="repFraccionesPorcentaje"></td><td id="repFraccionesEstado"></td></tr>
+      <tr><td>Exponentes</td><td id="repExponentesAciertos"></td><td id="repExponentesPorcentaje"></td><td id="repExponentesEstado"></td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="reporte-seccion-titulo">Resumen</h3>
+  <div class="reporte-resumen">
+    <div><strong>Progreso final:</strong> <span id="repProgreso"></span></div>
+    <div><strong>Estado general:</strong> <span id="repEstadoGeneral"></span></div>
+  </div>
+
+  <div class="reporte-pie">
+    <div>LOBO Ruta Cero Matemática</div>
+    <div class="qr-reporte" id="qrReporteLobo" aria-label="Código QR del Folio LOBO del reporte docente"></div>
+    <div class="reporte-folio" id="repFolio"></div>
+    <div class="reporte-nota">El Folio LOBO y el QR corresponden al mismo reconocimiento emitido para este estudiante.</div>
+  </div>
+</div>
+<div class="documentos-acciones"><button onclick="imprimirDocumento('reporte')">Imprimir / guardar como PDF</button><button onclick="abrirEvidenciaFinal()">Volver al reconocimiento</button><button onclick="abrirFinalizacionRuta()">Volver al cierre de ruta</button></div>
+</section>
+
+<section id="dashboard" class="pantalla">
+<div class="card">
+<h2>Dashboard</h2>
+<p id="datosAlumno"></p>
+<div class="card lobo">🐺 Cada módulo completado fortalece tus habilidades.</div>
+<div id="resumenAlumno"></div>
+<div class="progress"><div id="barraDashboard"></div></div>
+<p id="textoProgresoDashboard"></p>
+<p id="diagnosticoDashboard"></p>
+<div id="perfilAdaptativoDashboard" aria-live="polite"></div>
+<p id="estadoRutaDashboard"></p>
+<div id="pendienteDashboard"></div>
+<div id="cierreRutaDashboard"></div>
+<ul id='listaModulos'></ul>
+</div>
+</section>
+
+<style id="estiloImpresionDinamico">
+
+/* MI-VIS-01: cajas de respuesta más compactas y estéticas */
+#diagnostico #opciones,
+#opcionesPractica,
+#opcionesFrac,
+#opcionesExp,
+#opcionesExpNeg{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  justify-items:center;
+  margin:0 0 22px;
+}
+
+#diagnostico .opcion,
+#opcionesPractica .opcion,
+#opcionesFrac .opcion,
+#opcionesExp .opcion,
+#opcionesExpNeg .opcion{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:min(100%, 430px);
+  min-height:52px;
+  margin:0 auto;
+  padding:12px 16px;
+  box-sizing:border-box;
+  border:1px solid #cfd8d4;
+  border-radius:12px;
+  background:#fff;
+  color:#253630;
+  font-size:16px;
+  line-height:1.25;
+  cursor:pointer;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+  transition:border-color .16s ease, background .16s ease, box-shadow .16s ease, transform .08s ease;
+}
+
+#diagnostico .opcion:hover,
+#opcionesPractica .opcion:hover,
+#opcionesFrac .opcion:hover,
+#opcionesExp .opcion:hover,
+#opcionesExpNeg .opcion:hover{
+  border-color:#8fb3a6;
+  background:#f8fbfa;
+  box-shadow:0 3px 10px rgba(0,104,71,.08);
+}
+
+#diagnostico .opcion:has(input:checked),
+#opcionesPractica .opcion:has(input:checked),
+#opcionesFrac .opcion:has(input:checked),
+#opcionesExp .opcion:has(input:checked),
+#opcionesExpNeg .opcion:has(input:checked){
+  border-color:var(--c1);
+  background:#eef8f4;
+  box-shadow:0 0 0 2px rgba(0,104,71,.10);
+}
+
+#diagnostico .opcion input[type="radio"],
+#opcionesPractica .opcion input[type="radio"],
+#opcionesFrac .opcion input[type="radio"],
+#opcionesExp .opcion input[type="radio"],
+#opcionesExpNeg .opcion input[type="radio"]{
+  flex:0 0 auto;
+  width:18px;
+  height:18px;
+  margin:0;
+  padding:0;
+  accent-color:var(--c1);
+  cursor:pointer;
+}
+
+@media (max-width:560px){
+  #diagnostico .opcion,
+  #opcionesPractica .opcion,
+  #opcionesFrac .opcion,
+  #opcionesExp .opcion,
+  #opcionesExpNeg .opcion{
+    width:100%;
+    max-width:none;
+  }
+}
+
+</style>
+<script src="qrcode.min.js"></script>
+<script>
+
+function limpiarModoImpresion(){
+ document.body.classList.remove('imprimir-reconocimiento','imprimir-reporte','imprimir-reto');
+ const estilo=document.getElementById('estiloImpresionDinamico');
+ if(estilo) estilo.textContent='';
+}
+
+function imprimirDocumento(tipo){
+ if(tipo!=='reconocimiento' && tipo!=='reporte' && tipo!=='reto') return;
+ if(alumno.rutaCompletada!==true){
+   mostrarPantalla('dashboard');
+   return;
+ }
+
+ if(tipo==='reconocimiento'){
+   prepararEvidenciaFinal();
+   document.body.classList.add('imprimir-reconocimiento');
+ }else if(tipo==='reporte'){
+   prepararReporteDocente();
+   document.body.classList.add('imprimir-reporte');
+ }else{
+   prepararRetoLobo();
+   document.body.classList.add('imprimir-reto');
+ }
+
+ const estilo=document.getElementById('estiloImpresionDinamico');
+ if(estilo){
+   estilo.textContent=tipo==='reconocimiento'
+     ? '@page{size:letter landscape;margin:0.2in;}'
+     : tipo==='reporte'
+       ? '@page{size:letter portrait;margin:0.2in;}'
+       : '@page{size:letter portrait;margin:0.2in;}';
+ }
+
+ setTimeout(()=>window.print(),50);
+}
+
+window.addEventListener('afterprint',limpiarModoImpresion);
+
+const CONFIG_RUTA = {
+  ejerciciosPorModulo: 4,
+  criterioAcreditacion: 0.75,
+  enterosAdaptativos:{
+    tamBloque:5,
+    minimoAntesDeConsolidar:10,
+    maximoEjercicios:20,
+    ventanaReciente:10,
+    aciertosVentana:8,
+    aciertosUltimoBloque:4
+  },
+  fraccionesAdaptativas:{
+    tamBloque:5,
+    minimoAntesDeConsolidar:10,
+    maximoEjercicios:20,
+    ventanaReciente:10,
+    aciertosVentana:8,
+    aciertosUltimoBloque:4
+  },
+  exponentesPositivosAdaptativos:{
+    tamBloque:5,
+    minimoAntesDeConsolidar:10,
+    maximoEjercicios:20,
+    ventanaReciente:10,
+    aciertosVentana:8,
+    aciertosUltimoBloque:4
+  },
+  exponentesNegativosAdaptativos:{
+    tamBloque:5,
+    minimoAntesDeConsolidar:10,
+    maximoEjercicios:20,
+    ventanaReciente:10,
+    aciertosVentana:8,
+    aciertosUltimoBloque:4
+  }
+};
+
+window.onload = verificarSesion;
+
+let reinicioRutaEnCurso=false;
+
+function guardarPersistenciaADP04(){
+  if(reinicioRutaEnCurso) return;
+  if(typeof alumno!=='object' || !alumno || !alumno.nombre) return;
+  const practica=alumno.practicaEnteros;
+  if(practica?.activa && practica.version==='ADP-03'){
+    practica.persistenciaVersion='ADP-04';
+  }
+  const practicaFracGuardada=alumno.practicaFracciones;
+  if(practicaFracGuardada?.activa && practicaFracGuardada.version==='ADP-05'){
+    practicaFracGuardada.persistenciaVersion='ADP-05';
+  }
+  const practicaExpGuardada=alumno.practicaExponentes;
+  if(practicaExpGuardada?.activa && practicaExpGuardada.version==='ADP-06'){
+    practicaExpGuardada.persistenciaVersion='ADP-06';
+  }
+  const practicaExpNegGuardada=alumno.practicaExponentesNegativos;
+  if(practicaExpNegGuardada?.activa && practicaExpNegGuardada.version==='ADP-07'){
+    practicaExpNegGuardada.persistenciaVersion='ADP-07';
+  }
+  localStorage.setItem('loboRutaCeroAlumno',JSON.stringify(alumno));
+}
+
+function normalizarPersistenciaADP04(){
+  const practica=alumno?.practicaEnteros;
+  if(!practica?.activa || practica.version!=='ADP-03') return false;
+
+  asegurarPerfilEnterosAdaptativo();
+  const cfg=CONFIG_RUTA.enterosAdaptativos;
+  practica.persistenciaVersion='ADP-04';
+  if(!Array.isArray(practica.historial)) practica.historial=[];
+  practica.aciertosTotales=practica.historial.filter(r=>r.correcto).length;
+  if(!practica.niveles) practica.niveles={};
+  ['sumaEnteros','restaEnteros'].forEach(habilidad=>{
+    if(!['A','B','C'].includes(practica.niveles[habilidad])){
+      practica.niveles[habilidad]=alumno.perfilAdaptativo?.[habilidad]?.nivel || nivelInicialEnteros(habilidad);
+    }
+    alumno.perfilAdaptativo[habilidad].nivel=practica.niveles[habilidad];
+  });
+  if(!Number.isInteger(practica.bloqueNumero) || practica.bloqueNumero<1){
+    practica.bloqueNumero=Math.floor(practica.historial.length/cfg.tamBloque)+1;
+  }
+  if(!Number.isInteger(practica.ejercicioEnBloque) || practica.ejercicioEnBloque<0){
+    practica.ejercicioEnBloque=practica.historial.length%cfg.tamBloque;
+  }
+  practica.ejercicioEnBloque=Math.min(practica.ejercicioEnBloque,cfg.tamBloque-1);
+
+  const bloqueValido=Array.isArray(practica.bloqueActual)
+    && practica.bloqueActual.length===cfg.tamBloque
+    && practica.bloqueActual.every(q=>q && q.bloque===practica.bloqueNumero);
+  if(!bloqueValido){
+    practica.bloqueActual=generarBloqueEnterosAdaptativo(practica);
+  }
+  return true;
+}
+
+
+function normalizarPersistenciaFraccionesADP05(){
+  const practica=alumno?.practicaFracciones;
+  if(!practica?.activa || practica.version!=='ADP-05') return false;
+
+  asegurarPerfilFraccionesAdaptativo();
+  const cfg=CONFIG_RUTA.fraccionesAdaptativas;
+  practica.persistenciaVersion='ADP-05';
+  if(!Array.isArray(practica.historial)) practica.historial=[];
+  practica.aciertosTotales=practica.historial.filter(r=>r.correcto).length;
+  if(!practica.niveles) practica.niveles={};
+
+  ['simplificacion','sumaFracciones'].forEach(habilidad=>{
+    if(!['A','B','C'].includes(practica.niveles[habilidad])){
+      practica.niveles[habilidad]=alumno.perfilAdaptativo?.[habilidad]?.nivel || nivelInicialFracciones(habilidad);
+    }
+    alumno.perfilAdaptativo[habilidad].nivel=practica.niveles[habilidad];
+  });
+
+  if(!Number.isInteger(practica.bloqueNumero) || practica.bloqueNumero<1){
+    practica.bloqueNumero=Math.floor(practica.historial.length/cfg.tamBloque)+1;
+  }
+  if(!Number.isInteger(practica.ejercicioEnBloque) || practica.ejercicioEnBloque<0){
+    practica.ejercicioEnBloque=practica.historial.length%cfg.tamBloque;
+  }
+  practica.ejercicioEnBloque=Math.min(practica.ejercicioEnBloque,cfg.tamBloque-1);
+
+  const bloqueValido=Array.isArray(practica.bloqueActual)
+    && practica.bloqueActual.length===cfg.tamBloque
+    && practica.bloqueActual.every(q=>q && q.bloque===practica.bloqueNumero);
+  if(!bloqueValido){
+    practica.bloqueActual=generarBloqueFraccionesAdaptativo(practica);
+  }
+  return true;
+}
+
+
+function normalizarPersistenciaExponentesADP06(){
+  const practica=alumno?.practicaExponentes;
+  if(!practica?.activa || practica.version!=='ADP-06') return false;
+
+  asegurarPerfilExponentesPositivosAdaptativo();
+  const cfg=CONFIG_RUTA.exponentesPositivosAdaptativos;
+  practica.persistenciaVersion='ADP-06';
+  if(!Array.isArray(practica.historial)) practica.historial=[];
+  practica.aciertosTotales=practica.historial.filter(r=>r.correcto).length;
+
+  if(!['A','B','C'].includes(practica.nivel)){
+    practica.nivel=alumno.perfilAdaptativo?.potenciasPositivas?.nivel || nivelInicialExponentesPositivos();
+  }
+  alumno.perfilAdaptativo.potenciasPositivas.nivel=practica.nivel;
+
+  if(!Number.isInteger(practica.bloqueNumero) || practica.bloqueNumero<1){
+    practica.bloqueNumero=Math.floor(practica.historial.length/cfg.tamBloque)+1;
+  }
+  if(!Number.isInteger(practica.ejercicioEnBloque) || practica.ejercicioEnBloque<0){
+    practica.ejercicioEnBloque=practica.historial.length%cfg.tamBloque;
+  }
+  practica.ejercicioEnBloque=Math.min(practica.ejercicioEnBloque,cfg.tamBloque-1);
+
+  const bloqueValido=Array.isArray(practica.bloqueActual)
+    && practica.bloqueActual.length===cfg.tamBloque
+    && practica.bloqueActual.every(q=>q && q.bloque===practica.bloqueNumero);
+  if(!bloqueValido){
+    practica.bloqueActual=generarBloqueExponentesPositivosAdaptativo(practica);
+  }
+  return true;
+}
+
+
+function normalizarPersistenciaExponentesNegativosADP07(){
+  const practica=alumno?.practicaExponentesNegativos;
+  if(!practica?.activa || practica.version!=='ADP-07') return false;
+
+  asegurarPerfilExponentesNegativosAdaptativo();
+  const cfg=CONFIG_RUTA.exponentesNegativosAdaptativos;
+  practica.persistenciaVersion='ADP-07';
+  if(!Array.isArray(practica.historial)) practica.historial=[];
+  practica.aciertosTotales=practica.historial.filter(r=>r.correcto).length;
+
+  if(!['A','B','C'].includes(practica.nivel)){
+    practica.nivel=alumno.perfilAdaptativo?.potenciasNegativas?.nivel || nivelInicialExponentesNegativos();
+  }
+  alumno.perfilAdaptativo.potenciasNegativas.nivel=practica.nivel;
+
+  if(!Number.isInteger(practica.bloqueNumero) || practica.bloqueNumero<1){
+    practica.bloqueNumero=Math.floor(practica.historial.length/cfg.tamBloque)+1;
+  }
+  if(!Number.isInteger(practica.ejercicioEnBloque) || practica.ejercicioEnBloque<0){
+    practica.ejercicioEnBloque=practica.historial.length%cfg.tamBloque;
+  }
+  practica.ejercicioEnBloque=Math.min(practica.ejercicioEnBloque,cfg.tamBloque-1);
+
+  const bloqueValido=Array.isArray(practica.bloqueActual)
+    && practica.bloqueActual.length===cfg.tamBloque
+    && practica.bloqueActual.every(q=>q && q.bloque===practica.bloqueNumero);
+  if(!bloqueValido){
+    practica.bloqueActual=generarBloqueExponentesNegativosAdaptativo(practica);
+  }
+  return true;
+}
+
+window.addEventListener('pagehide',guardarPersistenciaADP04);
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden') guardarPersistenciaADP04();
+});
+
+
+function asegurarEstructuraADP07(){
+  if(!alumno || !alumno.rutaIniciada || !alumno.modulos) return false;
+  let cambio=false;
+
+  if(!alumno.modulos.exponentesNegativos){
+    const positivosConsolidados=alumno.modulos.exponentes?.acreditado===true;
+    alumno.modulos.exponentesNegativos={
+      desbloqueado:positivosConsolidados,
+      acreditado:false
+    };
+    cambio=true;
+
+    // Una ruta concluida en ADP-06 todavía no incluía el nuevo módulo 4.
+    if(positivosConsolidados && alumno.rutaCompletada===true){
+      alumno.rutaCompletada=false;
+      alumno.fechaFinalizacion=null;
+      cambio=true;
+    }
+  }
+
+  return cambio;
+}
+
+function verificarSesion(){
+ let datos=localStorage.getItem('loboRutaCeroAlumno');
+ if(datos){
+   alumno=JSON.parse(datos);
+   if(alumno.rutaCompletada!==true){
+      alumno.rutaCompletada=false;
+   }
+
+   // Reconstruir generador determinista
+   if(alumno.semilla){
+      rngGenerator = mulberry32(alumno.semilla);
+   }
+
+   let persistenciaNormalizada=asegurarEstructuraADP07();
+   if(normalizarPersistenciaADP04()) persistenciaNormalizada=true;
+   if(normalizarPersistenciaFraccionesADP05()) persistenciaNormalizada=true;
+   if(normalizarPersistenciaExponentesADP06()) persistenciaNormalizada=true;
+   if(normalizarPersistenciaExponentesNegativosADP07()) persistenciaNormalizada=true;
+   if(persistenciaNormalizada){
+      guardarPersistenciaADP04();
+   }
+
+   datosSesion.textContent=`Alumno: ${alumno.nombre} | Grupo: ${alumno.grupo}`;
+   mostrarPantalla('continuarRuta');
+ }
+}
+
+function continuarRuta(){
+
+ if(alumno.semilla){
+    rngGenerator = mulberry32(alumno.semilla);
+ }
+
+ if(alumno.rutaCompletada===true){
+   abrirFinalizacionRuta();
+ }else if(alumno.rutaIniciada===true){
+   datosAlumno.textContent=`Alumno: ${alumno.nombre} | Grupo: ${alumno.grupo}`;
+   mostrarPantalla('dashboard');
+ }else{
+   mostrarPantalla('introDiagnostico');
+ }
+}
+
+function abrirFinalizacionRuta(){
+ if(alumno.rutaCompletada!==true){
+   mostrarPantalla('dashboard');
+   return;
+ }
+ asegurarFolioLobo();
+ const btn=document.getElementById('btnRetoLobo');
+ if(btn) btn.textContent=alumno.retoLobo ? 'Ver Reto LOBO (opcional)' : 'Generar Reto LOBO (opcional)';
+ mostrarPantalla('finalizacionRuta');
+}
+
+
+function toggleCreditosLobo(){
+ const contenido=document.getElementById('creditosLobo');
+ const boton=document.getElementById('btnCreditosLobo');
+ if(!contenido || !boton) return;
+
+ const abrir=contenido.hasAttribute('hidden');
+ if(abrir){
+   contenido.removeAttribute('hidden');
+   boton.setAttribute('aria-expanded','true');
+ }else{
+   contenido.setAttribute('hidden','');
+   boton.setAttribute('aria-expanded','false');
+ }
+}
+
+function hashTextoReto(texto){
+ let h=2166136261;
+ const s=String(texto||'');
+ for(let i=0;i<s.length;i++){
+   h^=s.charCodeAt(i);
+   h=Math.imul(h,16777619);
+ }
+ return h>>>0;
+}
+
+function enteroReto(rng,min,max){
+ return Math.floor(rng()*(max-min+1))+min;
+}
+
+function puntajeRefuerzoReto(clave){
+ const perfil=alumno.perfilAdaptativo?.[clave] || {};
+ let score=0;
+
+ // Evidencia diagnóstica inicial.
+ if(perfil.diagnosticoBase?.correcto===false) score+=4;
+
+ const conf=perfil.confirmacion;
+ if(conf?.requerida){
+   if(conf.total===2){
+     if(conf.aciertos===0) score+=3;
+     else if(conf.aciertos===1) score+=2;
+     else if(conf.aciertos===2) score+=1;
+   }else{
+     score+=1;
+   }
+ }
+
+ // Evidencia de práctica por habilidad.
+ const historial=Array.isArray(perfil.historial) ? perfil.historial : [];
+ if(historial.length){
+   const errores=historial.filter(r=>r.correcto===false).length;
+   const tasaError=errores/historial.length;
+   if(tasaError>=0.40) score+=3;
+   else if(tasaError>=0.20) score+=2;
+   else if(tasaError>0) score+=1;
+ }
+
+ // Esfuerzo del módulo: más ejercicios o más intentos elevan el peso.
+ const mapaModulo={
+   sumaEnteros:'enteros',
+   restaEnteros:'enteros',
+   simplificacion:'fracciones',
+   sumaFracciones:'fracciones',
+   potenciasPositivas:'exponentes',
+   potenciasNegativas:'exponentesNegativos'
+ };
+ const modulo=mapaModulo[clave];
+ const datosModulo=alumno.modulos?.[modulo] || {};
+ const resultado=datosModulo.resultado || {};
+
+ if(Number.isFinite(resultado.total)){
+   if(resultado.total>=20) score+=2;
+   else if(resultado.total>=15) score+=1;
+ }
+
+ const intentos=Number(datosModulo.intentosAdaptativos || 1);
+ if(intentos>1) score+=Math.min(4,(intentos-1)*2);
+
+ // Exponentes negativos no tienen reactivo diagnóstico propio:
+ // su punto de entrada aporta evidencia adicional.
+ if(clave==='potenciasNegativas'){
+   const nivelInicial=resultado.nivelInicial || perfil.nivel;
+   if(nivelInicial==='A') score+=2;
+ }
+
+ // Focalización por subhabilidad en Enteros y Fracciones.
+ const pareja={
+   sumaEnteros:'restaEnteros',
+   restaEnteros:'sumaEnteros',
+   simplificacion:'sumaFracciones',
+   sumaFracciones:'simplificacion'
+ }[clave];
+
+ if(pareja){
+   const historialPareja=alumno.perfilAdaptativo?.[pareja]?.historial || [];
+   if(historial.length>historialPareja.length) score+=1;
+ }
+
+ return score;
+}
+
+function rankingRefuerzoReto(){
+ const habilidades=[
+   ['sumaEnteros','Suma de enteros'],
+   ['restaEnteros','Resta de enteros'],
+   ['simplificacion','Simplificación de fracciones'],
+   ['sumaFracciones','Suma de fracciones homogéneas'],
+   ['potenciasPositivas','Potencias con exponente positivo'],
+   ['potenciasNegativas','Exponentes con exponente entero negativo']
+ ];
+
+ return habilidades
+   .map(([clave,nombre],orden)=>({
+     clave,
+     nombre,
+     score:puntajeRefuerzoReto(clave),
+     orden
+   }))
+   .sort((a,b)=>b.score-a.score || a.orden-b.orden);
+}
+
+function fraccionRetoReducida(n,d){
+ const g=mcd(Math.abs(n),Math.abs(d)) || 1;
+ return `${n/g}/${d/g}`;
+}
+
+function plantillaRetoPorHabilidad(verbo,habilidad,rng){
+ const entero=(min,max)=>enteroReto(rng,min,max);
+
+ if(habilidad==='sumaEnteros'){
+   const a=-entero(3,12), b=entero(4,14);
+   if(verbo==='RESUELVO') return {
+     contenido:'Suma de enteros',
+     enunciado:`En un videojuego tu marcador está en ${a} puntos y obtienes ${b} puntos. ¿En qué valor queda el marcador? Representa la operación y resuélvela.`,
+     caja:'Escribe la operación con enteros, resuélvela y señala el resultado.'
+   };
+   if(verbo==='EXPLICO') return {
+     contenido:'Suma de enteros',
+     enunciado:`La temperatura cambia de ${a} °C al sumar ${b} °C. Resuelve y explica cómo decidiste el signo del resultado.`,
+     caja:'Explica cómo comparaste los signos y los valores absolutos.'
+   };
+   if(verbo==='ANALIZO') return {
+     contenido:'Suma de enteros',
+     enunciado:`María afirma que (${a}) + (${b}) siempre debe dar un resultado negativo porque uno de los números es negativo. Analiza su afirmación, identifica el error y corrige el procedimiento.`,
+     caja:''
+   };
+   if(verbo==='COMPRUEBO') return {
+     contenido:'Suma de enteros',
+     enunciado:`Resuelve (${a}) + (${b}) y comprueba tu respuesta usando una segunda estrategia, por ejemplo una recta numérica o una comparación de magnitudes.`,
+     caja:'Explica una segunda forma de verificar el resultado.'
+   };
+   return {
+     contenido:'Suma de enteros',
+     enunciado:`Construye una situación breve que pueda representarse con (${a}) + (${b}). Resuélvela y explica qué representa el resultado.`,
+     caja:'Crea una situación distinta y conecta cada número con el contexto.'
+   };
+ }
+
+ if(habilidad==='restaEnteros'){
+   const a=-entero(1,8), b=entero(3,10);
+   if(verbo==='RESUELVO') return {
+     contenido:'Resta de enteros',
+     enunciado:`Un elevador está en el nivel ${a} y desciende ${b} niveles. ¿En qué nivel termina? Representa la situación con una resta de enteros.`,
+     caja:'Escribe la resta, conviértela si lo necesitas en suma del opuesto y resuelve.'
+   };
+   if(verbo==='EXPLICO') return {
+     contenido:'Resta de enteros',
+     enunciado:`Explica por qué ${a} - (${ -b }) puede reescribirse como una suma. Después resuelve la operación.`,
+     caja:'Explica con tus palabras qué significa “sumar el opuesto”.'
+   };
+   if(verbo==='ANALIZO') return {
+     contenido:'Resta de enteros',
+     enunciado:`Luis escribe ${a} - (${ -b }) = ${a-b}. Identifica el error y corrige la operación usando la regla de la resta de enteros.`,
+     caja:''
+   };
+   if(verbo==='COMPRUEBO') return {
+     contenido:'Resta de enteros',
+     enunciado:`Resuelve ${a} - (${ -b }) y comprueba el resultado relacionando la resta con la suma del opuesto.`,
+     caja:'Muestra cómo una operación equivalente confirma tu resultado.'
+   };
+   return {
+     contenido:'Resta de enteros',
+     enunciado:`Inventa una situación de niveles, saldo o temperatura que pueda modelarse con ${a} - (${ -b }). Resuélvela y explica el significado del resultado.`,
+     caja:'Construye un contexto donde la resta de un número negativo tenga sentido.'
+   };
+ }
+
+ if(habilidad==='simplificacion'){
+   const pares=[[2,3],[3,4],[3,5],[4,5],[5,6]];
+   const [n,d]=pares[entero(0,pares.length-1)];
+   const f1=entero(2,3), f2=entero(2,3);
+   const num=n*f1*f2, den=d*f1*f2;
+   const parcialN=n*f2, parcialD=d*f2;
+   if(verbo==='RESUELVO') return {
+     contenido:'Simplificación de fracciones',
+     enunciado:`Simplifica completamente ${num}/${den}. Escribe los factores comunes que utilizaste.`,
+     caja:'Reduce la fracción hasta que numerador y denominador ya no tengan un factor común mayor que 1.'
+   };
+   if(verbo==='EXPLICO') return {
+     contenido:'Simplificación de fracciones',
+     enunciado:`Simplifica ${num}/${den} y explica por qué dividir numerador y denominador entre el mismo número conserva el valor de la fracción.`,
+     caja:'Explica por qué la nueva fracción es equivalente a la original.'
+   };
+   if(verbo==='ANALIZO') return {
+     contenido:'Simplificación de fracciones',
+     enunciado:`Ana afirma que ${num}/${den} = ${parcialN}/${parcialD} y que ya está completamente simplificada. ¿Estás de acuerdo? Identifica qué falta y corrige la simplificación.`,
+     caja:''
+   };
+   if(verbo==='COMPRUEBO') return {
+     contenido:'Simplificación de fracciones',
+     enunciado:`Simplifica ${num}/${den} y comprueba que la fracción obtenida es equivalente a la original usando productos cruzados u otra estrategia.`,
+     caja:'Explica cómo verificaste que ambas fracciones representan el mismo valor.'
+   };
+   return {
+     contenido:'Simplificación de fracciones',
+     enunciado:`Construye una fracción equivalente a ${n}/${d} multiplicando numerador y denominador por el mismo número. Después vuelve a simplificarla hasta recuperar ${n}/${d}.`,
+     caja:'Crea tu propio ejemplo y explica por qué las fracciones son equivalentes.'
+   };
+ }
+
+ if(habilidad==='sumaFracciones'){
+   const den=[6,8,10,12][entero(0,3)];
+   let n1=entero(1,Math.max(2,Math.floor(den/2)));
+   let n2=entero(1,Math.max(2,den-n1-1));
+   if(n1+n2>=den) n2=Math.max(1,den-n1-1);
+   const suma=n1+n2;
+   const correcta=fraccionRetoReducida(suma,den);
+
+   if(verbo==='RESUELVO') return {
+     contenido:'Suma de fracciones homogéneas',
+     enunciado:`Resuelve ${n1}/${den} + ${n2}/${den}. Simplifica el resultado si es posible.`,
+     caja:'Suma los numeradores, conserva el denominador y simplifica cuando corresponda.'
+   };
+   if(verbo==='EXPLICO') return {
+     contenido:'Suma de fracciones homogéneas',
+     enunciado:`Resuelve ${n1}/${den} + ${n2}/${den} y explica por qué el denominador se conserva cuando las fracciones tienen el mismo denominador.`,
+     caja:'Explica qué representa el denominador común y por qué no se suma.'
+   };
+   if(verbo==='ANALIZO') return {
+     contenido:'Suma de fracciones homogéneas',
+     enunciado:`Carlos afirma que ${n1}/${den} + ${n2}/${den} = ${suma}/${den*2}. Identifica el error, corrige la suma y simplifica si es necesario.`,
+     caja:''
+   };
+   if(verbo==='COMPRUEBO') return {
+     contenido:'Suma de fracciones homogéneas',
+     enunciado:`Calcula ${n1}/${den} + ${n2}/${den} y comprueba que tu resultado ${correcta} es razonable usando un dibujo, equivalencia o comparación con una unidad.`,
+     caja:'Explica cómo verificaste que la suma representa una cantidad razonable.'
+   };
+   return {
+     contenido:'Suma de fracciones homogéneas',
+     enunciado:`Construye una situación cotidiana que pueda representarse con ${n1}/${den} + ${n2}/${den}. Resuélvela y explica qué representa la fracción final.`,
+     caja:'Crea una situación nueva con partes del mismo tamaño.'
+   };
+ }
+
+ if(habilidad==='potenciasPositivas'){
+   const d=entero(3,5), n=entero(1,d-1), exp=entero(2,3);
+   const correcta=fraccionRetoReducida(n**exp,d**exp);
+   if(verbo==='RESUELVO') return {
+     contenido:'Potencias con exponente positivo',
+     enunciado:`Calcula (${n}/${d})^${exp}. Escribe el desarrollo como multiplicación repetida.`,
+     caja:'Eleva numerador y denominador y escribe el resultado simplificado.'
+   };
+   if(verbo==='EXPLICO') return {
+     contenido:'Potencias con exponente positivo',
+     enunciado:`Explica por qué en (${n}/${d})^${exp} el exponente debe aplicarse tanto al numerador como al denominador. Después calcula el resultado.`,
+     caja:'Relaciona la potencia con la multiplicación repetida de la fracción.'
+   };
+   if(verbo==='ANALIZO') return {
+     contenido:'Potencias con exponente positivo',
+     enunciado:`Luis afirma que (${n}/${d})^${exp} = ${n**exp}/${d}, porque solo debe elevarse el numerador. Identifica el error y corrige el resultado.`,
+     caja:''
+   };
+   if(verbo==='COMPRUEBO') return {
+     contenido:'Potencias con exponente positivo',
+     enunciado:`Resuelve (${n}/${d})^${exp} y comprueba el resultado escribiendo la fracción multiplicada por sí misma ${exp} veces.`,
+     caja:'Muestra cómo la multiplicación repetida confirma tu respuesta.'
+   };
+   return {
+     contenido:'Potencias con exponente positivo',
+     enunciado:`Una cantidad se multiplica por ${n}/${d} en cada etapa. Si el mismo factor se aplica ${exp} veces, representa el cambio con una potencia y calcula el factor total.`,
+     caja:'Explica qué representa la potencia dentro de la situación.'
+   };
+ }
+
+ // potenciasNegativas
+ const d=entero(3,5), n=entero(1,d-1), exp=entero(1,3);
+ const correcta=fraccionRetoReducida(d**exp,n**exp);
+ if(verbo==='RESUELVO') return {
+   contenido:'Exponentes con exponente entero negativo',
+   enunciado:`Calcula (${n}/${d})^(-${exp}). Escribe primero el recíproco y después la potencia con exponente positivo.`,
+   caja:'Muestra la inversión de la fracción y después calcula la potencia.'
+ };
+ if(verbo==='EXPLICO') return {
+   contenido:'Exponentes con exponente entero negativo',
+   enunciado:`Explica por qué (${n}/${d})^(-${exp}) se transforma en (${d}/${n})^${exp}. Después calcula el resultado.`,
+   caja:'Explica con tus palabras la relación entre exponente negativo y recíproco.'
+ };
+ if(verbo==='ANALIZO') return {
+   contenido:'Exponentes con exponente entero negativo',
+   enunciado:`Ana afirma que (${n}/${d})^(-${exp}) = -(${n}/${d})^${exp}. Identifica el error y corrige el procedimiento.`,
+   caja:''
+ };
+ if(verbo==='COMPRUEBO') return {
+   contenido:'Exponentes con exponente entero negativo',
+   enunciado:`Resuelve (${n}/${d})^(-${exp}) y comprueba el resultado reescribiendo primero la expresión con exponente positivo.`,
+   caja:'Muestra cómo el recíproco permite verificar tu resultado.'
+ };
+ return {
+   contenido:'Exponentes con exponente entero negativo',
+   enunciado:`Construye un ejemplo con una base distinta de cero que permita comparar a^2 con a^(-2). Calcula ambos valores y explica qué cambia.`,
+   caja:'Crea un ejemplo propio y explica el efecto del exponente negativo.'
+ };
+}
+
+function problemaVidaRealFracciones(rng){
+ const casos=[
+   {den:8,n1:2,n2:4},
+   {den:8,n1:1,n2:3},
+   {den:10,n1:2,n2:4},
+   {den:12,n1:3,n2:5},
+   {den:12,n1:4,n2:6}
+ ];
+ const c=casos[enteroReto(rng,0,casos.length-1)];
+ const suma=c.n1+c.n2;
+ const simplificada=fraccionRetoReducida(suma,c.den);
+
+ return {
+   verbo:'APLICO A MI VIDA REAL',
+   contenido:'Suma y simplificación de fracciones',
+   enunciado:`En una convivencia escolar, una pizza grande se divide en ${c.den} porciones iguales. Durante la primera parte de la convivencia se consumen ${c.n1}/${c.den} de la pizza y después ${c.n2}/${c.den}. ¿Qué fracción de la pizza se consumió en total? Simplifica tu resultado y explica qué significa ${simplificada} en esta situación.`,
+   caja:'Suma las fracciones, simplifica el resultado y explica qué representa la fracción final en la pizza.'
+ };
+}
+
+function asegurarRetoLobo(){
+ if(alumno.rutaCompletada!==true) return null;
+ if(alumno.retoLobo && alumno.retoLobo.version==='RL-ADP-08-1.0') return alumno.retoLobo;
+
+ const folio=asegurarFolioLobo();
+ const semillaReto=hashTextoReto(`${alumno.semilla||0}|${folio}|RETO-LOBO-ADP-08-1.0`);
+ const rng=mulberry32(semillaReto);
+
+ const ranking=rankingRefuerzoReto();
+ const foco1=ranking[0];
+ const foco2=ranking[1];
+ const foco3=ranking[2];
+
+ // Ponderación compacta:
+ // - foco principal aparece en RESUELVO y ANALIZO;
+ // - foco secundario aparece en EXPLICO y TRANSFIERO;
+ // - foco tercero aparece en COMPRUEBO;
+ // - APLICO A MI VIDA REAL consolida fracciones con un contexto funcional.
+ const asignaciones=[
+   ['RESUELVO',foco1.clave],
+   ['EXPLICO',foco2.clave],
+   ['ANALIZO',foco1.clave],
+   ['COMPRUEBO',foco3.clave],
+   ['TRANSFIERO',foco2.clave]
+ ];
+
+ const reactivos=asignaciones.map(([verbo,habilidad])=>{
+   const base=plantillaRetoPorHabilidad(verbo,habilidad,rng);
+   return {verbo,habilidad,...base};
+ });
+
+ reactivos.push(problemaVidaRealFracciones(rng));
+
+ alumno.retoLobo={
+   version:'RL-ADP-08-1.0',
+   fechaGeneracion:new Date().toLocaleDateString(),
+   tipo:'TRAYECTORIA_ADAPTADA',
+   ponderacion:{
+     focoPrincipal:{clave:foco1.clave,nombre:foco1.nombre,puntaje:foco1.score},
+     focoSecundario:{clave:foco2.clave,nombre:foco2.nombre,puntaje:foco2.score},
+     focoTercero:{clave:foco3.clave,nombre:foco3.nombre,puntaje:foco3.score}
+   },
+   reactivos
+ };
+
+ localStorage.setItem('loboRutaCeroAlumno',JSON.stringify(alumno));
+ return alumno.retoLobo;
+}
+
+function prepararRetoLobo(){
+ const reto=asegurarRetoLobo();
+ if(!reto) return;
+ const folio=asegurarFolioLobo();
+ retoAlumno.textContent=alumno.nombre || '—';
+ retoGrupo.textContent=alumno.grupo || '—';
+ retoSemestre.textContent=alumno.semestre || '—';
+ retoFecha.textContent=reto.fechaGeneracion || alumno.fechaFinalizacion || '—';
+ retoFolio1.textContent=`Folio LOBO: ${folio}`;
+ retoFolio2.textContent=`Folio LOBO: ${folio}`;
+ retoFolio3.textContent=`Folio LOBO: ${folio}`;
+
+ [retoR1,retoR2,retoR3,retoR4,retoR5,retoR6].forEach((el,i)=>{
+   el.textContent=reto.reactivos[i]?.enunciado || '—';
+ });
+
+ const cajas=[
+   [document.getElementById('retoCajaR1'),reto.reactivos[0]?.caja],
+   [document.getElementById('retoCajaR2'),reto.reactivos[1]?.caja],
+   [document.getElementById('retoCajaR4'),reto.reactivos[3]?.caja],
+   [document.getElementById('retoCajaR5'),reto.reactivos[4]?.caja],
+   [document.getElementById('retoCajaR6'),reto.reactivos[5]?.caja]
+ ];
+ cajas.forEach(([el,contenido])=>{
+   if(el && contenido) el.textContent=contenido;
+ });
+}
+
+function abrirRetoLobo(){
+ if(alumno.rutaCompletada!==true){
+   mostrarPantalla('dashboard');
+   return;
+ }
+ asegurarRetoLobo();
+ prepararRetoLobo();
+ mostrarPantalla('retoLobo');
+}
+
+function abrirEvidenciaFinal(){
+ if(alumno.rutaCompletada!==true){
+   mostrarPantalla('dashboard');
+   return;
+ }
+ prepararEvidenciaFinal();
+ mostrarPantalla('evidenciaFinal');
+}
+
+function normalizarFolioLobo(valor){
+ return String(valor || '')
+   .normalize('NFD')
+   .replace(/[\u0300-\u036f]/g,'')
+   .replace(/[^a-zA-Z0-9]/g,'')
+   .toUpperCase();
+}
+
+function asegurarFolioLobo(){
+ if(alumno.rutaCompletada!==true) return '—';
+ if(alumno.folioLobo) return alumno.folioLobo;
+
+ const fecha=alumno.fechaFinalizacion || '';
+ const anio=(fecha.match(/\d{4}/) || [new Date().getFullYear()])[0];
+ const grupo=normalizarFolioLobo(alumno.grupo) || 'SG';
+ const base=normalizarFolioLobo(`${alumno.nombre}|${alumno.grupo}|${alumno.semestre}|${fecha}`);
+ let hash=0;
+ for(let i=0;i<base.length;i++){hash=((hash<<5)-hash)+base.charCodeAt(i); hash|=0;}
+ const codigo=Math.abs(hash).toString(36).toUpperCase().padStart(6,'0').slice(0,6);
+ alumno.folioLobo=`LOBO-${anio}-${grupo}-${codigo}`;
+ localStorage.setItem('loboRutaCeroAlumno',JSON.stringify(alumno));
+ return alumno.folioLobo;
+}
+
+function prepararEvidenciaFinal(){
+ const folio=asegurarFolioLobo();
+ evAlumno.textContent=alumno.nombre || '—';
+ evGrupo.textContent=`Grupo: ${alumno.grupo || '—'}`;
+ evSemestre.textContent=`Semestre: ${alumno.semestre || '—'}`;
+ evFecha.textContent=`Fecha de conclusión: ${alumno.fechaFinalizacion || '—'}`;
+ evFolio.textContent=`Folio LOBO: ${folio}`;
+ if(window.LoboQRCode){ window.LoboQRCode.render('qrLobo',folio); }
+}
+
+function abrirReporteDocente(){
+ if(alumno.rutaCompletada!==true){
+   mostrarPantalla('dashboard');
+   return;
+ }
+ prepararReporteDocente();
+ mostrarPantalla('reporteDocente');
+}
+
+function textoAciertos(resultado){
+ if(!resultado || typeof resultado.aciertos!=='number' || typeof resultado.total!=='number') return '—';
+ return `${resultado.aciertos} de ${resultado.total}`;
+}
+
+function textoPorcentaje(resultado){
+ if(!resultado || typeof resultado.porcentaje!=='number') return '—';
+ return `${resultado.porcentaje} %`;
+}
+
+function estadoModulo(resultado,acreditado){
+ if(acreditado===true) return 'Acreditado';
+ if(resultado && resultado.acreditado===false) return 'Por reforzar';
+ return 'Sin registro';
+}
+
+function prepararReporteDocente(){
+ const folio=asegurarFolioLobo();
+ const diagnostico=alumno.diagnostico || null;
+ const modulos=alumno.modulos || {};
+ const enteros=modulos.enteros || {};
+ const fracciones=modulos.fracciones || {};
+ const exponentes=modulos.exponentes || {};
+ const exponentesNegativos=modulos.exponentesNegativos || {};
+ const resEnteros=enteros.resultado || null;
+ const resFracciones=fracciones.resultado || null;
+ const resExponentes=exponentes.resultado || null;
+ const acreditados=[enteros.acreditado,fracciones.acreditado,exponentes.acreditado,exponentesNegativos.acreditado].filter(Boolean).length;
+ const progreso=alumno.rutaCompletada===true ? 100 : Math.round((acreditados/4)*100);
+
+ repAlumno.textContent=alumno.nombre || '—';
+ repGrupo.textContent=alumno.grupo || '—';
+ repSemestre.textContent=alumno.semestre || '—';
+ repEstadoRuta.textContent=alumno.rutaCompletada===true ? 'Ruta completada' : 'Ruta en proceso';
+ repFechaInicio.textContent=alumno.fechaInicio || (diagnostico && diagnostico.fecha) || '—';
+ repFechaFin.textContent=alumno.fechaFinalizacion || '—';
+
+ repDiagAciertos.textContent=textoAciertos(diagnostico);
+ repDiagPorcentaje.textContent=textoPorcentaje(diagnostico);
+ repDiagEstado.textContent=diagnostico ? 'Diagnóstico realizado' : 'Sin registro';
+
+ repEnterosAciertos.textContent=textoAciertos(resEnteros);
+ repEnterosPorcentaje.textContent=textoPorcentaje(resEnteros);
+ repEnterosEstado.textContent=estadoModulo(resEnteros,enteros.acreditado);
+ repFraccionesAciertos.textContent=textoAciertos(resFracciones);
+ repFraccionesPorcentaje.textContent=textoPorcentaje(resFracciones);
+ repFraccionesEstado.textContent=estadoModulo(resFracciones,fracciones.acreditado);
+ repExponentesAciertos.textContent=textoAciertos(resExponentes);
+ repExponentesPorcentaje.textContent=textoPorcentaje(resExponentes);
+ repExponentesEstado.textContent=estadoModulo(resExponentes,exponentes.acreditado);
+
+ repProgreso.textContent=`${progreso} %`;
+ repEstadoGeneral.textContent=alumno.rutaCompletada===true ? 'Ruta completada' : 'Ruta en proceso';
+ repFolio.textContent=`Folio LOBO: ${folio}`;
+ if(window.LoboQRCode){ window.LoboQRCode.render('qrReporteLobo',folio); }
+}
+
+
+
+let resultadoActual=null;
+let practicaModulo=[], practicaActual=0, aciertosPractica=0;
+
+function obtenerMinimoAcreditacion(totalEjercicios) {
+  return Math.ceil(
+    totalEjercicios * CONFIG_RUTA.criterioAcreditacion
+  );
+}
+
+function nivelInicialEnteros(clave){
+  const estado=alumno.perfilAdaptativo?.[clave]?.estado;
+  return estado==='REQUIERE REFORZAMIENTO' ? 'A' : 'B';
+}
+
+function rangoNivelEnteros(nivel){
+  return nivel==='A' ? 0 : nivel==='B' ? 1 : 2;
+}
+
+function subirNivelEnteros(nivel){
+  return nivel==='A' ? 'B' : nivel==='B' ? 'C' : 'C';
+}
+
+function bajarNivelEnteros(nivel){
+  return nivel==='C' ? 'B' : nivel==='B' ? 'A' : 'A';
+}
+
+function asegurarPerfilEnterosAdaptativo(){
+  if(!alumno.perfilAdaptativo) alumno.perfilAdaptativo={};
+  ['sumaEnteros','restaEnteros'].forEach(clave=>{
+    if(!alumno.perfilAdaptativo[clave]){
+      alumno.perfilAdaptativo[clave]={
+        estado:'EN OBSERVACIÓN',
+        diagnosticoBase:{correcto:null},
+        confirmacion:{requerida:false,aciertos:0,total:0,respuestas:[]}
+      };
+    }
+    if(!Array.isArray(alumno.perfilAdaptativo[clave].historial)){
+      alumno.perfilAdaptativo[clave].historial=[];
+    }
+    if(!alumno.perfilAdaptativo[clave].nivel){
+      alumno.perfilAdaptativo[clave].nivel=nivelInicialEnteros(clave);
+    }
+  });
+}
+
+function mezclarOpcionesEnteros(valores){
+  const opciones=[...new Set(valores)];
+  const correcta=opciones[0];
+  let intentos=0;
+  while(opciones.length<4 && intentos<30){
+    let delta=randomInt(-12,12);
+    if(delta===0) delta=3;
+    const candidato=correcta+delta;
+    if(!opciones.includes(candidato)) opciones.push(candidato);
+    intentos++;
+  }
+  return opciones.slice(0,4).sort(()=>rngGenerator()-0.5);
+}
+
+function enteroAdaptativoNoCero(min,max){
+  let n=randomInt(min,max);
+  if(n===0) n=randomInt(0,1)===0 ? -1 : 1;
+  return n;
+}
+
+function motorSumaAdaptativa(nivel){
+  if(nivel==='A'){
+    const a=enteroAdaptativoNoCero(-10,10);
+    let b=enteroAdaptativoNoCero(-10,10);
+    if(Math.abs(a)+Math.abs(b)>16) b=b>0 ? Math.max(1,16-Math.abs(a)) : -Math.max(1,16-Math.abs(a));
+    const correcta=a+b;
+    return {
+      e:`(${a}) + (${b}) = ?`,
+      correcta,
+      opciones:mezclarOpcionesEnteros([correcta,-correcta,Math.abs(a)+Math.abs(b),a-b]),
+      habilidad:'sumaEnteros',
+      nivel
+    };
+  }
+
+  if(nivel==='C'){
+    let a=enteroAdaptativoNoCero(-18,18);
+    let b=enteroAdaptativoNoCero(-18,18);
+    let c=enteroAdaptativoNoCero(-12,12);
+    const signos=[Math.sign(a),Math.sign(b),Math.sign(c)];
+    if(signos.every(s=>s===signos[0])) c=-c;
+    const correcta=a+b+c;
+    return {
+      e:`(${a}) + (${b}) + (${c}) = ?`,
+      correcta,
+      opciones:mezclarOpcionesEnteros([correcta,a+b-c,Math.abs(a)+Math.abs(b)+Math.abs(c),-correcta]),
+      habilidad:'sumaEnteros',
+      nivel
+    };
+  }
+
+  const q=motorSuma();
+  return {...q,habilidad:'sumaEnteros',nivel:'B'};
+}
+
+function motorRestaAdaptativa(nivel){
+  if(nivel==='A'){
+    const a=enteroAdaptativoNoCero(-10,10);
+    const b=randomInt(1,9);
+    const correcta=a-b;
+    return {
+      e:`(${a}) - (${b}) = ?`,
+      correcta,
+      opciones:mezclarOpcionesEnteros([correcta,a+b,-correcta,Math.abs(a)-b]),
+      habilidad:'restaEnteros',
+      nivel
+    };
+  }
+
+  if(nivel==='C'){
+    const a=enteroAdaptativoNoCero(-20,20);
+    const magnitud=randomInt(2,15);
+    const b=-magnitud;
+    const correcta=a-b;
+    return {
+      e:`(${a}) - (${b}) = ?`,
+      correcta,
+      opciones:mezclarOpcionesEnteros([correcta,a+b,-correcta,a-magnitud]),
+      habilidad:'restaEnteros',
+      nivel
+    };
+  }
+
+  const q=motorResta();
+  return {...q,habilidad:'restaEnteros',nivel:'B'};
+}
+
+function tasaBloqueHabilidad(historial,bloque,habilidad){
+  const registros=historial.filter(r=>r.bloque===bloque && r.habilidad===habilidad);
+  if(!registros.length) return null;
+  return registros.filter(r=>r.correcto).length/registros.length;
+}
+
+function prioridadInicialEnteros(practica){
+  const sumaNivel=rangoNivelEnteros(practica.niveles.sumaEnteros);
+  const restaNivel=rangoNivelEnteros(practica.niveles.restaEnteros);
+  if(sumaNivel!==restaNivel) return sumaNivel<restaNivel ? 'sumaEnteros' : 'restaEnteros';
+
+  const pesoEstado={
+    'REQUIERE REFORZAMIENTO':0,
+    'EN OBSERVACIÓN':1,
+    'DOMINIO PROBABLE':2,
+    'EN CONSOLIDACIÓN':2,
+    'CONSOLIDADO':3
+  };
+  const es=alumno.perfilAdaptativo?.sumaEnteros?.estado || 'EN OBSERVACIÓN';
+  const er=alumno.perfilAdaptativo?.restaEnteros?.estado || 'EN OBSERVACIÓN';
+  const ps=pesoEstado[es] ?? 1;
+  const pr=pesoEstado[er] ?? 1;
+  if(ps!==pr) return ps<pr ? 'sumaEnteros' : 'restaEnteros';
+  return null;
+}
+
+function decidirPrioridadEnteros(practica){
+  if(practica.historial.length){
+    const bloqueAnterior=practica.bloqueNumero-1;
+    if(bloqueAnterior>=1){
+      const tasaS=tasaBloqueHabilidad(practica.historial,bloqueAnterior,'sumaEnteros');
+      const tasaR=tasaBloqueHabilidad(practica.historial,bloqueAnterior,'restaEnteros');
+      if(tasaS!==null && tasaR!==null && Math.abs(tasaS-tasaR)>=0.20){
+        return tasaS<tasaR ? 'sumaEnteros' : 'restaEnteros';
+      }
+    }
+  }
+  return prioridadInicialEnteros(practica);
+}
+
+function rngBloqueEnteros(practica){
+  const semilla=hashTextoReto(`${alumno.semilla||0}|MI-ADP-03|ENTEROS|${practica.intento}|${practica.bloqueNumero}`);
+  return mulberry32(semilla);
+}
+
+function generarBloqueEnterosAdaptativo(practica){
+  const cfg=CONFIG_RUTA.enterosAdaptativos;
+  const prioridad=decidirPrioridadEnteros(practica);
+  let cantidadSuma, cantidadResta;
+
+  if(prioridad==='sumaEnteros'){
+    cantidadSuma=4; cantidadResta=1;
+  }else if(prioridad==='restaEnteros'){
+    cantidadSuma=1; cantidadResta=4;
+  }else if(practica.bloqueNumero%2===1){
+    cantidadSuma=3; cantidadResta=2;
+  }else{
+    cantidadSuma=2; cantidadResta=3;
+  }
+
+  const rngAnterior=rngGenerator;
+  rngGenerator=rngBloqueEnteros(practica);
+  try{
+    const ejercicios=[];
+    for(let i=0;i<cantidadSuma;i++){
+      ejercicios.push(motorSumaAdaptativa(practica.niveles.sumaEnteros));
+    }
+    for(let i=0;i<cantidadResta;i++){
+      ejercicios.push(motorRestaAdaptativa(practica.niveles.restaEnteros));
+    }
+    for(let i=ejercicios.length-1;i>0;i--){
+      const j=Math.floor(rngGenerator()*(i+1));
+      [ejercicios[i],ejercicios[j]]=[ejercicios[j],ejercicios[i]];
+    }
+    return ejercicios.slice(0,cfg.tamBloque).map(q=>({...q,bloque:practica.bloqueNumero}));
+  }finally{
+    rngGenerator=rngAnterior;
+  }
+}
+
+function crearPracticaEnterosAdaptativa(){
+  asegurarPerfilEnterosAdaptativo();
+  if(!alumno.modulos) alumno.modulos={};
+  if(!alumno.modulos.enteros) alumno.modulos.enteros={desbloqueado:true,acreditado:false};
+  const intento=(alumno.modulos.enteros.intentosAdaptativos||0)+1;
+  alumno.modulos.enteros.intentosAdaptativos=intento;
+
+  const practica={
+    version:'ADP-03',
+    persistenciaVersion:'ADP-04',
+    activa:true,
+    intento,
+    bloqueNumero:1,
+    ejercicioEnBloque:0,
+    aciertosTotales:0,
+    historial:[],
+    niveles:{
+      sumaEnteros:nivelInicialEnteros('sumaEnteros'),
+      restaEnteros:nivelInicialEnteros('restaEnteros')
+    },
+    mensajeTransicion:'🐺 Primer bloque: LOBO combinará suma y resta y ajustará el apoyo con base en tus respuestas.'
+  };
+  practica.bloqueActual=generarBloqueEnterosAdaptativo(practica);
+  return practica;
+}
+
+function mostrarResultadoPractica(config){
+ resultadoActual=config;
+ resultadoTitulo.textContent=`Resultados — ${config.modulo}`;
+ resultadoAciertos.textContent=`Aciertos: ${config.aciertos} de ${config.total}`;
+ resultadoPorcentaje.textContent=`Porcentaje: ${config.porcentaje} %`;
+ resultadoEstado.textContent=`Estado: ${config.estadoTexto || (config.acreditado ? 'MÓDULO ACREDITADO' : 'PRÁCTICA POR REFORZAR')}`;
+ resultadoDesbloqueo.textContent=config.textoDesbloqueo || (config.desbloqueo ? `${config.desbloqueo} está disponible.` : 'Sin contenido nuevo desbloqueado.');
+ resultadoLobo.textContent=config.mensajeLobo;
+ const pantallaMicro=config.pantallaMicro || 'microEnteros';
+ const accionPrincipal=config.accionPrincipal || {
+   texto:'Continuar al Dashboard',
+   pantalla:'dashboard'
+ };
+ const accionOnclick=accionPrincipal.accion || `mostrarPantalla('${accionPrincipal.pantalla}')`;
+ if(config.acreditado){
+   resultadoAcciones.innerHTML=`<button onclick="${accionOnclick}">${accionPrincipal.texto}</button>`;
+ }else{
+   resultadoAcciones.innerHTML=`<button onclick="mostrarPantalla('${pantallaMicro}')">Revisar Microlección</button> <button onclick="mostrarPantalla('dashboard')">Volver al Dashboard</button>`;
+ }
+ mostrarPantalla('resultadoPractica');
+}
+
+function sincronizarGlobalesPracticaEnteros(){
+  const practica=alumno.practicaEnteros;
+  practicaModulo=practica?.bloqueActual || [];
+  practicaActual=practica?.ejercicioEnBloque || 0;
+  aciertosPractica=practica?.aciertosTotales || 0;
+}
+
+function nombreCortoHabilidadEnteros(clave){
+  return clave==='restaEnteros' ? 'Resta' : 'Suma';
+}
+
+function mostrarPractica(){
+  const practica=alumno.practicaEnteros;
+  if(!practica || practica.version!=='ADP-03' || !practica.activa) return;
+  sincronizarGlobalesPracticaEnteros();
+
+  const q=practicaModulo[practicaActual];
+  if(!q) return;
+  const cfg=CONFIG_RUTA.enterosAdaptativos;
+  barraPractica.style.width=((practicaActual)/cfg.tamBloque*100)+'%';
+  contadorPractica.textContent=`Bloque ${practica.bloqueNumero} · Ejercicio ${practicaActual+1} de ${cfg.tamBloque} · ${nombreCortoHabilidadEnteros(q.habilidad)} · Nivel ${q.nivel}`;
+  estadoAdaptativoEnteros.textContent=`Práctica acumulada: ${practica.historial.length} de ${cfg.maximoEjercicios} ejercicios máximo · Suma: Nivel ${practica.niveles.sumaEnteros} · Resta: Nivel ${practica.niveles.restaEnteros}`;
+  loboPractica.textContent=practica.mensajeTransicion || '🐺 Resuelve con calma. LOBO ajustará la práctica con base en tu desempeño.';
+  enunciadoPractica.textContent=q.e;
+  opcionesPractica.innerHTML='';
+  q.opciones.forEach(o=>{
+    opcionesPractica.innerHTML += `<label class='opcion'><input type='radio' name='respP' value='${o}'> ${o}</label>`;
+  });
+}
+
+function guardarEvidenciaPerfilEnteros(registro,practica){
+  asegurarPerfilEnterosAdaptativo();
+  const perfil=alumno.perfilAdaptativo[registro.habilidad];
+  perfil.nivel=practica.niveles[registro.habilidad];
+  perfil.historial.push({
+    modulo:'enteros',
+    nivel:registro.nivel,
+    bloque:registro.bloque,
+    correcto:registro.correcto
+  });
+}
+
+function estadoHabilidadPorPractica(practica,habilidad){
+  const ultimos=practica.historial.filter(r=>r.habilidad===habilidad).slice(-5);
+  if(!ultimos.length) return alumno.perfilAdaptativo?.[habilidad]?.estado || 'EN OBSERVACIÓN';
+  const tasa=ultimos.filter(r=>r.correcto).length/ultimos.length;
+  if(tasa>=0.80) return 'EN CONSOLIDACIÓN';
+  if(tasa<0.60) return 'REQUIERE REFORZAMIENTO';
+  return 'EN OBSERVACIÓN';
+}
+
+function ajustarNivelPorBloqueEnteros(nivel,respuestas,aciertosBloque){
+  if(respuestas.length<2 || aciertosBloque===3) return nivel;
+  const tasa=respuestas.filter(r=>r.correcto).length/respuestas.length;
+  if(aciertosBloque>=4 && tasa>=0.80) return subirNivelEnteros(nivel);
+  if(aciertosBloque<=2 && tasa<0.60) return bajarNivelEnteros(nivel);
+  return nivel;
+}
+
+function actualizarNivelesTrasBloqueEnteros(practica,aciertosBloque){
+  ['sumaEnteros','restaEnteros'].forEach(habilidad=>{
+    const respuestas=practica.historial.filter(r=>r.bloque===practica.bloqueNumero && r.habilidad===habilidad);
+    practica.niveles[habilidad]=ajustarNivelPorBloqueEnteros(practica.niveles[habilidad],respuestas,aciertosBloque);
+    asegurarPerfilEnterosAdaptativo();
+    alumno.perfilAdaptativo[habilidad].nivel=practica.niveles[habilidad];
+    alumno.perfilAdaptativo[habilidad].estado=estadoHabilidadPorPractica(practica,habilidad);
+  });
+}
+
+function cumpleCriterioConsolidacionEnteros(practica,aciertosUltimoBloque){
+  const cfg=CONFIG_RUTA.enterosAdaptativos;
+  if(practica.historial.length<cfg.minimoAntesDeConsolidar) return false;
+  const recientes=practica.historial.slice(-cfg.ventanaReciente);
+  const aciertosRecientes=recientes.filter(r=>r.correcto).length;
+  return aciertosRecientes>=cfg.aciertosVentana && aciertosUltimoBloque>=cfg.aciertosUltimoBloque;
+}
+
+function mensajeTransicionBloqueEnteros(practica,aciertosBloque){
+  let decision;
+  if(aciertosBloque<=2){
+    decision='mantendremos o aumentaremos el apoyo en la siguiente tanda';
+  }else if(aciertosBloque===3){
+    decision='mantendremos el nivel para reunir más evidencia';
+  }else if(aciertosBloque===4){
+    decision='avanzaremos hacia mayor consolidación';
+  }else{
+    decision='subiremos la exigencia cuando la evidencia de cada habilidad lo permita';
+  }
+
+  const prioridad=decidirPrioridadEnteros(practica);
+  const foco=prioridad
+    ? ` La siguiente tanda dará mayor atención a ${prioridad==='sumaEnteros' ? 'la suma' : 'la resta'}.`
+    : ' La siguiente tanda mantendrá un equilibrio entre suma y resta.';
+  return `🐺 Bloque ${practica.bloqueNumero-1}: ${aciertosBloque} de 5. ${decision}.${foco}`;
+}
+
+function finalizarPracticaEnterosAdaptativa(consolidado,aciertosUltimoBloque){
+  const practica=alumno.practicaEnteros;
+  const cfg=CONFIG_RUTA.enterosAdaptativos;
+  const totalEjercicios=practica.historial.length;
+  const aciertosTotales=practica.historial.filter(r=>r.correcto).length;
+  const porcentaje=Math.round((aciertosTotales/totalEjercicios)*100);
+  const recientes=practica.historial.slice(-cfg.ventanaReciente);
+  const aciertosRecientes=recientes.filter(r=>r.correcto).length;
+
+  if(consolidado){
+    alumno.modulos.enteros.acreditado=true;
+    alumno.modulos.enteros.estado='CONSOLIDADO';
+    alumno.modulos.fracciones.desbloqueado=true;
+    asegurarPerfilEnterosAdaptativo();
+    alumno.perfilAdaptativo.sumaEnteros.estado='CONSOLIDADO';
+    alumno.perfilAdaptativo.restaEnteros.estado='CONSOLIDADO';
+  }else{
+    alumno.modulos.enteros.acreditado=false;
+    alumno.modulos.enteros.estado='REQUIERE REFORZAMIENTO';
+  }
+
+  alumno.modulos.enteros.resultado={
+    aciertos:aciertosTotales,
+    total:totalEjercicios,
+    porcentaje,
+    acreditado:consolidado,
+    fecha:new Date().toLocaleDateString(),
+    tipo:'ADAPTATIVA_ADP03',
+    bloques:Math.ceil(totalEjercicios/cfg.tamBloque),
+    criterioConsolidacion:{
+      ventana:cfg.ventanaReciente,
+      aciertosRecientes,
+      requeridoVentana:cfg.aciertosVentana,
+      aciertosUltimoBloque,
+      requeridoUltimoBloque:cfg.aciertosUltimoBloque
+    }
+  };
+
+  alumno.practicaEnteros=null;
+  guardarPersistenciaADP04();
+
+  mostrarResultadoPractica({
+    modulo:'Enteros',
+    aciertos:aciertosTotales,
+    total:totalEjercicios,
+    porcentaje,
+    acreditado:consolidado,
+    estadoTexto:consolidado ? 'CONSOLIDADO' : 'REQUIERE REFORZAMIENTO',
+    desbloqueo:consolidado ? 'Fracciones' : '',
+    textoDesbloqueo:consolidado
+      ? `Criterio alcanzado: ${aciertosRecientes}/${cfg.ventanaReciente} recientes y ${aciertosUltimoBloque}/5 en el último bloque. Fracciones está disponible.`
+      : `Se alcanzó el máximo de ${cfg.maximoEjercicios} ejercicios sin cumplir todavía el criterio 8/10 + 4/5.`,
+    mensajeLobo:consolidado
+      ? '🐺 Has mostrado desempeño estable en enteros. La ruta puede avanzar al siguiente módulo.'
+      : '🐺 Detendremos la práctica por ahora. Revisa la microlección y busca apoyo si lo necesitas antes de volver a intentarlo.',
+    pantallaMicro:'microEnteros'
+  });
+}
+
+function cerrarBloqueEnterosAdaptativo(){
+  const practica=alumno.practicaEnteros;
+  const cfg=CONFIG_RUTA.enterosAdaptativos;
+  const respuestasBloque=practica.historial.filter(r=>r.bloque===practica.bloqueNumero);
+  const aciertosBloque=respuestasBloque.filter(r=>r.correcto).length;
+
+  actualizarNivelesTrasBloqueEnteros(practica,aciertosBloque);
+
+  if(cumpleCriterioConsolidacionEnteros(practica,aciertosBloque)){
+    barraPractica.style.width='100%';
+    finalizarPracticaEnterosAdaptativa(true,aciertosBloque);
+    return;
+  }
+
+  if(practica.historial.length>=cfg.maximoEjercicios){
+    barraPractica.style.width='100%';
+    finalizarPracticaEnterosAdaptativa(false,aciertosBloque);
+    return;
+  }
+
+  practica.bloqueNumero++;
+  practica.ejercicioEnBloque=0;
+  practica.mensajeTransicion=mensajeTransicionBloqueEnteros(practica,aciertosBloque);
+  practica.bloqueActual=generarBloqueEnterosAdaptativo(practica);
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaEnteros();
+  mostrarPractica();
+}
+
+function comprobarPractica(){
+  const practica=alumno.practicaEnteros;
+  if(!practica || practica.version!=='ADP-03') return;
+  let r=document.querySelector('input[name=respP]:checked');
+  if(!r){ alert('Selecciona una respuesta'); return; }
+
+  const q=practica.bloqueActual[practica.ejercicioEnBloque];
+  const correcto=String(r.value)===String(q.correcta);
+  if(correcto){
+    alert('✅ Correcto.');
+    practica.aciertosTotales++;
+  }else if(q.habilidad==='restaEnteros'){
+    alert('❌ Aún no. Recuerda: restar un entero equivale a sumar su opuesto.');
+  }else{
+    alert('❌ Aún no. Revisa los signos y compara los valores absolutos.');
+  }
+
+  const registro={
+    habilidad:q.habilidad,
+    nivel:q.nivel,
+    bloque:practica.bloqueNumero,
+    correcto
+  };
+  practica.historial.push(registro);
+  guardarEvidenciaPerfilEnteros(registro,practica);
+  practica.ejercicioEnBloque++;
+
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaEnteros();
+
+  if(practica.ejercicioEnBloque<CONFIG_RUTA.enterosAdaptativos.tamBloque){
+    mostrarPractica();
+  }else{
+    cerrarBloqueEnterosAdaptativo();
+  }
+}
+
+function etiquetaEstadoAdaptativo(estado){
+  const etiquetas={
+    'DOMINIO PROBABLE':'◐ Dominio probable',
+    'EN OBSERVACIÓN':'◌ En observación',
+    'REQUIERE REFORZAMIENTO':'↺ Requiere reforzamiento',
+    'EN CONSOLIDACIÓN':'↑ En consolidación',
+    'CONSOLIDADO':'✓ Consolidado'
+  };
+  return etiquetas[estado] || `◌ ${estado || 'En observación'}`;
+}
+
+function evidenciaBreveHabilidad(clave){
+  const perfil=alumno.perfilAdaptativo?.[clave] || {};
+  const partes=[];
+  if(perfil.diagnosticoBase && typeof perfil.diagnosticoBase.correcto==='boolean'){
+    partes.push(perfil.diagnosticoBase.correcto ? 'diagnóstico base correcto' : 'diagnóstico base por reforzar');
+  }
+  const conf=perfil.confirmacion;
+  if(conf?.requerida && Number.isFinite(conf.total) && conf.total>0){
+    partes.push(`confirmación ${conf.aciertos || 0}/${conf.total}`);
+  }
+  const practica=(perfil.historial || []).filter(r=>r.modulo==='enteros' || r.modulo==='fracciones' || r.modulo==='exponentesPositivos' || r.modulo==='exponentesNegativos').slice(-5);
+  if(practica.length){
+    const aciertos=practica.filter(r=>r.correcto).length;
+    partes.push(`evidencia reciente ${aciertos}/${practica.length}`);
+  }
+  return partes.length ? partes.join(' · ') : 'Aún sin evidencia de práctica adaptativa.';
+}
+
+function renderPerfilAdaptativoDashboard(){
+  const cont=document.getElementById('perfilAdaptativoDashboard');
+  if(!cont) return;
+  const perfil=alumno.perfilAdaptativo;
+  if(!perfil){
+    cont.innerHTML='';
+    return;
+  }
+
+  const definiciones=[
+    ['sumaEnteros','Suma de enteros','enteros'],
+    ['restaEnteros','Resta de enteros','enteros'],
+    ['simplificacion','Simplificación de fracciones','fracciones'],
+    ['sumaFracciones','Suma de fracciones homogéneas','fracciones'],
+    ['potenciasPositivas','Potencias con exponente positivo','exponentesPositivos']
+  ];
+
+  if(alumno.modulos?.exponentes?.acreditado===true || perfil.potenciasNegativas){
+    definiciones.push(['potenciasNegativas','Exponentes con exponente entero negativo','exponentesNegativos']);
+  }
+
+  const tarjetas=definiciones.map(([clave,nombre,modulo])=>{
+    const p=perfil[clave] || {};
+    const estado=p.estado || 'EN OBSERVACIÓN';
+    const nivel=p.nivel || (
+      modulo==='fracciones'
+        ? nivelInicialFracciones(clave)
+        : modulo==='exponentesPositivos'
+          ? nivelInicialExponentesPositivos()
+          : modulo==='exponentesNegativos'
+            ? nivelInicialExponentesNegativos()
+            : nivelInicialEnteros(clave)
+    );
+    return `<div class="perfil-habilidad">
+      <strong>${nombre}</strong>
+      <span class="perfil-estado">${etiquetaEstadoAdaptativo(estado)}</span>
+      <p class="perfil-nivel">Nivel actual: <strong>${nivel}</strong></p>
+      <p class="perfil-evidencia">${evidenciaBreveHabilidad(clave)}</p>
+    </div>`;
+  }).join('');
+
+  cont.innerHTML=`<div class="perfil-adaptativo-panel">
+    <h3>Perfil adaptativo</h3>
+    <p class="perfil-adaptativo-ayuda">Estos estados cambian con nueva evidencia; no son etiquetas permanentes.</p>
+    <div class="perfil-adaptativo-grid">${tarjetas}</div>
+  </div>`;
+}
+
+function resumenPracticaEnterosPendiente(){
+  const practica=alumno.practicaEnteros;
+  if(!practica?.activa || practica.version!=='ADP-03') return '';
+  const cfg=CONFIG_RUTA.enterosAdaptativos;
+  const ejercicio=Math.min((practica.ejercicioEnBloque || 0)+1,cfg.tamBloque);
+  return `Bloque ${practica.bloqueNumero} · ejercicio ${ejercicio} de ${cfg.tamBloque} · Suma nivel ${practica.niveles.sumaEnteros} · Resta nivel ${practica.niveles.restaEnteros}`;
+}
+
+function reanudarPracticaEnteros(){
+  if(!alumno.practicaEnteros?.activa || alumno.practicaEnteros.version!=='ADP-03'){
+    mostrarPantalla('dashboard');
+    return;
+  }
+  normalizarPersistenciaADP04();
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaEnteros();
+  mostrarPantalla('practicaEnteros');
+  mostrarPractica();
+}
+
+
+function resumenPracticaFraccionesPendiente(){
+  const practica=alumno.practicaFracciones;
+  if(!practica?.activa || practica.version!=='ADP-05') return '';
+  const cfg=CONFIG_RUTA.fraccionesAdaptativas;
+  const ejercicio=Math.min((practica.ejercicioEnBloque || 0)+1,cfg.tamBloque);
+  return `Bloque ${practica.bloqueNumero} · ejercicio ${ejercicio} de ${cfg.tamBloque} · Simplificación nivel ${practica.niveles.simplificacion} · Suma nivel ${practica.niveles.sumaFracciones}`;
+}
+
+function reanudarPracticaFracciones(){
+  if(!alumno.practicaFracciones?.activa || alumno.practicaFracciones.version!=='ADP-05'){
+    mostrarPantalla('dashboard');
+    return;
+  }
+  normalizarPersistenciaFraccionesADP05();
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaFracciones();
+  mostrarPantalla('practicaFracciones');
+  mostrarPracticaFrac();
+}
+
+
+function resumenPracticaExponentesPendiente(){
+  const practica=alumno.practicaExponentes;
+  if(!practica?.activa || practica.version!=='ADP-06') return '';
+  const cfg=CONFIG_RUTA.exponentesPositivosAdaptativos;
+  const ejercicio=Math.min((practica.ejercicioEnBloque || 0)+1,cfg.tamBloque);
+  return `Bloque ${practica.bloqueNumero} · ejercicio ${ejercicio} de ${cfg.tamBloque} · Nivel ${practica.nivel}`;
+}
+
+function reanudarPracticaExponentes(){
+  if(!alumno.practicaExponentes?.activa || alumno.practicaExponentes.version!=='ADP-06'){
+    mostrarPantalla('dashboard');
+    return;
+  }
+  normalizarPersistenciaExponentesADP06();
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaExponentes();
+  mostrarPantalla('practicaExponentes');
+  mostrarPracticaExp();
+}
+
+
+function resumenPracticaExponentesNegativosPendiente(){
+  const practica=alumno.practicaExponentesNegativos;
+  if(!practica?.activa || practica.version!=='ADP-07') return '';
+  const cfg=CONFIG_RUTA.exponentesNegativosAdaptativos;
+  const ejercicio=Math.min((practica.ejercicioEnBloque || 0)+1,cfg.tamBloque);
+  return `Bloque ${practica.bloqueNumero} · ejercicio ${ejercicio} de ${cfg.tamBloque} · Nivel ${practica.nivel}`;
+}
+
+function reanudarPracticaExponentesNegativos(){
+  if(!alumno.practicaExponentesNegativos?.activa || alumno.practicaExponentesNegativos.version!=='ADP-07'){
+    mostrarPantalla('dashboard');
+    return;
+  }
+  normalizarPersistenciaExponentesNegativosADP07();
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaExponentesNegativos();
+  mostrarPantalla('practicaExponentesNegativos');
+  mostrarPracticaExpNeg();
+}
+
+function actualizarDashboard(){
+ if(!listaModulos) return;
+ const modulos=alumno.modulos || {};
+ const enteros=modulos.enteros || {};
+ const fracciones=modulos.fracciones || {};
+ const exponentes=modulos.exponentes || {};
+ const exponentesNegativos=modulos.exponentesNegativos || {};
+ const acreditados=[enteros.acreditado,fracciones.acreditado,exponentes.acreditado,exponentesNegativos.acreditado].filter(Boolean).length;
+ const progreso=alumno.rutaCompletada===true ? 100 : Math.round((acreditados/4)*100);
+ const diagnosticoGuardado=alumno.diagnostico || null;
+ const pendiente=alumno.practicaEnteros?.activa
+   ? {tipo:'enterosAdaptativo',accion:'reanudarPracticaEnteros()'}
+   : alumno.practicaFracciones?.activa && alumno.practicaFracciones.version==='ADP-05'
+     ? {tipo:'fraccionesAdaptativo',accion:'reanudarPracticaFracciones()'}
+     : alumno.practicaFracciones?.activa
+       ? {tipo:'fracciones',accion:'iniciarPracticaFracciones()'}
+       : alumno.practicaExponentes?.activa && alumno.practicaExponentes.version==='ADP-06'
+         ? {tipo:'exponentesAdaptativo',accion:'reanudarPracticaExponentes()'}
+         : alumno.practicaExponentes?.activa
+           ? {tipo:'exponentes',accion:'iniciarPracticaExponentes()'}
+           : alumno.practicaExponentesNegativos?.activa && alumno.practicaExponentesNegativos.version==='ADP-07'
+             ? {tipo:'exponentesNegativosAdaptativo',accion:'reanudarPracticaExponentesNegativos()'}
+             : null;
+
+ resumenAlumno.innerHTML=`<p>Nombre: ${alumno.nombre || 'No disponible'}</p><p>Grupo: ${alumno.grupo || 'No disponible'}</p><p>Semestre: ${alumno.semestre || 'No disponible'}</p>`;
+ barraDashboard.style.width=progreso+'%';
+ textoProgresoDashboard.textContent=`Progreso: ${progreso} %`;
+ diagnosticoDashboard.textContent=diagnosticoGuardado && typeof diagnosticoGuardado.porcentaje==='number'
+   ? `Diagnóstico inicial: ${diagnosticoGuardado.porcentaje} %`
+   : 'Diagnóstico inicial: No disponible';
+ renderPerfilAdaptativoDashboard();
+ estadoRutaDashboard.textContent=alumno.rutaCompletada===true ? 'Ruta completada' : 'Ruta en proceso';
+ if(pendiente?.tipo==='enterosAdaptativo') {
+   pendienteDashboard.innerHTML=`<div class="persistencia-pendiente"><p><strong>Práctica adaptativa pendiente.</strong><br>${resumenPracticaEnterosPendiente()}.</p><button onclick="${pendiente.accion}">Continuar exactamente donde quedé</button></div>`;
+ } else if(pendiente?.tipo==='fraccionesAdaptativo') {
+   pendienteDashboard.innerHTML=`<div class="persistencia-pendiente"><p><strong>Práctica adaptativa pendiente.</strong><br>${resumenPracticaFraccionesPendiente()}.</p><button onclick="${pendiente.accion}">Continuar exactamente donde quedé</button></div>`;
+ } else if(pendiente?.tipo==='exponentesAdaptativo') {
+   pendienteDashboard.innerHTML=`<div class="persistencia-pendiente"><p><strong>Práctica adaptativa pendiente.</strong><br>${resumenPracticaExponentesPendiente()}.</p><button onclick="${pendiente.accion}">Continuar exactamente donde quedé</button></div>`;
+ } else if(pendiente?.tipo==='exponentesNegativosAdaptativo') {
+   pendienteDashboard.innerHTML=`<div class="persistencia-pendiente"><p><strong>Práctica adaptativa pendiente.</strong><br>${resumenPracticaExponentesNegativosPendiente()}.</p><button onclick="${pendiente.accion}">Continuar exactamente donde quedé</button></div>`;
+ } else {
+   pendienteDashboard.innerHTML=pendiente
+     ? `<p>Existe una práctica pendiente.</p><button onclick="${pendiente.accion}">Continuar práctica</button>`
+     : '<p>No existen prácticas pendientes.</p>';
+ }
+ const cierreRutaControl=document.getElementById('cierreRutaDashboard');
+ if(cierreRutaControl){
+   cierreRutaControl.innerHTML=alumno.rutaCompletada===true
+     ? '<button onclick="abrirFinalizacionRuta()">Ver cierre de ruta</button>'
+     : '';
+ }
+
+ let h='';
+ if(enteros.acreditado){
+   h+='<li>✅ Módulo 1: Enteros (Acreditado)</li>';
+ } else if(enteros.desbloqueado){
+   h+='<li><button onclick="mostrarPantalla(\'microEnteros\')">► Módulo 1: Enteros (Disponible)</button></li>';
+ } else {
+   h+='<li>🔒 Módulo 1: Enteros</li>';
+ }
+ if(fracciones.acreditado){
+   h+='<li>✅ Módulo 2: Fracciones (Acreditado)</li>';
+ } else if(fracciones.desbloqueado){
+   h+='<li><button onclick="mostrarPantalla(\'microFracciones\')">► Módulo 2: Fracciones (Disponible)</button></li>';
+ } else {
+   h+='<li>🔒 Módulo 2: Fracciones</li>';
+ }
+ if(exponentes.acreditado){
+   h+='<li>✅ Módulo 3: Exponentes positivos (Acreditado)</li>';
+ } else if(exponentes.desbloqueado){
+   h+='<li><button onclick="mostrarPantalla(\'microExponentes\')">► Módulo 3: Exponentes positivos (Disponible)</button></li>';
+ } else {
+   h+='<li>🔒 Módulo 3: Exponentes positivos</li>';
+ }
+ if(exponentesNegativos.acreditado){
+   h+='<li>✅ Módulo 4: Exponentes negativos (Acreditado)</li>';
+ } else if(exponentesNegativos.desbloqueado){
+   h+='<li><button onclick="mostrarPantalla(\'microExponentesNegativos\')">► Módulo 4: Exponentes negativos (Disponible)</button></li>';
+ } else {
+   h+='<li>🔒 Módulo 4: Exponentes negativos</li>';
+ }
+ listaModulos.innerHTML=h;
+}
+
+
+
+let practicaExp=[], actualExp=0, aciertosExp=0;
+
+function nivelInicialExponentesPositivos(){
+  const estado=alumno.perfilAdaptativo?.potenciasPositivas?.estado;
+  return estado==='REQUIERE REFORZAMIENTO' ? 'A' : 'B';
+}
+
+function subirNivelExponentesPositivos(nivel){
+  return nivel==='A' ? 'B' : nivel==='B' ? 'C' : 'C';
+}
+
+function bajarNivelExponentesPositivos(nivel){
+  return nivel==='C' ? 'B' : nivel==='B' ? 'A' : 'A';
+}
+
+function asegurarPerfilExponentesPositivosAdaptativo(){
+  if(!alumno.perfilAdaptativo) alumno.perfilAdaptativo={};
+  if(!alumno.perfilAdaptativo.potenciasPositivas){
+    alumno.perfilAdaptativo.potenciasPositivas={
+      estado:'EN OBSERVACIÓN',
+      diagnosticoBase:{correcto:null},
+      confirmacion:{requerida:false,aciertos:0,total:0,respuestas:[]}
+    };
+  }
+  const perfil=alumno.perfilAdaptativo.potenciasPositivas;
+  if(!Array.isArray(perfil.historial)) perfil.historial=[];
+  if(!perfil.nivel) perfil.nivel=nivelInicialExponentesPositivos();
+}
+
+function mezclarOpcionesPotencias(correcta,candidatos=[]){
+  const opciones=[String(correcta)];
+  const claves=new Set([claveFraccionEquivalente(correcta)]);
+
+  for(const candidato of candidatos){
+    const texto=String(candidato);
+    const clave=claveFraccionEquivalente(texto);
+    if(!claves.has(clave)){
+      opciones.push(texto);
+      claves.add(clave);
+    }
+    if(opciones.length===4) break;
+  }
+
+  let intentos=0;
+  while(opciones.length<4 && intentos<100){
+    const den=randomInt(2,40);
+    const num=randomInt(1,Math.max(2,den+12));
+    const candidato=`${num}/${den}`;
+    const clave=claveFraccionEquivalente(candidato);
+    if(!claves.has(clave)){
+      opciones.push(candidato);
+      claves.add(clave);
+    }
+    intentos++;
+  }
+
+  return opciones.slice(0,4).sort(()=>rngGenerator()-0.5);
+}
+
+function basePotenciaCoprima(nivel){
+  let n,d,exp;
+
+  if(nivel==='A'){
+    do{
+      d=randomInt(2,5);
+      n=randomInt(1,d-1);
+    }while(mcd(n,d)!==1);
+    exp=2;
+  }else if(nivel==='B'){
+    do{
+      d=randomInt(2,6);
+      n=randomInt(1,6);
+    }while(n===d || mcd(n,d)!==1);
+    exp=randomInt(2,3);
+  }else{
+    do{
+      d=randomInt(2,5);
+      n=randomInt(1,6);
+    }while(n===d || mcd(n,d)!==1);
+    exp=randomInt(3,4);
+  }
+
+  return {n,d,exp};
+}
+
+function motorPotenciasPositivasAdaptativo(nivel){
+  const {n,d,exp}=basePotenciaCoprima(nivel);
+  const numCorrecto=n**exp;
+  const denCorrecto=d**exp;
+  const correcta=fraccionReducidaTexto(numCorrecto,denCorrecto);
+
+  const candidatos=[
+    `${numCorrecto}/${d}`,          // eleva solo numerador
+    `${n}/${denCorrecto}`,          // eleva solo denominador
+    `${n*exp}/${d*exp}`,            // multiplica por el exponente
+    `${n*exp}/${denCorrecto}`,
+    `${numCorrecto}/${d*exp}`,
+    `${n}/${d}`                     // conserva la base sin potenciar
+  ];
+
+  return {
+    e:`(${n}/${d})^${exp} = ?`,
+    correcta,
+    opciones:mezclarOpcionesPotencias(correcta,candidatos),
+    habilidad:'potenciasPositivas',
+    nivel
+  };
+}
+
+function rngBloqueExponentesPositivos(practica){
+  const semilla=hashTextoReto(`${alumno.semilla||0}|MI-ADP-06|EXPONENTES-POSITIVOS|${practica.intento}|${practica.bloqueNumero}`);
+  return mulberry32(semilla);
+}
+
+function generarBloqueExponentesPositivosAdaptativo(practica){
+  const cfg=CONFIG_RUTA.exponentesPositivosAdaptativos;
+  const rngAnterior=rngGenerator;
+  rngGenerator=rngBloqueExponentesPositivos(practica);
+  try{
+    const ejercicios=[];
+    for(let i=0;i<cfg.tamBloque;i++){
+      ejercicios.push({
+        ...motorPotenciasPositivasAdaptativo(practica.nivel),
+        bloque:practica.bloqueNumero
+      });
+    }
+    return ejercicios;
+  }finally{
+    rngGenerator=rngAnterior;
+  }
+}
+
+function crearPracticaExponentesPositivosAdaptativa(){
+  asegurarPerfilExponentesPositivosAdaptativo();
+  if(!alumno.modulos) alumno.modulos={};
+  if(!alumno.modulos.exponentes) alumno.modulos.exponentes={desbloqueado:true,acreditado:false};
+
+  const intento=(alumno.modulos.exponentes.intentosAdaptativos||0)+1;
+  alumno.modulos.exponentes.intentosAdaptativos=intento;
+
+  const practica={
+    version:'ADP-06',
+    persistenciaVersion:'ADP-06',
+    activa:true,
+    intento,
+    bloqueNumero:1,
+    ejercicioEnBloque:0,
+    aciertosTotales:0,
+    historial:[],
+    nivel:nivelInicialExponentesPositivos(),
+    mensajeTransicion:'🐺 Primer bloque: LOBO comprobará cómo aplicas exponentes positivos a fracciones y ajustará la exigencia con base en tus respuestas.'
+  };
+  practica.bloqueActual=generarBloqueExponentesPositivosAdaptativo(practica);
+  return practica;
+}
+
+function sincronizarGlobalesPracticaExponentes(){
+  const practica=alumno.practicaExponentes;
+  practicaExp=practica?.bloqueActual || [];
+  actualExp=practica?.ejercicioEnBloque || 0;
+  aciertosExp=practica?.aciertosTotales || 0;
+}
+
+function mostrarPracticaExp(){
+  const practica=alumno.practicaExponentes;
+  if(!practica || practica.version!=='ADP-06' || !practica.activa) return;
+  sincronizarGlobalesPracticaExponentes();
+
+  const q=practicaExp[actualExp];
+  if(!q) return;
+  const cfg=CONFIG_RUTA.exponentesPositivosAdaptativos;
+  barraExp.style.width=((actualExp)/cfg.tamBloque*100)+'%';
+  contadorExp.textContent=`Bloque ${practica.bloqueNumero} · Ejercicio ${actualExp+1} de ${cfg.tamBloque} · Nivel ${q.nivel}`;
+  estadoAdaptativoExponentes.textContent=`Práctica acumulada: ${practica.historial.length} de ${cfg.maximoEjercicios} ejercicios máximo · Nivel actual: ${practica.nivel}`;
+  loboPracticaExp.textContent=practica.mensajeTransicion || '🐺 Eleva numerador y denominador. LOBO ajustará la exigencia con base en tu desempeño.';
+  enunciadoExp.textContent=q.e;
+  opcionesExp.innerHTML='';
+  q.opciones.forEach(o=>opcionesExp.innerHTML += `<label class='opcion'><input type='radio' name='respE' value='${o}'> ${o}</label>`);
+}
+
+function guardarEvidenciaPerfilExponentes(registro,practica){
+  asegurarPerfilExponentesPositivosAdaptativo();
+  const perfil=alumno.perfilAdaptativo.potenciasPositivas;
+  perfil.nivel=practica.nivel;
+  perfil.historial.push({
+    modulo:'exponentesPositivos',
+    nivel:registro.nivel,
+    bloque:registro.bloque,
+    correcto:registro.correcto
+  });
+}
+
+function estadoPotenciasPositivasPorPractica(practica){
+  const ultimos=practica.historial.slice(-5);
+  if(!ultimos.length) return alumno.perfilAdaptativo?.potenciasPositivas?.estado || 'EN OBSERVACIÓN';
+  const tasa=ultimos.filter(r=>r.correcto).length/ultimos.length;
+  if(tasa>=0.80) return 'EN CONSOLIDACIÓN';
+  if(tasa<0.60) return 'REQUIERE REFORZAMIENTO';
+  return 'EN OBSERVACIÓN';
+}
+
+function ajustarNivelBloqueExponentes(nivel,aciertosBloque){
+  if(aciertosBloque<=2) return bajarNivelExponentesPositivos(nivel);
+  if(aciertosBloque===3) return nivel;
+  return subirNivelExponentesPositivos(nivel);
+}
+
+function cumpleCriterioConsolidacionExponentes(practica,aciertosUltimoBloque){
+  const cfg=CONFIG_RUTA.exponentesPositivosAdaptativos;
+  if(practica.historial.length<cfg.minimoAntesDeConsolidar) return false;
+  const recientes=practica.historial.slice(-cfg.ventanaReciente);
+  const aciertosRecientes=recientes.filter(r=>r.correcto).length;
+  return aciertosRecientes>=cfg.aciertosVentana && aciertosUltimoBloque>=cfg.aciertosUltimoBloque;
+}
+
+function mensajeTransicionBloqueExponentes(practica,aciertosBloque){
+  let decision;
+  if(aciertosBloque<=2){
+    decision='aumentaremos el apoyo y reduciremos la exigencia cuando sea posible';
+  }else if(aciertosBloque===3){
+    decision='mantendremos el nivel para reunir más evidencia';
+  }else if(aciertosBloque===4){
+    decision='avanzaremos hacia mayor consolidación';
+  }else{
+    decision='subiremos la exigencia para comprobar estabilidad';
+  }
+  return `🐺 Bloque ${practica.bloqueNumero-1}: ${aciertosBloque} de 5. ${decision}.`;
+}
+
+function finalizarPracticaExponentesPositivosAdaptativa(consolidado,aciertosUltimoBloque){
+  const practica=alumno.practicaExponentes;
+  const cfg=CONFIG_RUTA.exponentesPositivosAdaptativos;
+  const totalEjercicios=practica.historial.length;
+  const aciertosTotales=practica.historial.filter(r=>r.correcto).length;
+  const porcentaje=Math.round((aciertosTotales/totalEjercicios)*100);
+  const recientes=practica.historial.slice(-cfg.ventanaReciente);
+  const aciertosRecientes=recientes.filter(r=>r.correcto).length;
+
+  asegurarPerfilExponentesPositivosAdaptativo();
+
+  if(consolidado){
+    alumno.modulos.exponentes.acreditado=true;
+    alumno.modulos.exponentes.estado='CONSOLIDADO';
+    alumno.perfilAdaptativo.potenciasPositivas.estado='CONSOLIDADO';
+    if(!alumno.modulos.exponentesNegativos){
+      alumno.modulos.exponentesNegativos={desbloqueado:true,acreditado:false};
+    }else{
+      alumno.modulos.exponentesNegativos.desbloqueado=true;
+    }
+    alumno.rutaCompletada=false;
+    alumno.fechaFinalizacion=null;
+  }else{
+    alumno.modulos.exponentes.acreditado=false;
+    alumno.modulos.exponentes.estado='REQUIERE REFORZAMIENTO';
+    alumno.perfilAdaptativo.potenciasPositivas.estado='REQUIERE REFORZAMIENTO';
+  }
+
+  alumno.modulos.exponentes.resultado={
+    aciertos:aciertosTotales,
+    total:totalEjercicios,
+    porcentaje,
+    acreditado:consolidado,
+    fecha:new Date().toLocaleDateString(),
+    tipo:'ADAPTATIVA_ADP06',
+    nivelFinal:practica.nivel,
+    bloques:Math.ceil(totalEjercicios/cfg.tamBloque),
+    criterioConsolidacion:{
+      ventana:cfg.ventanaReciente,
+      aciertosRecientes,
+      requeridoVentana:cfg.aciertosVentana,
+      aciertosUltimoBloque,
+      requeridoUltimoBloque:cfg.aciertosUltimoBloque
+    }
+  };
+
+  alumno.practicaExponentes=null;
+  guardarPersistenciaADP04();
+
+  if(consolidado){
+    mostrarResultadoPractica({
+      modulo:'Exponentes positivos',
+      aciertos:aciertosTotales,
+      total:totalEjercicios,
+      porcentaje,
+      acreditado:true,
+      estadoTexto:'CONSOLIDADO',
+      desbloqueo:'Exponentes negativos',
+      textoDesbloqueo:`Criterio alcanzado: ${aciertosRecientes}/${cfg.ventanaReciente} recientes y ${aciertosUltimoBloque}/5 en el último bloque. Exponentes negativos está disponible.`,
+      mensajeLobo:'🐺 Has consolidado exponentes positivos. Ese desempeño definirá tu punto de entrada al nuevo módulo de exponentes negativos.',
+      pantallaMicro:'microExponentes',
+      accionPrincipal:{
+        texto:'Continuar al Dashboard',
+        pantalla:'dashboard'
+      }
+    });
+  }else{
+    mostrarResultadoPractica({
+      modulo:'Exponentes positivos',
+      aciertos:aciertosTotales,
+      total:totalEjercicios,
+      porcentaje,
+      acreditado:false,
+      estadoTexto:'REQUIERE REFORZAMIENTO',
+      desbloqueo:null,
+      textoDesbloqueo:`Se alcanzó el máximo de ${cfg.maximoEjercicios} ejercicios sin cumplir todavía el criterio 8/10 + 4/5.`,
+      mensajeLobo:'🐺 Detendremos la práctica por ahora. Revisa la microlección y busca apoyo si lo necesitas antes de volver a intentarlo.',
+      pantallaMicro:'microExponentes'
+    });
+  }
+}
+
+function cerrarBloqueExponentesPositivosAdaptativo(){
+  const practica=alumno.practicaExponentes;
+  const cfg=CONFIG_RUTA.exponentesPositivosAdaptativos;
+  const respuestasBloque=practica.historial.filter(r=>r.bloque===practica.bloqueNumero);
+  const aciertosBloque=respuestasBloque.filter(r=>r.correcto).length;
+
+  practica.nivel=ajustarNivelBloqueExponentes(practica.nivel,aciertosBloque);
+  asegurarPerfilExponentesPositivosAdaptativo();
+  alumno.perfilAdaptativo.potenciasPositivas.nivel=practica.nivel;
+  alumno.perfilAdaptativo.potenciasPositivas.estado=estadoPotenciasPositivasPorPractica(practica);
+
+  if(cumpleCriterioConsolidacionExponentes(practica,aciertosBloque)){
+    barraExp.style.width='100%';
+    finalizarPracticaExponentesPositivosAdaptativa(true,aciertosBloque);
+    return;
+  }
+
+  if(practica.historial.length>=cfg.maximoEjercicios){
+    barraExp.style.width='100%';
+    finalizarPracticaExponentesPositivosAdaptativa(false,aciertosBloque);
+    return;
+  }
+
+  practica.bloqueNumero++;
+  practica.ejercicioEnBloque=0;
+  practica.mensajeTransicion=mensajeTransicionBloqueExponentes(practica,aciertosBloque);
+  practica.bloqueActual=generarBloqueExponentesPositivosAdaptativo(practica);
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaExponentes();
+  mostrarPracticaExp();
+}
+
+function iniciarPracticaExponentes(){
+  if(alumno.practicaExponentes?.activa && alumno.practicaExponentes.version==='ADP-06'){
+    if(confirm('🐺 Tienes una práctica adaptativa pendiente. ¿Deseas continuarla?')){
+      reanudarPracticaExponentes();
+    }
+    return;
+  }
+
+  // Compatibilidad: la práctica anterior de 4 ejercicios no se mezcla con ADP-06.
+  if(alumno.practicaExponentes?.activa && alumno.practicaExponentes.version!=='ADP-06'){
+    alumno.practicaExponentes=null;
+  }
+
+  alumno.practicaExponentes=crearPracticaExponentesPositivosAdaptativa();
+  sincronizarGlobalesPracticaExponentes();
+  guardarPersistenciaADP04();
+  mostrarPantalla('practicaExponentes');
+  mostrarPracticaExp();
+}
+
+function comprobarExp(){
+  const practica=alumno.practicaExponentes;
+  if(!practica || practica.version!=='ADP-06') return;
+  const r=document.querySelector('input[name=respE]:checked');
+  if(!r){alert('Selecciona una respuesta'); return;}
+
+  const q=practica.bloqueActual[practica.ejercicioEnBloque];
+  const correcto=claveFraccionEquivalente(r.value)===claveFraccionEquivalente(q.correcta);
+
+  if(correcto){
+    alert('✅ Correcto.');
+    practica.aciertosTotales++;
+  }else{
+    alert('❌ Aún no. Recuerda: el exponente se aplica tanto al numerador como al denominador.');
+  }
+
+  const registro={
+    habilidad:'potenciasPositivas',
+    nivel:q.nivel,
+    bloque:practica.bloqueNumero,
+    correcto
+  };
+  practica.historial.push(registro);
+  guardarEvidenciaPerfilExponentes(registro,practica);
+  practica.ejercicioEnBloque++;
+
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaExponentes();
+
+  if(practica.ejercicioEnBloque<CONFIG_RUTA.exponentesPositivosAdaptativos.tamBloque){
+    mostrarPracticaExp();
+  }else{
+    cerrarBloqueExponentesPositivosAdaptativo();
+  }
+}
+
+
+let practicaExpNeg=[], actualExpNeg=0, aciertosExpNeg=0;
+
+function puntoEntradaExponentesNegativos(){
+  const resultado=alumno.modulos?.exponentes?.resultado || null;
+  const perfilPos=alumno.perfilAdaptativo?.potenciasPositivas || {};
+  const nivelFinal=resultado?.nivelFinal || perfilPos.nivel || 'A';
+  const consolidado=resultado?.acreditado===true;
+  const consolidacionRapida=consolidado && resultado.total<=10;
+  const nivelSolido=nivelFinal==='C';
+
+  if(consolidacionRapida && nivelSolido){
+    return {
+      nivel:'B',
+      razon:'Desempeño sólido y consolidación rápida en exponentes positivos.'
+    };
+  }
+
+  return {
+    nivel:'A',
+    razon:'LOBO iniciará con apoyo para construir el significado del exponente negativo a partir del recíproco.'
+  };
+}
+
+function nivelInicialExponentesNegativos(){
+  return puntoEntradaExponentesNegativos().nivel;
+}
+
+function subirNivelExponentesNegativos(nivel){
+  return nivel==='A' ? 'B' : nivel==='B' ? 'C' : 'C';
+}
+
+function bajarNivelExponentesNegativos(nivel){
+  return nivel==='C' ? 'B' : nivel==='B' ? 'A' : 'A';
+}
+
+function asegurarPerfilExponentesNegativosAdaptativo(){
+  if(!alumno.perfilAdaptativo) alumno.perfilAdaptativo={};
+  if(!alumno.perfilAdaptativo.potenciasNegativas){
+    const entrada=puntoEntradaExponentesNegativos();
+    alumno.perfilAdaptativo.potenciasNegativas={
+      estado:'EN OBSERVACIÓN',
+      nivel:entrada.nivel,
+      origenPuntoEntrada:'DERIVADO_DE_EXPONENTES_POSITIVOS',
+      razonPuntoEntrada:entrada.razon,
+      historial:[],
+      subhabilidades:{
+        reciproco:{historial:[]},
+        reglaNegativa:{historial:[]},
+        inversionPotencia:{historial:[]},
+        paridadNegativa:{historial:[]}
+      }
+    };
+  }
+
+  const perfil=alumno.perfilAdaptativo.potenciasNegativas;
+  if(!Array.isArray(perfil.historial)) perfil.historial=[];
+  if(!perfil.subhabilidades) perfil.subhabilidades={};
+  ['reciproco','reglaNegativa','inversionPotencia','paridadNegativa'].forEach(clave=>{
+    if(!perfil.subhabilidades[clave]) perfil.subhabilidades[clave]={historial:[]};
+    if(!Array.isArray(perfil.subhabilidades[clave].historial)) perfil.subhabilidades[clave].historial=[];
+  });
+  if(!['A','B','C'].includes(perfil.nivel)) perfil.nivel=nivelInicialExponentesNegativos();
+}
+
+function textoFraccionSeguro(n,d){
+  if(d===0) throw new Error('La base cero no está permitida en exponentes negativos.');
+  return fraccionReducidaTexto(n,d);
+}
+
+function opcionesExponentesNegativos(correcta,candidatos=[]){
+  return mezclarOpcionesPotencias(correcta,candidatos);
+}
+
+function motorReciprocoNegativo(nivel){
+  const base=nivel==='A' ? randomInt(2,6) : randomInt(2,9);
+  const correcta=`1/${base}`;
+  return {
+    e:`${base}^(-1) = ?`,
+    correcta,
+    opciones:opcionesExponentesNegativos(correcta,[
+      `${base}/1`,
+      `${-base}/1`,
+      `-1/${base}`,
+      `1/${base+1}`
+    ]),
+    habilidad:'potenciasNegativas',
+    subhabilidad:'reciproco',
+    nivel
+  };
+}
+
+function motorReglaNegativa(nivel){
+  const base=nivel==='A' ? randomInt(2,5) : randomInt(2,8);
+  const exp=nivel==='A' ? randomInt(1,2) : randomInt(2,3);
+  const potencia=base**exp;
+  const correcta=`1/${potencia}`;
+  return {
+    e:`${base}^(-${exp}) = ?`,
+    correcta,
+    opciones:opcionesExponentesNegativos(correcta,[
+      `${potencia}/1`,
+      `-1/${potencia}`,
+      `1/${base*exp}`,
+      `${base*exp}/1`
+    ]),
+    habilidad:'potenciasNegativas',
+    subhabilidad:'reglaNegativa',
+    nivel
+  };
+}
+
+function baseFraccionPositivaNegativos(nivel){
+  let n,d;
+  do{
+    d=nivel==='A' ? randomInt(3,6) : randomInt(3,8);
+    n=randomInt(1,d-1);
+  }while(mcd(n,d)!==1);
+  return {n,d};
+}
+
+function motorInversionPotenciaNegativa(nivel){
+  const {n,d}=baseFraccionPositivaNegativos(nivel);
+  const exp=nivel==='A' ? randomInt(1,2) : randomInt(2,3);
+  const correcta=textoFraccionSeguro(d**exp,n**exp);
+  return {
+    e:`(${n}/${d})^(-${exp}) = ?`,
+    correcta,
+    opciones:opcionesExponentesNegativos(correcta,[
+      `${n**exp}/${d**exp}`,
+      `${d}/${n}`,
+      `-${d**exp}/${n**exp}`,
+      `${d*exp}/${n*exp}`
+    ]),
+    habilidad:'potenciasNegativas',
+    subhabilidad:'inversionPotencia',
+    nivel
+  };
+}
+
+function motorParidadNegativa(nivel){
+  const usarFraccion=randomInt(0,1)===1;
+  const exp=randomInt(2,4);
+
+  if(usarFraccion){
+    let n,d;
+    do{
+      d=randomInt(3,6);
+      n=randomInt(1,d-1);
+    }while(mcd(n,d)!==1);
+
+    const signo=exp%2===0 ? 1 : -1;
+    const correcta=textoFraccionSeguro(signo*(d**exp),n**exp);
+    return {
+      e:`(-${n}/${d})^(-${exp}) = ?`,
+      correcta,
+      opciones:opcionesExponentesNegativos(correcta,[
+        `${signo*(n**exp)}/${d**exp}`,
+        `${-signo*(d**exp)}/${n**exp}`,
+        `${d**exp}/${n**exp}`,
+        `${signo*d}/${n}`
+      ]),
+      habilidad:'potenciasNegativas',
+      subhabilidad:'paridadNegativa',
+      nivel
+    };
+  }
+
+  const base=randomInt(2,5);
+  const signo=exp%2===0 ? 1 : -1;
+  const correcta=textoFraccionSeguro(signo,base**exp);
+  return {
+    e:`(-${base})^(-${exp}) = ?`,
+    correcta,
+    opciones:opcionesExponentesNegativos(correcta,[
+      `${signo*(base**exp)}/1`,
+      `${-signo}/${base**exp}`,
+      `1/${base**exp}`,
+      `${signo}/${base*exp}`
+    ]),
+    habilidad:'potenciasNegativas',
+    subhabilidad:'paridadNegativa',
+    nivel
+  };
+}
+
+function motorExponentesNegativosPorSubhabilidad(subhabilidad,nivel){
+  switch(subhabilidad){
+    case 'reciproco': return motorReciprocoNegativo(nivel);
+    case 'reglaNegativa': return motorReglaNegativa(nivel);
+    case 'inversionPotencia': return motorInversionPotenciaNegativa(nivel);
+    case 'paridadNegativa': return motorParidadNegativa(nivel);
+    default: return motorReglaNegativa(nivel);
+  }
+}
+
+function subhabilidadesPermitidasNegativos(nivel){
+  if(nivel==='A') return ['reciproco','reglaNegativa','inversionPotencia'];
+  if(nivel==='B') return ['reglaNegativa','inversionPotencia','reciproco'];
+  return ['paridadNegativa','inversionPotencia','reglaNegativa'];
+}
+
+function tasaSubhabilidadNegativos(historial,bloque,subhabilidad){
+  const registros=historial.filter(r=>r.bloque===bloque && r.subhabilidad===subhabilidad);
+  if(!registros.length) return null;
+  return registros.filter(r=>r.correcto).length/registros.length;
+}
+
+function decidirPrioridadExponentesNegativos(practica){
+  const bloqueAnterior=practica.bloqueNumero-1;
+  if(bloqueAnterior<1) return null;
+
+  const permitidas=subhabilidadesPermitidasNegativos(practica.nivel);
+  const tasas=permitidas
+    .map(sub=>({sub,tasa:tasaSubhabilidadNegativos(practica.historial,bloqueAnterior,sub)}))
+    .filter(x=>x.tasa!==null);
+
+  if(!tasas.length) return null;
+  tasas.sort((a,b)=>a.tasa-b.tasa);
+  if(tasas.length===1 || tasas[0].tasa<tasas[tasas.length-1].tasa){
+    return tasas[0].sub;
+  }
+  return null;
+}
+
+function patronBloqueExponentesNegativos(nivel){
+  if(nivel==='A'){
+    return ['reciproco','reglaNegativa','inversionPotencia','inversionPotencia','reciproco'];
+  }
+  if(nivel==='B'){
+    return ['reglaNegativa','inversionPotencia','inversionPotencia','reglaNegativa','reciproco'];
+  }
+  return ['paridadNegativa','paridadNegativa','inversionPotencia','paridadNegativa','reglaNegativa'];
+}
+
+function rngBloqueExponentesNegativos(practica){
+  const semilla=hashTextoReto(`${alumno.semilla||0}|MI-ADP-07|EXPONENTES-NEGATIVOS|${practica.intento}|${practica.bloqueNumero}`);
+  return mulberry32(semilla);
+}
+
+function generarBloqueExponentesNegativosAdaptativo(practica){
+  const cfg=CONFIG_RUTA.exponentesNegativosAdaptativos;
+  const prioridad=decidirPrioridadExponentesNegativos(practica);
+  let patron=patronBloqueExponentesNegativos(practica.nivel);
+
+  if(prioridad && subhabilidadesPermitidasNegativos(practica.nivel).includes(prioridad)){
+    patron=[prioridad,prioridad,...patron.slice(2)];
+  }
+
+  const rngAnterior=rngGenerator;
+  rngGenerator=rngBloqueExponentesNegativos(practica);
+  try{
+    const ejercicios=patron.slice(0,cfg.tamBloque).map(sub=>({
+      ...motorExponentesNegativosPorSubhabilidad(sub,practica.nivel),
+      bloque:practica.bloqueNumero
+    }));
+    for(let i=ejercicios.length-1;i>0;i--){
+      const j=Math.floor(rngGenerator()*(i+1));
+      [ejercicios[i],ejercicios[j]]=[ejercicios[j],ejercicios[i]];
+    }
+    return ejercicios;
+  }finally{
+    rngGenerator=rngAnterior;
+  }
+}
+
+function crearPracticaExponentesNegativosAdaptativa(){
+  asegurarPerfilExponentesNegativosAdaptativo();
+  const entrada=puntoEntradaExponentesNegativos();
+
+  if(!alumno.modulos.exponentesNegativos){
+    alumno.modulos.exponentesNegativos={desbloqueado:true,acreditado:false};
+  }
+
+  const intento=(alumno.modulos.exponentesNegativos.intentosAdaptativos||0)+1;
+  alumno.modulos.exponentesNegativos.intentosAdaptativos=intento;
+
+  const practica={
+    version:'ADP-07',
+    persistenciaVersion:'ADP-07',
+    activa:true,
+    intento,
+    bloqueNumero:1,
+    ejercicioEnBloque:0,
+    aciertosTotales:0,
+    historial:[],
+    nivel:entrada.nivel,
+    puntoEntrada:entrada,
+    mensajeTransicion:`🐺 Punto de entrada ${entrada.nivel}: ${entrada.razon}`
+  };
+
+  practica.bloqueActual=generarBloqueExponentesNegativosAdaptativo(practica);
+  return practica;
+}
+
+function sincronizarGlobalesPracticaExponentesNegativos(){
+  const practica=alumno.practicaExponentesNegativos;
+  practicaExpNeg=practica?.bloqueActual || [];
+  actualExpNeg=practica?.ejercicioEnBloque || 0;
+  aciertosExpNeg=practica?.aciertosTotales || 0;
+}
+
+function nombreSubhabilidadNegativos(clave){
+  const nombres={
+    reciproco:'Recíproco',
+    reglaNegativa:'Regla a⁻ⁿ = 1/aⁿ',
+    inversionPotencia:'Inversión y potencia',
+    paridadNegativa:'Paridad con base negativa'
+  };
+  return nombres[clave] || clave;
+}
+
+function mostrarPracticaExpNeg(){
+  const practica=alumno.practicaExponentesNegativos;
+  if(!practica || practica.version!=='ADP-07' || !practica.activa) return;
+  sincronizarGlobalesPracticaExponentesNegativos();
+
+  const q=practicaExpNeg[actualExpNeg];
+  if(!q) return;
+  const cfg=CONFIG_RUTA.exponentesNegativosAdaptativos;
+  barraExpNeg.style.width=((actualExpNeg)/cfg.tamBloque*100)+'%';
+  contadorExpNeg.textContent=`Bloque ${practica.bloqueNumero} · Ejercicio ${actualExpNeg+1} de ${cfg.tamBloque} · ${nombreSubhabilidadNegativos(q.subhabilidad)} · Nivel ${q.nivel}`;
+  estadoAdaptativoExponentesNegativos.textContent=`Práctica acumulada: ${practica.historial.length} de ${cfg.maximoEjercicios} ejercicios máximo · Nivel actual: ${practica.nivel}`;
+  loboPracticaExpNeg.textContent=practica.mensajeTransicion || '🐺 Usa el recíproco y convierte el exponente en positivo antes de calcular.';
+  enunciadoExpNeg.textContent=q.e;
+  opcionesExpNeg.innerHTML='';
+  q.opciones.forEach(o=>opcionesExpNeg.innerHTML += `<label class='opcion'><input type='radio' name='respEN' value='${o}'> ${o}</label>`);
+}
+
+function guardarEvidenciaPerfilExponentesNegativos(registro,practica){
+  asegurarPerfilExponentesNegativosAdaptativo();
+  const perfil=alumno.perfilAdaptativo.potenciasNegativas;
+  perfil.nivel=practica.nivel;
+
+  const evidencia={
+    modulo:'exponentesNegativos',
+    nivel:registro.nivel,
+    bloque:registro.bloque,
+    subhabilidad:registro.subhabilidad,
+    correcto:registro.correcto
+  };
+
+  perfil.historial.push(evidencia);
+  perfil.subhabilidades[registro.subhabilidad].historial.push({
+    nivel:registro.nivel,
+    bloque:registro.bloque,
+    correcto:registro.correcto
+  });
+}
+
+function estadoExponentesNegativosPorPractica(practica){
+  const ultimos=practica.historial.slice(-5);
+  if(!ultimos.length) return alumno.perfilAdaptativo?.potenciasNegativas?.estado || 'EN OBSERVACIÓN';
+  const tasa=ultimos.filter(r=>r.correcto).length/ultimos.length;
+  if(tasa>=0.80) return 'EN CONSOLIDACIÓN';
+  if(tasa<0.60) return 'REQUIERE REFORZAMIENTO';
+  return 'EN OBSERVACIÓN';
+}
+
+function ajustarNivelBloqueExponentesNegativos(nivel,aciertosBloque){
+  if(aciertosBloque<=2) return bajarNivelExponentesNegativos(nivel);
+  if(aciertosBloque===3) return nivel;
+  return subirNivelExponentesNegativos(nivel);
+}
+
+function cumpleCriterioConsolidacionExponentesNegativos(practica,aciertosUltimoBloque){
+  const cfg=CONFIG_RUTA.exponentesNegativosAdaptativos;
+  if(practica.historial.length<cfg.minimoAntesDeConsolidar) return false;
+  const recientes=practica.historial.slice(-cfg.ventanaReciente);
+  const aciertosRecientes=recientes.filter(r=>r.correcto).length;
+  return aciertosRecientes>=cfg.aciertosVentana && aciertosUltimoBloque>=cfg.aciertosUltimoBloque;
+}
+
+function mensajeTransicionBloqueExponentesNegativos(practica,aciertosBloque){
+  let decision;
+  if(aciertosBloque<=2){
+    decision='aumentaremos el apoyo y reforzaremos la idea del recíproco';
+  }else if(aciertosBloque===3){
+    decision='mantendremos el nivel para reunir más evidencia';
+  }else if(aciertosBloque===4){
+    decision='avanzaremos hacia mayor consolidación';
+  }else{
+    decision='subiremos la exigencia para comprobar estabilidad';
+  }
+
+  const prioridad=decidirPrioridadExponentesNegativos(practica);
+  const foco=prioridad ? ` La siguiente tanda dará mayor atención a ${nombreSubhabilidadNegativos(prioridad).toLowerCase()}.` : '';
+  return `🐺 Bloque ${practica.bloqueNumero-1}: ${aciertosBloque} de 5. ${decision}.${foco}`;
+}
+
+function finalizarPracticaExponentesNegativosAdaptativa(consolidado,aciertosUltimoBloque){
+  const practica=alumno.practicaExponentesNegativos;
+  const cfg=CONFIG_RUTA.exponentesNegativosAdaptativos;
+  const totalEjercicios=practica.historial.length;
+  const aciertosTotales=practica.historial.filter(r=>r.correcto).length;
+  const porcentaje=Math.round((aciertosTotales/totalEjercicios)*100);
+  const recientes=practica.historial.slice(-cfg.ventanaReciente);
+  const aciertosRecientes=recientes.filter(r=>r.correcto).length;
+
+  asegurarPerfilExponentesNegativosAdaptativo();
+
+  if(consolidado){
+    alumno.modulos.exponentesNegativos.acreditado=true;
+    alumno.modulos.exponentesNegativos.estado='CONSOLIDADO';
+    alumno.perfilAdaptativo.potenciasNegativas.estado='CONSOLIDADO';
+    alumno.rutaCompletada=true;
+    alumno.fechaFinalizacion=new Date().toLocaleDateString();
+  }else{
+    alumno.modulos.exponentesNegativos.acreditado=false;
+    alumno.modulos.exponentesNegativos.estado='REQUIERE REFORZAMIENTO';
+    alumno.perfilAdaptativo.potenciasNegativas.estado='REQUIERE REFORZAMIENTO';
+    alumno.rutaCompletada=false;
+  }
+
+  alumno.modulos.exponentesNegativos.resultado={
+    aciertos:aciertosTotales,
+    total:totalEjercicios,
+    porcentaje,
+    acreditado:consolidado,
+    fecha:new Date().toLocaleDateString(),
+    tipo:'ADAPTATIVA_ADP07',
+    nivelInicial:practica.puntoEntrada?.nivel || nivelInicialExponentesNegativos(),
+    nivelFinal:practica.nivel,
+    bloques:Math.ceil(totalEjercicios/cfg.tamBloque),
+    criterioConsolidacion:{
+      ventana:cfg.ventanaReciente,
+      aciertosRecientes,
+      requeridoVentana:cfg.aciertosVentana,
+      aciertosUltimoBloque,
+      requeridoUltimoBloque:cfg.aciertosUltimoBloque
+    }
+  };
+
+  alumno.practicaExponentesNegativos=null;
+  guardarPersistenciaADP04();
+
+  if(consolidado){
+    prepararEvidenciaFinal();
+    mostrarResultadoPractica({
+      modulo:'Exponentes negativos',
+      aciertos:aciertosTotales,
+      total:totalEjercicios,
+      porcentaje,
+      acreditado:true,
+      estadoTexto:'CONSOLIDADO',
+      desbloqueo:null,
+      textoDesbloqueo:`Criterio alcanzado: ${aciertosRecientes}/${cfg.ventanaReciente} recientes y ${aciertosUltimoBloque}/5 en el último bloque. Ruta Cero completada.`,
+      mensajeLobo:'🐺 Has consolidado el cuarto módulo. La Ruta Cero Matemática está completa.',
+      pantallaMicro:'microExponentesNegativos',
+      accionPrincipal:{
+        texto:'Finalizar Ruta',
+        pantalla:'finalizacionRuta',
+        accion:'abrirFinalizacionRuta()'
+      }
+    });
+  }else{
+    mostrarResultadoPractica({
+      modulo:'Exponentes negativos',
+      aciertos:aciertosTotales,
+      total:totalEjercicios,
+      porcentaje,
+      acreditado:false,
+      estadoTexto:'REQUIERE REFORZAMIENTO',
+      desbloqueo:null,
+      textoDesbloqueo:`Se alcanzó el máximo de ${cfg.maximoEjercicios} ejercicios sin cumplir todavía el criterio 8/10 + 4/5.`,
+      mensajeLobo:'🐺 Detendremos la práctica por ahora. Revisa la microlección y busca apoyo si lo necesitas antes de volver a intentarlo.',
+      pantallaMicro:'microExponentesNegativos'
+    });
+  }
+}
+
+function cerrarBloqueExponentesNegativosAdaptativo(){
+  const practica=alumno.practicaExponentesNegativos;
+  const cfg=CONFIG_RUTA.exponentesNegativosAdaptativos;
+  const respuestasBloque=practica.historial.filter(r=>r.bloque===practica.bloqueNumero);
+  const aciertosBloque=respuestasBloque.filter(r=>r.correcto).length;
+
+  practica.nivel=ajustarNivelBloqueExponentesNegativos(practica.nivel,aciertosBloque);
+  asegurarPerfilExponentesNegativosAdaptativo();
+  alumno.perfilAdaptativo.potenciasNegativas.nivel=practica.nivel;
+  alumno.perfilAdaptativo.potenciasNegativas.estado=estadoExponentesNegativosPorPractica(practica);
+
+  if(cumpleCriterioConsolidacionExponentesNegativos(practica,aciertosBloque)){
+    barraExpNeg.style.width='100%';
+    finalizarPracticaExponentesNegativosAdaptativa(true,aciertosBloque);
+    return;
+  }
+
+  if(practica.historial.length>=cfg.maximoEjercicios){
+    barraExpNeg.style.width='100%';
+    finalizarPracticaExponentesNegativosAdaptativa(false,aciertosBloque);
+    return;
+  }
+
+  practica.bloqueNumero++;
+  practica.ejercicioEnBloque=0;
+  practica.mensajeTransicion=mensajeTransicionBloqueExponentesNegativos(practica,aciertosBloque);
+  practica.bloqueActual=generarBloqueExponentesNegativosAdaptativo(practica);
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaExponentesNegativos();
+  mostrarPracticaExpNeg();
+}
+
+function iniciarPracticaExponentesNegativos(){
+  if(!alumno.modulos?.exponentesNegativos?.desbloqueado){
+    mostrarPantalla('dashboard');
+    return;
+  }
+
+  if(alumno.practicaExponentesNegativos?.activa && alumno.practicaExponentesNegativos.version==='ADP-07'){
+    if(confirm('🐺 Tienes una práctica adaptativa pendiente. ¿Deseas continuarla?')){
+      reanudarPracticaExponentesNegativos();
+    }
+    return;
+  }
+
+  alumno.practicaExponentesNegativos=crearPracticaExponentesNegativosAdaptativa();
+  sincronizarGlobalesPracticaExponentesNegativos();
+  guardarPersistenciaADP04();
+  mostrarPantalla('practicaExponentesNegativos');
+  mostrarPracticaExpNeg();
+}
+
+function comprobarExpNeg(){
+  const practica=alumno.practicaExponentesNegativos;
+  if(!practica || practica.version!=='ADP-07') return;
+
+  const r=document.querySelector('input[name=respEN]:checked');
+  if(!r){alert('Selecciona una respuesta'); return;}
+
+  const q=practica.bloqueActual[practica.ejercicioEnBloque];
+  const correcto=claveFraccionEquivalente(r.value)===claveFraccionEquivalente(q.correcta);
+
+  if(correcto){
+    alert('✅ Correcto.');
+    practica.aciertosTotales++;
+  }else{
+    alert('❌ Aún no. Identifica el recíproco, cambia el exponente a positivo y después calcula la potencia.');
+  }
+
+  const registro={
+    habilidad:'potenciasNegativas',
+    subhabilidad:q.subhabilidad,
+    nivel:q.nivel,
+    bloque:practica.bloqueNumero,
+    correcto
+  };
+
+  practica.historial.push(registro);
+  guardarEvidenciaPerfilExponentesNegativos(registro,practica);
+  practica.ejercicioEnBloque++;
+
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaExponentesNegativos();
+
+  if(practica.ejercicioEnBloque<CONFIG_RUTA.exponentesNegativosAdaptativos.tamBloque){
+    mostrarPracticaExpNeg();
+  }else{
+    cerrarBloqueExponentesNegativosAdaptativo();
+  }
+}
+
+let practicaFrac=[], actualFrac=0, aciertosFrac=0;
+
+function nivelInicialFracciones(clave){
+  const estado=alumno.perfilAdaptativo?.[clave]?.estado;
+  return estado==='REQUIERE REFORZAMIENTO' ? 'A' : 'B';
+}
+
+function subirNivelFracciones(nivel){
+  return nivel==='A' ? 'B' : nivel==='B' ? 'C' : 'C';
+}
+
+function bajarNivelFracciones(nivel){
+  return nivel==='C' ? 'B' : nivel==='B' ? 'A' : 'A';
+}
+
+function rangoNivelFracciones(nivel){
+  return nivel==='A' ? 0 : nivel==='B' ? 1 : 2;
+}
+
+function asegurarPerfilFraccionesAdaptativo(){
+  if(!alumno.perfilAdaptativo) alumno.perfilAdaptativo={};
+  ['simplificacion','sumaFracciones'].forEach(clave=>{
+    if(!alumno.perfilAdaptativo[clave]){
+      alumno.perfilAdaptativo[clave]={
+        estado:'EN OBSERVACIÓN',
+        diagnosticoBase:{correcto:null},
+        confirmacion:{requerida:false,aciertos:0,total:0,respuestas:[]}
+      };
+    }
+    if(!Array.isArray(alumno.perfilAdaptativo[clave].historial)){
+      alumno.perfilAdaptativo[clave].historial=[];
+    }
+    if(!alumno.perfilAdaptativo[clave].nivel){
+      alumno.perfilAdaptativo[clave].nivel=nivelInicialFracciones(clave);
+    }
+  });
+}
+
+function fraccionReducidaTexto(n,d){
+  const g=mcd(Math.abs(n),Math.abs(d));
+  return `${n/g}/${d/g}`;
+}
+
+function mezclarOpcionesFracciones(valores){
+  const opciones=[...new Set(valores.map(String))];
+  const correcta=opciones[0];
+  let intentos=0;
+  while(opciones.length<4 && intentos<40){
+    const den=randomInt(2,18);
+    const num=randomInt(1,Math.max(1,den+5));
+    const candidato=`${num}/${den}`;
+    if(!opciones.includes(candidato) && candidato!==correcta) opciones.push(candidato);
+    intentos++;
+  }
+  return opciones.slice(0,4).sort(()=>rngGenerator()-0.5);
+}
+
+function claveFraccionEquivalente(valor){
+  const m=String(valor).trim().match(/^(-?\d+)\/(-?\d+)$/);
+  if(!m) return String(valor).trim();
+  let n=Number(m[1]), d=Number(m[2]);
+  if(d===0) return String(valor).trim();
+  if(d<0){ n=-n; d=-d; }
+  const g=mcd(Math.abs(n),Math.abs(d)) || 1;
+  return `${n/g}/${d/g}`;
+}
+
+function mezclarOpcionesSumaFracciones(correcta,candidatos=[]){
+  const opciones=[String(correcta)];
+  const claves=new Set([claveFraccionEquivalente(correcta)]);
+
+  for(const candidato of candidatos){
+    const texto=String(candidato);
+    const clave=claveFraccionEquivalente(texto);
+    if(!claves.has(clave)){
+      opciones.push(texto);
+      claves.add(clave);
+    }
+    if(opciones.length===4) break;
+  }
+
+  let intentos=0;
+  while(opciones.length<4 && intentos<80){
+    const den=randomInt(2,18);
+    const num=randomInt(1,den+7);
+    const candidato=`${num}/${den}`;
+    const clave=claveFraccionEquivalente(candidato);
+    if(!claves.has(clave)){
+      opciones.push(candidato);
+      claves.add(clave);
+    }
+    intentos++;
+  }
+
+  return opciones.slice(0,4).sort(()=>rngGenerator()-0.5);
+}
+
+function parCoprimoFracciones(maxDen){
+  let n,d;
+  do{
+    d=randomInt(3,maxDen);
+    n=randomInt(1,d-1);
+  }while(mcd(n,d)!==1);
+  return [n,d];
+}
+
+function motorSimplificacionAdaptativa(nivel){
+  const maxDen=nivel==='A' ? 8 : nivel==='B' ? 11 : 14;
+  const [n,d]=parCoprimoFracciones(maxDen);
+  const f1=nivel==='A' ? randomInt(2,3) : randomInt(2,5);
+  const f2=nivel==='C' ? randomInt(2,4) : 1;
+  const factor=f1*f2;
+  const num=n*factor, den=d*factor;
+  const correcta=`${n}/${d}`;
+
+  const parcial=nivel==='C'
+    ? `${n*f1}/${d*f1}`
+    : `${Math.max(1,Math.floor(num/f1))}/${den}`;
+
+  return {
+    e:`Simplifica completamente: ${num}/${den}`,
+    correcta,
+    opciones:mezclarOpcionesFracciones([correcta,`${num}/${den}`,parcial,`${n}/${den*factor}`]),
+    habilidad:'simplificacion',
+    nivel
+  };
+}
+
+function motorSumaFraccionesAdaptativa(nivel){
+  if(nivel==='C'){
+    const den=randomInt(7,16);
+    const n1=randomInt(1,den-1);
+    const n2=randomInt(1,den-1);
+    const n3=randomInt(1,den-1);
+    const suma=n1+n2+n3;
+    const correcta=fraccionReducidaTexto(suma,den);
+    return {
+      e:`${n1}/${den} + ${n2}/${den} + ${n3}/${den} = ?`,
+      correcta,
+      opciones:mezclarOpcionesSumaFracciones(correcta,[
+        `${suma}/${den*3}`,
+        `${n1+n2}/${den}`,
+        `${Math.max(1,suma-1)}/${den}`,
+        `${suma+1}/${den}`
+      ]),
+      habilidad:'sumaFracciones',
+      nivel
+    };
+  }
+
+  const den=nivel==='A' ? randomInt(4,9) : randomInt(5,14);
+  let n1=randomInt(1,den-1);
+  let n2=randomInt(1,den-1);
+
+  if(nivel==='A' && n1+n2>den){
+    n2=Math.max(1,den-n1);
+  }
+
+  const suma=n1+n2;
+  const correcta=fraccionReducidaTexto(suma,den);
+  return {
+    e:`${n1}/${den} + ${n2}/${den} = ?`,
+    correcta,
+    opciones:mezclarOpcionesSumaFracciones(correcta,[
+      `${suma}/${den*2}`,
+      `${Math.abs(n1-n2)}/${den}`,
+      `${suma+1}/${den}`,
+      `${Math.max(1,suma-1)}/${den}`
+    ]),
+    habilidad:'sumaFracciones',
+    nivel
+  };
+}
+
+function tasaBloqueHabilidadFracciones(historial,bloque,habilidad){
+  const registros=historial.filter(r=>r.bloque===bloque && r.habilidad===habilidad);
+  if(!registros.length) return null;
+  return registros.filter(r=>r.correcto).length/registros.length;
+}
+
+function prioridadInicialFracciones(practica){
+  const nivelS=rangoNivelFracciones(practica.niveles.simplificacion);
+  const nivelF=rangoNivelFracciones(practica.niveles.sumaFracciones);
+  if(nivelS!==nivelF) return nivelS<nivelF ? 'simplificacion' : 'sumaFracciones';
+
+  const pesoEstado={
+    'REQUIERE REFORZAMIENTO':0,
+    'EN OBSERVACIÓN':1,
+    'DOMINIO PROBABLE':2,
+    'EN CONSOLIDACIÓN':2,
+    'CONSOLIDADO':3
+  };
+  const es=alumno.perfilAdaptativo?.simplificacion?.estado || 'EN OBSERVACIÓN';
+  const ef=alumno.perfilAdaptativo?.sumaFracciones?.estado || 'EN OBSERVACIÓN';
+  const ps=pesoEstado[es] ?? 1;
+  const pf=pesoEstado[ef] ?? 1;
+  if(ps!==pf) return ps<pf ? 'simplificacion' : 'sumaFracciones';
+  return null;
+}
+
+function decidirPrioridadFracciones(practica){
+  if(practica.historial.length){
+    const bloqueAnterior=practica.bloqueNumero-1;
+    if(bloqueAnterior>=1){
+      const tasaS=tasaBloqueHabilidadFracciones(practica.historial,bloqueAnterior,'simplificacion');
+      const tasaF=tasaBloqueHabilidadFracciones(practica.historial,bloqueAnterior,'sumaFracciones');
+      if(tasaS!==null && tasaF!==null && Math.abs(tasaS-tasaF)>=0.20){
+        return tasaS<tasaF ? 'simplificacion' : 'sumaFracciones';
+      }
+    }
+  }
+  return prioridadInicialFracciones(practica);
+}
+
+function rngBloqueFracciones(practica){
+  const semilla=hashTextoReto(`${alumno.semilla||0}|MI-ADP-05|FRACCIONES|${practica.intento}|${practica.bloqueNumero}`);
+  return mulberry32(semilla);
+}
+
+function generarBloqueFraccionesAdaptativo(practica){
+  const cfg=CONFIG_RUTA.fraccionesAdaptativas;
+  const prioridad=decidirPrioridadFracciones(practica);
+  let cantidadSimplificacion, cantidadSuma;
+
+  if(prioridad==='simplificacion'){
+    cantidadSimplificacion=4; cantidadSuma=1;
+  }else if(prioridad==='sumaFracciones'){
+    cantidadSimplificacion=1; cantidadSuma=4;
+  }else if(practica.bloqueNumero%2===1){
+    cantidadSimplificacion=3; cantidadSuma=2;
+  }else{
+    cantidadSimplificacion=2; cantidadSuma=3;
+  }
+
+  const rngAnterior=rngGenerator;
+  rngGenerator=rngBloqueFracciones(practica);
+  try{
+    const ejercicios=[];
+    for(let i=0;i<cantidadSimplificacion;i++){
+      ejercicios.push(motorSimplificacionAdaptativa(practica.niveles.simplificacion));
+    }
+    for(let i=0;i<cantidadSuma;i++){
+      ejercicios.push(motorSumaFraccionesAdaptativa(practica.niveles.sumaFracciones));
+    }
+    for(let i=ejercicios.length-1;i>0;i--){
+      const j=Math.floor(rngGenerator()*(i+1));
+      [ejercicios[i],ejercicios[j]]=[ejercicios[j],ejercicios[i]];
+    }
+    return ejercicios.slice(0,cfg.tamBloque).map(q=>({...q,bloque:practica.bloqueNumero}));
+  }finally{
+    rngGenerator=rngAnterior;
+  }
+}
+
+function crearPracticaFraccionesAdaptativa(){
+  asegurarPerfilFraccionesAdaptativo();
+  if(!alumno.modulos) alumno.modulos={};
+  if(!alumno.modulos.fracciones) alumno.modulos.fracciones={desbloqueado:true,acreditado:false};
+
+  const intento=(alumno.modulos.fracciones.intentosAdaptativos||0)+1;
+  alumno.modulos.fracciones.intentosAdaptativos=intento;
+
+  const practica={
+    version:'ADP-05',
+    persistenciaVersion:'ADP-05',
+    activa:true,
+    intento,
+    bloqueNumero:1,
+    ejercicioEnBloque:0,
+    aciertosTotales:0,
+    historial:[],
+    niveles:{
+      simplificacion:nivelInicialFracciones('simplificacion'),
+      sumaFracciones:nivelInicialFracciones('sumaFracciones')
+    },
+    mensajeTransicion:'🐺 Primer bloque: LOBO combinará simplificación y suma de fracciones y ajustará el apoyo con base en tus respuestas.'
+  };
+  practica.bloqueActual=generarBloqueFraccionesAdaptativo(practica);
+  return practica;
+}
+
+function sincronizarGlobalesPracticaFracciones(){
+  const practica=alumno.practicaFracciones;
+  practicaFrac=practica?.bloqueActual || [];
+  actualFrac=practica?.ejercicioEnBloque || 0;
+  aciertosFrac=practica?.aciertosTotales || 0;
+}
+
+function nombreCortoHabilidadFracciones(clave){
+  return clave==='sumaFracciones' ? 'Suma homogénea' : 'Simplificación';
+}
+
+function mostrarPracticaFrac(){
+  const practica=alumno.practicaFracciones;
+  if(!practica || practica.version!=='ADP-05' || !practica.activa) return;
+  sincronizarGlobalesPracticaFracciones();
+
+  const q=practicaFrac[actualFrac];
+  if(!q) return;
+  const cfg=CONFIG_RUTA.fraccionesAdaptativas;
+  barraFrac.style.width=((actualFrac)/cfg.tamBloque*100)+'%';
+  contadorFrac.textContent=`Bloque ${practica.bloqueNumero} · Ejercicio ${actualFrac+1} de ${cfg.tamBloque} · ${nombreCortoHabilidadFracciones(q.habilidad)} · Nivel ${q.nivel}`;
+  estadoAdaptativoFracciones.textContent=`Práctica acumulada: ${practica.historial.length} de ${cfg.maximoEjercicios} ejercicios máximo · Simplificación: Nivel ${practica.niveles.simplificacion} · Suma: Nivel ${practica.niveles.sumaFracciones}`;
+  loboPracticaFrac.textContent=practica.mensajeTransicion || '🐺 Trabaja paso a paso. LOBO ajustará el apoyo con base en tu desempeño.';
+  enunciadoFrac.textContent=q.e;
+  opcionesFrac.innerHTML='';
+  q.opciones.forEach(o=>opcionesFrac.innerHTML += `<label class='opcion'><input type='radio' name='respF' value='${o}'> ${o}</label>`);
+}
+
+function guardarEvidenciaPerfilFracciones(registro,practica){
+  asegurarPerfilFraccionesAdaptativo();
+  const perfil=alumno.perfilAdaptativo[registro.habilidad];
+  perfil.nivel=practica.niveles[registro.habilidad];
+  perfil.historial.push({
+    modulo:'fracciones',
+    nivel:registro.nivel,
+    bloque:registro.bloque,
+    correcto:registro.correcto
+  });
+}
+
+function estadoHabilidadPorPracticaFracciones(practica,habilidad){
+  const ultimos=practica.historial.filter(r=>r.habilidad===habilidad).slice(-5);
+  if(!ultimos.length) return alumno.perfilAdaptativo?.[habilidad]?.estado || 'EN OBSERVACIÓN';
+  const tasa=ultimos.filter(r=>r.correcto).length/ultimos.length;
+  if(tasa>=0.80) return 'EN CONSOLIDACIÓN';
+  if(tasa<0.60) return 'REQUIERE REFORZAMIENTO';
+  return 'EN OBSERVACIÓN';
+}
+
+function ajustarNivelPorBloqueFracciones(nivel,respuestas,aciertosBloque){
+  if(respuestas.length<2 || aciertosBloque===3) return nivel;
+  const tasa=respuestas.filter(r=>r.correcto).length/respuestas.length;
+  if(aciertosBloque>=4 && tasa>=0.80) return subirNivelFracciones(nivel);
+  if(aciertosBloque<=2 && tasa<0.60) return bajarNivelFracciones(nivel);
+  return nivel;
+}
+
+function actualizarNivelesTrasBloqueFracciones(practica,aciertosBloque){
+  ['simplificacion','sumaFracciones'].forEach(habilidad=>{
+    const respuestas=practica.historial.filter(r=>r.bloque===practica.bloqueNumero && r.habilidad===habilidad);
+    practica.niveles[habilidad]=ajustarNivelPorBloqueFracciones(practica.niveles[habilidad],respuestas,aciertosBloque);
+    asegurarPerfilFraccionesAdaptativo();
+    alumno.perfilAdaptativo[habilidad].nivel=practica.niveles[habilidad];
+    alumno.perfilAdaptativo[habilidad].estado=estadoHabilidadPorPracticaFracciones(practica,habilidad);
+  });
+}
+
+function cumpleCriterioConsolidacionFracciones(practica,aciertosUltimoBloque){
+  const cfg=CONFIG_RUTA.fraccionesAdaptativas;
+  if(practica.historial.length<cfg.minimoAntesDeConsolidar) return false;
+  const recientes=practica.historial.slice(-cfg.ventanaReciente);
+  const aciertosRecientes=recientes.filter(r=>r.correcto).length;
+  return aciertosRecientes>=cfg.aciertosVentana && aciertosUltimoBloque>=cfg.aciertosUltimoBloque;
+}
+
+function mensajeTransicionBloqueFracciones(practica,aciertosBloque){
+  let decision;
+  if(aciertosBloque<=2){
+    decision='mantendremos o aumentaremos el apoyo en la siguiente tanda';
+  }else if(aciertosBloque===3){
+    decision='mantendremos el nivel para reunir más evidencia';
+  }else if(aciertosBloque===4){
+    decision='avanzaremos hacia mayor consolidación';
+  }else{
+    decision='subiremos la exigencia cuando la evidencia de cada habilidad lo permita';
+  }
+
+  const prioridad=decidirPrioridadFracciones(practica);
+  const foco=prioridad
+    ? ` La siguiente tanda dará mayor atención a ${prioridad==='simplificacion' ? 'la simplificación' : 'la suma de fracciones'}.`
+    : ' La siguiente tanda mantendrá un equilibrio entre simplificación y suma.';
+  return `🐺 Bloque ${practica.bloqueNumero-1}: ${aciertosBloque} de 5. ${decision}.${foco}`;
+}
+
+function finalizarPracticaFraccionesAdaptativa(consolidado,aciertosUltimoBloque){
+  const practica=alumno.practicaFracciones;
+  const cfg=CONFIG_RUTA.fraccionesAdaptativas;
+  const totalEjercicios=practica.historial.length;
+  const aciertosTotales=practica.historial.filter(r=>r.correcto).length;
+  const porcentaje=Math.round((aciertosTotales/totalEjercicios)*100);
+  const recientes=practica.historial.slice(-cfg.ventanaReciente);
+  const aciertosRecientes=recientes.filter(r=>r.correcto).length;
+
+  if(consolidado){
+    alumno.modulos.fracciones.acreditado=true;
+    alumno.modulos.fracciones.estado='CONSOLIDADO';
+    alumno.modulos.exponentes.desbloqueado=true;
+    asegurarPerfilFraccionesAdaptativo();
+    alumno.perfilAdaptativo.simplificacion.estado='CONSOLIDADO';
+    alumno.perfilAdaptativo.sumaFracciones.estado='CONSOLIDADO';
+  }else{
+    alumno.modulos.fracciones.acreditado=false;
+    alumno.modulos.fracciones.estado='REQUIERE REFORZAMIENTO';
+  }
+
+  alumno.modulos.fracciones.resultado={
+    aciertos:aciertosTotales,
+    total:totalEjercicios,
+    porcentaje,
+    acreditado:consolidado,
+    fecha:new Date().toLocaleDateString(),
+    tipo:'ADAPTATIVA_ADP05',
+    bloques:Math.ceil(totalEjercicios/cfg.tamBloque),
+    criterioConsolidacion:{
+      ventana:cfg.ventanaReciente,
+      aciertosRecientes,
+      requeridoVentana:cfg.aciertosVentana,
+      aciertosUltimoBloque,
+      requeridoUltimoBloque:cfg.aciertosUltimoBloque
+    }
+  };
+
+  alumno.practicaFracciones=null;
+  guardarPersistenciaADP04();
+
+  mostrarResultadoPractica({
+    modulo:'Fracciones',
+    aciertos:aciertosTotales,
+    total:totalEjercicios,
+    porcentaje,
+    acreditado:consolidado,
+    estadoTexto:consolidado ? 'CONSOLIDADO' : 'REQUIERE REFORZAMIENTO',
+    desbloqueo:consolidado ? 'Exponentes' : '',
+    textoDesbloqueo:consolidado
+      ? `Criterio alcanzado: ${aciertosRecientes}/${cfg.ventanaReciente} recientes y ${aciertosUltimoBloque}/5 en el último bloque. Exponentes está disponible.`
+      : `Se alcanzó el máximo de ${cfg.maximoEjercicios} ejercicios sin cumplir todavía el criterio 8/10 + 4/5.`,
+    mensajeLobo:consolidado
+      ? '🐺 Has mostrado desempeño estable en fracciones. La ruta puede avanzar al siguiente módulo.'
+      : '🐺 Detendremos la práctica por ahora. Revisa la microlección y busca apoyo si lo necesitas antes de volver a intentarlo.',
+    pantallaMicro:'microFracciones'
+  });
+}
+
+function cerrarBloqueFraccionesAdaptativo(){
+  const practica=alumno.practicaFracciones;
+  const cfg=CONFIG_RUTA.fraccionesAdaptativas;
+  const respuestasBloque=practica.historial.filter(r=>r.bloque===practica.bloqueNumero);
+  const aciertosBloque=respuestasBloque.filter(r=>r.correcto).length;
+
+  actualizarNivelesTrasBloqueFracciones(practica,aciertosBloque);
+
+  if(cumpleCriterioConsolidacionFracciones(practica,aciertosBloque)){
+    barraFrac.style.width='100%';
+    finalizarPracticaFraccionesAdaptativa(true,aciertosBloque);
+    return;
+  }
+
+  if(practica.historial.length>=cfg.maximoEjercicios){
+    barraFrac.style.width='100%';
+    finalizarPracticaFraccionesAdaptativa(false,aciertosBloque);
+    return;
+  }
+
+  practica.bloqueNumero++;
+  practica.ejercicioEnBloque=0;
+  practica.mensajeTransicion=mensajeTransicionBloqueFracciones(practica,aciertosBloque);
+  practica.bloqueActual=generarBloqueFraccionesAdaptativo(practica);
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaFracciones();
+  mostrarPracticaFrac();
+}
+
+function iniciarPracticaFracciones(){
+  if(alumno.practicaFracciones?.activa && alumno.practicaFracciones.version==='ADP-05'){
+    if(confirm('🐺 Tienes una práctica adaptativa pendiente. ¿Deseas continuarla?')){
+      reanudarPracticaFracciones();
+    }
+    return;
+  }
+
+  // Compatibilidad: una práctica anterior a MI-ADP-05 no se mezcla con el nuevo motor.
+  if(alumno.practicaFracciones?.activa && alumno.practicaFracciones.version!=='ADP-05'){
+    alumno.practicaFracciones=null;
+  }
+
+  alumno.practicaFracciones=crearPracticaFraccionesAdaptativa();
+  sincronizarGlobalesPracticaFracciones();
+  guardarPersistenciaADP04();
+  mostrarPantalla('practicaFracciones');
+  mostrarPracticaFrac();
+}
+
+function comprobarFrac(){
+  const practica=alumno.practicaFracciones;
+  if(!practica || practica.version!=='ADP-05') return;
+  const r=document.querySelector('input[name=respF]:checked');
+  if(!r){alert('Selecciona una respuesta'); return;}
+
+  const q=practica.bloqueActual[practica.ejercicioEnBloque];
+  const correcto=String(r.value)===String(q.correcta);
+  if(correcto){
+    alert('✅ Correcto.');
+    practica.aciertosTotales++;
+  }else if(q.habilidad==='simplificacion'){
+    alert('❌ Aún no. Busca un factor común y comprueba que numerador y denominador queden completamente reducidos.');
+  }else{
+    alert('❌ Aún no. En fracciones homogéneas conserva el denominador, suma los numeradores y simplifica si es posible.');
+  }
+
+  const registro={
+    habilidad:q.habilidad,
+    nivel:q.nivel,
+    bloque:practica.bloqueNumero,
+    correcto
+  };
+  practica.historial.push(registro);
+  guardarEvidenciaPerfilFracciones(registro,practica);
+  practica.ejercicioEnBloque++;
+
+  guardarPersistenciaADP04();
+  sincronizarGlobalesPracticaFracciones();
+
+  if(practica.ejercicioEnBloque<CONFIG_RUTA.fraccionesAdaptativas.tamBloque){
+    mostrarPracticaFrac();
+  }else{
+    cerrarBloqueFraccionesAdaptativo();
+  }
+}
+
+function iniciarPracticaEnteros(){
+  if(alumno.practicaEnteros?.activa && alumno.practicaEnteros.version==='ADP-03'){
+    if(confirm('🐺 Tienes una práctica adaptativa pendiente. ¿Deseas continuarla?')){
+      reanudarPracticaEnteros();
+    }
+    // MI-ADP-04: cancelar ya no borra ni reemplaza la práctica pendiente.
+    return;
+  }
+
+  // Compatibilidad: una práctica anterior a MI-ADP-03 no se mezcla con el nuevo motor.
+  if(alumno.practicaEnteros?.activa && alumno.practicaEnteros.version!=='ADP-03'){
+    alumno.practicaEnteros=null;
+  }
+
+  alumno.practicaEnteros=crearPracticaEnterosAdaptativa();
+  sincronizarGlobalesPracticaEnteros();
+  guardarPersistenciaADP04();
+  mostrarPantalla('practicaEnteros');
+  mostrarPractica();
+}
+
+function iniciarRuta(){
+ alumno.rutaIniciada=true;
+ alumno.rutaCompletada=false;
+ alumno.moduloActual=1;
+ alumno.progresoGeneral=0;
+ alumno.modulos={
+   enteros:{desbloqueado:true,acreditado:false},
+   fracciones:{desbloqueado:false,acreditado:false},
+   exponentes:{desbloqueado:false,acreditado:false},
+   exponentesNegativos:{desbloqueado:false,acreditado:false}
+ };
+ localStorage.setItem('loboRutaCeroAlumno',JSON.stringify(alumno));
+ datosAlumno.textContent=`Alumno: ${alumno.nombre} | Grupo: ${alumno.grupo}`;
+ mostrarPantalla('dashboard');
+}
+
+function reiniciarRuta(){
+ if(confirm('Se eliminará todo el progreso.')){
+   // MI-ADP-04a: impedir que pagehide/visibilitychange vuelva a guardar
+   // el objeto anterior durante la recarga.
+   reinicioRutaEnCurso=true;
+   localStorage.removeItem('loboRutaCeroAlumno');
+   alumno={};
+   location.reload();
+ }
+}
+
+let alumno={}, diagnostico=[], actual=0, aciertos=0, respuestasDiagnostico=[], rngGenerator;
+let faseDiagnostico='base', confirmacionesDiagnostico=[], actualConfirmacion=0, respuestasConfirmacion=[];
+
+const HABILIDADES_DIAGNOSTICO=[
+ {clave:'sumaEnteros',nombre:'Suma de enteros'},
+ {clave:'restaEnteros',nombre:'Resta de enteros'},
+ {clave:'simplificacion',nombre:'Simplificación de fracciones'},
+ {clave:'sumaFracciones',nombre:'Suma de fracciones homogéneas'},
+ {clave:'potenciasPositivas',nombre:'Potencias con exponente positivo'}
+];
+
+function generarSemilla(){
+ let texto=(alumno.nombre+alumno.grupo+alumno.semestre).toLowerCase().replaceAll(" ","").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+ let hash=0;
+ for(let i=0;i<texto.length;i++){hash=((hash<<5)-hash)+texto.charCodeAt(i); hash|=0;}
+ return Math.abs(hash);
+}
+function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}}
+function randomInt(min,max){return Math.floor(rngGenerator()*(max-min+1))+min;}
+
+function mostrarPantalla(id){
+ if(id==='dashboard'){setTimeout(actualizarDashboard,50);}
+ if(typeof alumno==='object' && alumno.nombre &&
+   id!=='continuarRuta' && id!=='registro'){
+   alumno.pantallaActual=id;
+   localStorage.setItem('loboRutaCeroAlumno',JSON.stringify(alumno));
+ }
+ document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('activa'));
+ document.getElementById(id).classList.add('activa');
+}
+
+function registrarAlumno(){
+ alumno={nombre:nombre.value, grupo:grupo.value, semestre:semestre.value};
+ if(!alumno.nombre||!alumno.grupo||!alumno.semestre){alert("Captura nombre, grupo y semestre");return;}
+ alumno.semilla=generarSemilla();
+ rngGenerator=mulberry32(alumno.semilla);
+ localStorage.setItem('loboRutaCeroAlumno',JSON.stringify(alumno));
+ mostrarPantalla('introDiagnostico');
+}
+
+function generarOpcionesUnicas(correcta,a,b){
+ let opciones=new Set();
+ opciones.add(correcta);
+ while(opciones.size<4){
+   let candidato;
+   switch(randomInt(1,3)){
+     case 1: candidato=-correcta; break;
+     case 2: candidato=Math.abs(a)+Math.abs(b); break;
+     case 3: candidato=correcta+randomInt(-10,10); break;
+   }
+   if(candidato!==correcta) opciones.add(candidato);
+ }
+ return [...opciones].sort(()=>rngGenerator()-0.5);
+}
+
+function motorSuma(){
+ let a=randomInt(-20,20), b=randomInt(-20,20);
+ if(a===0)a=5;
+ if(b===0)b=-3;
+ let c=a+b;
+ return {
+   e:`(${a}) + (${b}) = ?`,
+   correcta:c,
+   opciones:generarOpcionesUnicas(c,a,b)
+ };
+}
+
+function motorResta(){
+ let a=randomInt(-20,20), b=randomInt(-20,20);
+ let c=a-b;
+ return {e:`(${a}) - (${b}) = ?`, correcta:c, opciones:generarOpcionesUnicas(c,a,b)};
+}
+
+function mcd(a,b){while(b){let t=b;b=a%b;a=t;} return Math.abs(a);}
+
+function motorSimplificacion(){
+ let n=randomInt(2,6), d=randomInt(2,6), f=randomInt(2,5);
+ let num=n*f, den=d*f, correcta=`${n}/${d}`;
+ let opciones=[correcta,`${num}/${den}`,`${n*f}/${d}`,`${n}/${d*f}`];
+ opciones=[...new Set(opciones)];
+ while(opciones.length<4) opciones.push(`${randomInt(1,9)}/${randomInt(2,9)}`);
+ return {e:`Simplifica: ${num}/${den}`, correcta:correcta, opciones:opciones.slice(0,4).sort(()=>rngGenerator()-0.5)};
+}
+
+function motorFracciones(){
+ let den=randomInt(2,8), n1=randomInt(1,den-1), n2=randomInt(1,den-1);
+ let s=n1+n2, g=mcd(s,den);
+ let correcta=`${s/g}/${den/g}`;
+ let opciones=mezclarOpcionesSumaFracciones(correcta,[
+   `${s}/${den*2}`,
+   `${n1}/${den}`,
+   `${n2}/${den}`,
+   `${s+1}/${den}`,
+   `${Math.max(1,s-1)}/${den}`
+ ]);
+ return {e:`${n1}/${den} + ${n2}/${den} = ?`, correcta:correcta, opciones};
+}
+
+function motorPotencias(){
+ let n,d,exp;
+ do{
+   n=randomInt(1,4);
+   d=randomInt(2,5);
+ }while(n===d);
+ exp=randomInt(2,3);
+ let correcta=fraccionReducidaTexto(n**exp,d**exp);
+ let opciones=mezclarOpcionesPotencias(correcta,[
+   `${n**exp}/${d}`,
+   `${n}/${d**exp}`,
+   `${n*exp}/${d*exp}`,
+   `${n}/${d}`
+ ]);
+ return {e:`(${n}/${d})^${exp} = ?`, correcta:correcta, opciones};
+}
+
+function motorPorHabilidad(clave){
+ switch(clave){
+   case 'sumaEnteros': return motorSuma();
+   case 'restaEnteros': return motorResta();
+   case 'simplificacion': return motorSimplificacion();
+   case 'sumaFracciones': return motorFracciones();
+   case 'potenciasPositivas': return motorPotencias();
+   default: throw new Error(`Habilidad diagnóstica desconocida: ${clave}`);
+ }
+}
+
+function iniciarDiagnostico(){ generarDiagnostico(); mostrarPantalla('diagnostico'); mostrarPregunta(); }
+
+function generarDiagnostico(){
+ diagnostico=[
+   {...motorSuma(),habilidad:'sumaEnteros'},
+   {...motorResta(),habilidad:'restaEnteros'},
+   {...motorSimplificacion(),habilidad:'simplificacion'},
+   {...motorFracciones(),habilidad:'sumaFracciones'},
+   {...motorPotencias(),habilidad:'potenciasPositivas'}
+ ];
+ actual=0;
+ aciertos=0;
+ respuestasDiagnostico=[];
+ faseDiagnostico='base';
+ confirmacionesDiagnostico=[];
+ actualConfirmacion=0;
+ respuestasConfirmacion=[];
+}
+
+function obtenerHabilidad(clave){
+ return HABILIDADES_DIAGNOSTICO.find(h=>h.clave===clave) || {clave:clave,nombre:clave};
+}
+
+function generarDosConfirmaciones(habilidad){
+ const habilidadInfo=obtenerHabilidad(habilidad);
+ const usados=new Set(diagnostico.filter(q=>q.habilidad===habilidad).map(q=>q.e));
+ const reactivos=[];
+ for(let i=0;i<2;i++){
+   let q=null;
+   let intentos=0;
+   do{
+     q=motorPorHabilidad(habilidad);
+     intentos++;
+   }while(usados.has(q.e) && intentos<25);
+   usados.add(q.e);
+   reactivos.push({...q,habilidad:habilidad,habilidadNombre:habilidadInfo.nombre,confirmacionNumero:i+1});
+ }
+ return reactivos;
+}
+
+function prepararConfirmacionSelectiva(){
+ const habilidadesFalladas=HABILIDADES_DIAGNOSTICO.filter(({clave})=>{
+   const registro=respuestasDiagnostico.find(r=>r.habilidad===clave);
+   return registro && registro.correcto===false;
+ });
+ confirmacionesDiagnostico=[];
+ habilidadesFalladas.forEach(({clave})=>{
+   confirmacionesDiagnostico.push(...generarDosConfirmaciones(clave));
+ });
+ actualConfirmacion=0;
+ respuestasConfirmacion=[];
+ return confirmacionesDiagnostico.length;
+}
+
+function mostrarPregunta(){
+ const esBase=faseDiagnostico==='base';
+ const q=esBase ? diagnostico[actual] : confirmacionesDiagnostico[actualConfirmacion];
+ const total=esBase ? diagnostico.length : confirmacionesDiagnostico.length;
+ const indice=esBase ? actual : actualConfirmacion;
+ barra.style.width=((indice)/total*100)+'%';
+ contador.textContent=esBase
+   ? `Reactivo ${indice+1} de ${total}`
+   : `Confirmación ${indice+1} de ${total} · ${q.habilidadNombre}`;
+ mensajeLobo.textContent=esBase
+   ? "🐺 Responde con tranquilidad. Esto no afecta tu calificación."
+   : "🐺 Revisaremos un poco más esta habilidad para elegir mejor tu punto de partida.";
+ enunciado.textContent=q.e;
+ opciones.innerHTML='';
+ q.opciones.forEach(o=>{
+   opciones.innerHTML += `<label class='opcion'><input type='radio' name='resp' value='${o}'> ${o}</label>`;
+ });
+}
+
+function comprobar(){
+ let r=document.querySelector('input[name=resp]:checked');
+ if(!r){alert('Selecciona una respuesta'); return;}
+
+ if(faseDiagnostico==='base'){
+   const q=diagnostico[actual];
+   const correcto=String(r.value)===String(q.correcta);
+   if(correcto) aciertos++;
+   respuestasDiagnostico.push({habilidad:q.habilidad,correcto:correcto});
+   actual++;
+
+   if(actual<diagnostico.length){
+     mostrarPregunta();
+     return;
+   }
+
+   if(prepararConfirmacionSelectiva()>0){
+     faseDiagnostico='confirmacion';
+     mostrarPregunta();
+   }else{
+     finalizar();
+   }
+   return;
+ }
+
+ const q=confirmacionesDiagnostico[actualConfirmacion];
+ const correcto=String(r.value)===String(q.correcta);
+ respuestasConfirmacion.push({
+   habilidad:q.habilidad,
+   correcto:correcto,
+   numero:q.confirmacionNumero
+ });
+ actualConfirmacion++;
+ if(actualConfirmacion<confirmacionesDiagnostico.length){
+   mostrarPregunta();
+ }else{
+   finalizar();
+ }
+}
+
+function clasificarEstadoInicial(baseCorrecto,aciertosConfirmacion,totalConfirmacion){
+ if(baseCorrecto===true) return 'DOMINIO PROBABLE';
+ if(totalConfirmacion===2 && aciertosConfirmacion===2) return 'EN OBSERVACIÓN';
+ return 'REQUIERE REFORZAMIENTO';
+}
+
+function construirPerfilDiagnosticoSelectivo(){
+ const perfil={};
+ HABILIDADES_DIAGNOSTICO.forEach(({clave})=>{
+   const registroBase=respuestasDiagnostico.find(r=>r.habilidad===clave);
+   const baseCorrecto=registroBase ? registroBase.correcto : null;
+   const confirmaciones=respuestasConfirmacion.filter(r=>r.habilidad===clave);
+   const aciertosConfirmacion=confirmaciones.filter(r=>r.correcto).length;
+   const requerida=baseCorrecto===false;
+   const estado=clasificarEstadoInicial(baseCorrecto,aciertosConfirmacion,confirmaciones.length);
+
+   perfil[clave]={
+     estado:estado,
+     diagnosticoBase:{correcto:baseCorrecto},
+     confirmacion:{
+       requerida:requerida,
+       aciertos:aciertosConfirmacion,
+       total:confirmaciones.length,
+       respuestas:confirmaciones.map(r=>r.correcto)
+     }
+   };
+ });
+ return perfil;
+}
+
+function finalizar(){
+ barra.style.width='100%';
+ const totalBase=diagnostico.length;
+ const porcentajeDiagnostico=Math.round((aciertos/totalBase)*100);
+ const totalConfirmacion=confirmacionesDiagnostico.length;
+ const aciertosConfirmacion=respuestasConfirmacion.filter(r=>r.correcto).length;
+
+ alumno.diagnostico={
+   aciertos:aciertos,
+   total:totalBase,
+   porcentaje:porcentajeDiagnostico,
+   fecha:new Date().toLocaleDateString(),
+   confirmacionSelectiva:{
+     aplicada:totalConfirmacion>0,
+     aciertos:aciertosConfirmacion,
+     total:totalConfirmacion
+   }
+ };
+ alumno.perfilAdaptativo=construirPerfilDiagnosticoSelectivo();
+ localStorage.setItem('loboRutaCeroAlumno',JSON.stringify(alumno));
+
+ resultadoTexto.textContent=totalConfirmacion>0
+   ? `Diagnóstico base: ${aciertos} de ${totalBase} (${porcentajeDiagnostico}%). Se aplicaron ${totalConfirmacion} reactivos de confirmación selectiva.`
+   : `Aciertos: ${aciertos} de ${totalBase} (${porcentajeDiagnostico}%). No se requirieron reactivos de confirmación.`;
+ datosAlumno.textContent=`Alumno: ${alumno.nombre} | Grupo: ${alumno.grupo}`;
+ mostrarPantalla('resultadoDiag');
+}
+</script>
+</body>
+</html>
