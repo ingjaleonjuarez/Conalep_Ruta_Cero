@@ -879,168 +879,28 @@ body:has(#retoLobo.activa){background:#e9eceb}
   }
 }
 
-</style>
-<style id="miMob01Responsive">
-/* ============================================================
-   MI-MOB-01 — Adecuación responsive para dispositivo móvil
-   LOBO Ruta Cero Matemática
-   Intervención exclusivamente CSS. No modifica ejercicios,
-   generadores, adaptación, persistencia, navegación ni documentos.
-   ============================================================ */
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{min-width:0}
-.pantalla,.card{box-sizing:border-box}
-.pantalla{width:100%}
-.card{max-width:100%}
-img,svg,canvas{max-width:100%}
-button,input{touch-action:manipulation}
 
-@media(max-width:640px){
-  body:not(:has(#evidenciaFinal.activa)):not(:has(#reporteDocente.activa)):not(:has(#retoLobo.activa)){
-    overflow-x:hidden;
-  }
-
-  header{padding:11px 12px 10px !important}
-  header h1{
-    margin:0 0 4px !important;
-    font-size:clamp(20px,6vw,24px) !important;
-    line-height:1.08 !important;
-  }
-  header h3{
-    margin:0 !important;
-    font-size:13px !important;
-    line-height:1.2 !important;
-  }
-
-  .pantalla{padding:14px 12px 22px}
-  .pantalla > .card{
-    width:100%;
-    margin:10px auto;
-    padding:20px 16px 22px;
-    border-radius:12px;
-  }
-  #registro,#introDiagnostico,#diagnostico,#resultadoDiag,
-  #microEnteros,#microFracciones,#microExponentes,#microExponentesNegativos,
-  #practicaEnteros,#practicaFracciones,#practicaExponentes,#practicaExponentesNegativos,
-  #resultadoPractica,#dashboard,#finalizacionRuta,#continuarRuta{
-    max-width:100%;
-  }
-
-  h2{font-size:clamp(22px,6vw,26px);line-height:1.15}
-  h3,p,.opcion,.card{overflow-wrap:anywhere}
-
-  #registro input{
-    min-height:48px;
-    font-size:16px;
-  }
-  #registro button,
-  #introDiagnostico button,
-  #diagnostico button,
-  #resultadoDiag button,
-  #continuarRuta button,
-  #microEnteros button,#microFracciones button,#microExponentes button,#microExponentesNegativos button,
-  #resultadoPractica button,
-  #dashboard button,
-  #finalizacionRuta button,
-  #practicaEnteros button,#practicaFracciones button,#practicaExponentes button,#practicaExponentesNegativos button{
-    width:100%;
-    min-height:48px;
-    margin-left:0;
-    margin-right:0;
-  }
-  #continuarRuta button + button,
-  #resultadoAcciones button + button{
-    margin-left:0;
-    margin-top:9px;
-  }
-  #resultadoAcciones,
-  .finalizacion-acciones{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:9px;
-  }
-  #resultadoAcciones button,
-  .finalizacion-acciones button{width:100%;margin:0}
-
-  #diagnostico #enunciado,
-  #enunciadoPractica,#enunciadoFrac,#enunciadoExp,#enunciadoExpNeg{
-    min-height:0;
-    font-size:clamp(20px,5.6vw,25px);
-    line-height:1.28;
-    padding-left:4px;
-    padding-right:4px;
-  }
-  #diagnostico #opciones,
-  #opcionesPractica,#opcionesFrac,#opcionesExp,#opcionesExpNeg{
-    width:100%;
-    gap:9px;
-  }
-  #diagnostico .opcion,
-  #opcionesPractica .opcion,#opcionesFrac .opcion,#opcionesExp .opcion,#opcionesExpNeg .opcion{
-    width:100%;
-    max-width:none;
-    min-height:52px;
-    padding:12px 13px;
-  }
-  #diagnostico .opcion input[type="radio"],
-  #opcionesPractica .opcion input[type="radio"],#opcionesFrac .opcion input[type="radio"],
-  #opcionesExp .opcion input[type="radio"],#opcionesExpNeg .opcion input[type="radio"]{
-    width:20px;
-    height:20px;
-  }
-
-  .diagnostico-datos,.perfil-adaptativo-grid{grid-template-columns:1fr}
-  #introDiagnostico .diagnostico-dato{min-height:72px}
-  .persistencia-pendiente button{width:100%}
-  .card.lobo{
-    margin-left:0;
-    margin-right:0;
-    padding:13px 14px;
-    min-height:0;
-    line-height:1.42;
-  }
-
-  #dashboard ul{padding-left:20px}
-  #dashboard li{margin-bottom:8px}
-  #dashboard li button{width:100%;text-align:left}
-  .progress{height:12px}
-
-  /* Los documentos conservan su maquetación para impresión. En móvil
-     se consultan mediante desplazamiento horizontal, sin deformarlos. */
-  #evidenciaFinal.pantalla,#reporteDocente.pantalla,#retoLobo.pantalla{
-    padding:8px 0 20px;
-    overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
-    overscroll-behavior-inline:contain;
-    touch-action:pan-x pan-y;
-  }
-  .documentos-acciones{
-    width:calc(100vw - 24px);
-    margin:10px 12px 0;
-    display:grid;
-    grid-template-columns:1fr;
-    gap:8px;
-  }
-  .documentos-acciones button{width:100%;margin:0}
+/* MI-VIS-LOBO-PIE-01 — Cintilla cromática de pie de pantalla
+   Integración visual exclusivamente. No modifica navegación, ejercicios,
+   adaptación, persistencia, QR ni documentos imprimibles. */
+.lobo-creditos-globales{
+  max-width:none !important;
+  margin:18px 0 0 !important;
+  padding:10px 16px 11px !important;
+  box-sizing:border-box;
+  border-top:0 !important;
+  background:linear-gradient(135deg,var(--c1),var(--c2)) !important;
+  color:rgba(255,255,255,.94) !important;
+  box-shadow:0 -1px 4px rgba(11,61,46,.10);
+  text-align:center;
+  font-size:10.5px;
+  line-height:1.35;
 }
-
-@media(max-height:520px) and (orientation:landscape) and (max-width:950px){
-  header{padding:7px 12px 6px !important}
-  header h1{font-size:20px !important}
-  header h3{font-size:12px !important}
-  .pantalla{padding-top:8px;padding-bottom:14px}
-  .pantalla > .card{margin:6px auto;padding-top:16px;padding-bottom:17px}
-  .card.lobo{margin-bottom:14px}
+@media(max-width:560px){
+  .lobo-creditos-globales{font-size:9.5px}
 }
-
-@supports(padding:max(0px)){
-  @media(max-width:640px){
-    .pantalla{
-      padding-left:max(12px,env(safe-area-inset-left));
-      padding-right:max(12px,env(safe-area-inset-right));
-      padding-bottom:max(22px,env(safe-area-inset-bottom));
-    }
-  }
+@media print{
+  .lobo-creditos-globales{display:none !important}
 }
 </style>
 </head>
@@ -1524,6 +1384,10 @@ button,input{touch-action:manipulation}
 }
 
 </style>
+<footer class="lobo-creditos-globales" aria-label="Créditos del simulador">
+  <div>Sistemas inteligentes y adaptativos de apoyo al aprendizaje</div>
+  <div>Diseño pedagógico y adaptación digital: José Antonio León Juárez</div>
+</footer>
 <script src="qrcode.min.js"></script>
 <script>
 
